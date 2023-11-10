@@ -28,7 +28,7 @@ import org.apache.ibatis.session.SqlSession;
  *
  * @author Dell
  */
-@Path("cliente")
+@Path("autenticacion")
 public class AutenticacionWS {
 
     @Context
