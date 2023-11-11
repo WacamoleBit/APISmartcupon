@@ -10,6 +10,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -53,6 +54,31 @@ public class ClienteWS {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
         
+    }
+    
+    @PUT
+    @Path("actualizarCliente")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje actualizarClienteMovil(@FormParam("idCliente") Integer idCliente,
+                                          @FormParam("nombre") String nombre,
+                                          @FormParam("apellidoPaterno") String apellidoPaterno,
+                                          @FormParam("apellidoMaterno") String apellidoMaterno,
+                                          @FormParam("telefono") String telefono,
+                                          @FormParam("calle") String calle,
+                                          @FormParam("numero") Integer numero,
+                                          @FormParam("fechaNacimiento") String fechaNacimiento,
+                                          @FormParam("password") String password){
+        Mensaje respuesta = null;
+        
+        if(idCliente != 0 && !nombre.isEmpty() && !apellidoPaterno.isEmpty() && !apellidoMaterno.isEmpty() && !telefono.isEmpty() &&
+                !calle.isEmpty() && numero!=0 && !fechaNacimiento.isEmpty() && !password.isEmpty()){
+            
+            respuesta = ClienteDAO.actualizarCliente(idCliente, nombre, apellidoPaterno, apellidoMaterno, telefono, calle, numero, fechaNacimiento, password);
+        }else{
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+           
+        return respuesta;
     }
     
 }
