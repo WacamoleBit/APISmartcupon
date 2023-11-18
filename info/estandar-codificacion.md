@@ -3,8 +3,15 @@
 ## Índice
 
 - [Lenguaje de programación](#lenguaje-de-programación)
-- [Estándar](#estándar)
+- [Estándar](#estándar-general)
     - [Clases](#clases)
+    - [Variables](#variables)
+    - [Constantes](#constantes)
+    - [Métodos](#métodos)
+    - [Web Services](#web-services)
+    - [Web Services Paths](#web-services-paths)
+    - [Identificar Mappers](#identificar-mappers)
+
 
 ## Lenguaje de programación
 
@@ -24,7 +31,7 @@ El lenguaje de programación utilizado es __Java 8__
 Ejemplos:
 
 ~~~ java
-public class ServicioWS {
+public class ClienteWS {
     // atributos
     // métodos
 }
@@ -58,10 +65,15 @@ private Integer numeroFilasAfectadas = null; // clase
 private int idUsuario; //primitivo
 ~~~
 
-### Funciones
+### Constantes
+
+- Deben escribirse en mayúsculas, para los epacios usar guión bajo ( _ )
+
+### Métodos
 
 - Utilizar __camel case__.
 - Los nombres de las funciones deben describir su funcionalidad.
+- Deben ser verbo, sustantivo y de ser necesario especificar filtros de busqueda.
 
 ~~~ java
 public Mensaje iniciarSesion(String usuario, String contrasenia) {}
@@ -69,21 +81,49 @@ public Mensaje iniciarSesion(String usuario, String contrasenia) {}
 public Mensaje registrarCliente(String json) {}
 
 public Mensaje modificarUsuario(String json, Integer idUsuario) {}
+
+public void obtenerMunicipiosPorEstado(Integer estado) {}
 ~~~
+
+### Web Services 
+
+- Deben consumir `application/json`
+- Deben producir `application/json`
+- En caso de que problemas con validaciones regresar BAD REQUEST
 
 ### Web Services Paths
 
-- Los URIs de los recursos deben ser sustantivos.
-- Los recursos deben seguir una jerarquía.
-- Usar guines medios en lugar de guiones bajos.
+- Los URIs deben seguir el siguiente orden pertenencia/metodo/id
 - Utilizar nombres intuitivos
 
 ~~~ java
+${baseURL}/usuarios/obtenerDomicilio/{id}
+
 ${baseURL}/empresas/registrar
 
-${baseURL}/usuarios/{id}
+${baseURL}/clientes/obtenerPorId/{id}
 
-${baseURL}/usuarios/{id}/domicilio
+${baseURL}/clientes/obtenerPorEmpresa/{id}
+~~~
 
-${baseURL}/promociones/{id}
+### Identificar Mappers
+
+- El nombre de los mappers debe definirse {NombreTabla}Mapper.xml
+- El namespace debe definirse en minusculas como un pojo.
+- Los id de las consultas deben seguir el estándar para definir los métodos.
+
+~~~ xml
+<mapper namespace="cliente">
+    <select id="obtenerClientePorId" resultType="modelo.pojo.Cliente" parameterType="int">
+        SELECT * 
+        FROM cliente 
+        WHERE idCliente = #{idCliente}
+    </select>
+
+    <select id="modificarCliente" parameterType="modelo.pojo.Client">
+        UPDATE cliente 
+        SET column1 = ${column1}
+        WHERE idCliente = #{idCliente}
+    </select>
+<mapper/>
 ~~~
