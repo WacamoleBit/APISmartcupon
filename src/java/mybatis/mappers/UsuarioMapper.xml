@@ -5,8 +5,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 
-<mapper id="usuario">
-    <insert id="registrar" parameterType="modelo.pojo.Usuario">
+<mapper namespace="usuario">
+    <insert id="registrarUsuario" parameterType="modelo.pojo.Usuario">
         INSERT INTO usuario (nombre, apellidoPaterno, apellidoMaterno, curp, email, username, password, rol, empresa)
         VALUES (#{nombre}, #{apellidoPaterno}, #{apellidoMaterno}, #{curp}, #{email}, #{username}, #{password}, #{rol}, #{empresa})
     </insert>
