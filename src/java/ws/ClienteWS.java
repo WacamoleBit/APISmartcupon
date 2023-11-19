@@ -27,7 +27,7 @@ import modelo.pojo.Mensaje;
  *
  * @author Dell
  */
-@Path("cliente")
+@Path("clientes")
 public class ClienteWS {
 
     @Context
@@ -56,29 +56,22 @@ public class ClienteWS {
         
     }
     
+   
     @PUT
-    @Path("actualizarCliente")
+    @Path("editarCliente")
     @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje actualizarClienteMovil(@FormParam("idCliente") Integer idCliente,
-                                          @FormParam("nombre") String nombre,
-                                          @FormParam("apellidoPaterno") String apellidoPaterno,
-                                          @FormParam("apellidoMaterno") String apellidoMaterno,
-                                          @FormParam("telefono") String telefono,
-                                          @FormParam("calle") String calle,
-                                          @FormParam("numero") Integer numero,
-                                          @FormParam("fechaNacimiento") String fechaNacimiento,
-                                          @FormParam("password") String password){
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Mensaje editarClienteMovil(String json){
         Mensaje respuesta = null;
         
-        if(idCliente != 0 && !nombre.isEmpty() && !apellidoPaterno.isEmpty() && !apellidoMaterno.isEmpty() && !telefono.isEmpty() &&
-                !calle.isEmpty() && numero!=0 && !fechaNacimiento.isEmpty() && !password.isEmpty()){
-            
-            respuesta = ClienteDAO.actualizarCliente(idCliente, nombre, apellidoPaterno, apellidoMaterno, telefono, calle, numero, fechaNacimiento, password);
+        Gson gson = new Gson();
+        Cliente cliente= gson.fromJson(json, Cliente.class);
+        if(cliente != null){
+            return ClienteDAO.actualizarCliente(cliente);
         }else{
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            throw  new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-           
-        return respuesta;
     }
+    
     
 }

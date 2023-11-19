@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="direccion">
+    
+    <select id="obtenerDireccionPorId" parameterType="int" resultType="modelo.pojo.Direccion">
+        SELECT d.idDireccion, d.calle, d.numero, d.colonia, d.codigoPostal, d.ciudad, d.tipoDireccion, ci.estado
+        FROM cliente cl 
+        INNER JOIN direccion d ON cl.direccion = d.idDireccion 
+        INNER JOIN ciudad ci ON d.ciudad = ci.idCiudad 
+        INNER JOIN estado es ON ci.estado = es.idEstado WHERE cl.id=#{id}
+    </select>
+    
+    <insert id="registrarDireccionCliente" parameterType="modelo.pojo.Direccion">
+        INSERT INTO direccion(calle, numero, ciudad, tipoDireccion ) 
+        VALUES (#{calle},#{numero},#{ciudad},#{tipoDireccion})
+    </insert>
+    
+    <insert id="registrarDireccionEmpresa" parameterType="modelo.pojo.Direccion">
+        INSERT INTO direccion(calle, numero, codigoPostal, ciudad, tipoDireccion ) 
+        VALUES (#{calle},#{numero},#{codigoPostal},#{ciudad},#{tipoDireccion})
+    </insert>
+    
+    <insert id="registrarDireccionSucursal" parameterType="modelo.pojo.Direccion">
+        INSERT INTO direccion(calle, numero, colonia, codigoPostal, ciudad, tipoDireccion ) 
+        VALUES (#{calle},#{numero},#{colonia},#{codigoPostal},#{ciudad},#{tipoDireccion})
+    </insert>
+   
+    <update id="editarDireccionCliente" parameterType="modelo.pojo.Direccion">
+        UPDATE direccion SET calle=#{calle}, numero=#{numero} 
+        WHERE idDireccion=#{idDireccion}
+    </update>
+</mapper>
+

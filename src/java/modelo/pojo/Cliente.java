@@ -11,39 +11,37 @@ package modelo.pojo;
  */
 public class Cliente {
         
-    private Integer idCliente;
+    private Integer id;
     private String nombre;
     private String apellidoPaterno;
     private String apellidoMaterno;
     private String telefono;
     private String email;
-    private String calle;
-    private Integer numero;
+    private Integer direccion; 
     private String fechaNacimiento;
     private String password;
 
     public Cliente() {
     }
 
-    public Cliente(Integer idCliente, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String email, String calle, Integer numero, String fechaNacimiento, String password) {
-        this.idCliente = idCliente;
+    public Cliente(Integer id, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String email, Integer direccion, String fechaNacimiento, String password) {
+        this.id = id;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.telefono = telefono;
         this.email = email;
-        this.calle = calle;
-        this.numero = numero;
+        this.direccion = direccion;
         this.fechaNacimiento = fechaNacimiento;
         this.password = password;
     }
 
-    public Integer getIdCliente() {
-        return idCliente;
+    public Integer getId() {
+        return id;
     }
 
-    public void setIdCliente(Integer idCliente) {
-        this.idCliente = idCliente;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getNombre() {
@@ -86,20 +84,12 @@ public class Cliente {
         this.email = email;
     }
 
-    public String getCalle() {
-        return calle;
+    public Integer getDireccion() {
+        return direccion;
     }
 
-    public void setCalle(String calle) {
-        this.calle = calle;
-    }
-
-    public Integer getNumero() {
-        return numero;
-    }
-
-    public void setNumero(Integer numero) {
-        this.numero = numero;
+    public void setDireccion(Integer direccion) {
+        this.direccion = direccion;
     }
 
     public String getFechaNacimiento() {
@@ -117,4 +107,5 @@ public class Cliente {
     public void setPassword(String password) {
         this.password = password;
     }
+    
 }

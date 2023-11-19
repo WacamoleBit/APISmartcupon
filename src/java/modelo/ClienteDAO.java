@@ -45,37 +45,18 @@ public class ClienteDAO {
         return msj;
     }
     
-    
-    public static Mensaje actualizarCliente(Integer idCliente,
-                                    String nombre,
-                                    String apellidoPaterno,
-                                    String apellidoMaterno,
-                                    String telefono,
-                                    String calle,
-                                    Integer numero,
-                                    String fechaNacimiento,
-                                    String password){
+    public static Mensaje actualizarCliente(Cliente cliente){
 
         Mensaje respuesta = new Mensaje();
         respuesta.setError(true);
         SqlSession conexionBD = MyBatisUtil.getSession();
         if(conexionBD != null){
-            HashMap<String, Object> parametros = new HashMap<>();
-            parametros.put("idCliente", idCliente);
-            parametros.put("nombre", nombre);
-            parametros.put("apellidoPaterno", apellidoPaterno);
-            parametros.put("apellidoMaterno", apellidoMaterno);
-            parametros.put("telefono", telefono);
-            parametros.put("calle", calle);
-            parametros.put("numero", numero);
-            parametros.put("fechaNacimiento", fechaNacimiento);
-            parametros.put("password", password);
-
-            Cliente cliente = conexionBD.selectOne("cliente.obtenerClientePorId",idCliente);
+            
+            Cliente clienteExistente = conexionBD.selectOne("cliente.obtenerClientePorId", cliente.getId());
 
             if(cliente != null){
                 try {
-                    int numeroFilasAfectadas = conexionBD.update("cliente.actualizarCliente", parametros);
+                    int numeroFilasAfectadas = conexionBD.update("cliente.actualizarInformacionCliente", cliente);
                     conexionBD.commit();
                     if(numeroFilasAfectadas > 0){
                         respuesta.setError(false);
@@ -94,4 +75,5 @@ public class ClienteDAO {
         }
         return respuesta;
     }
+    
 }
