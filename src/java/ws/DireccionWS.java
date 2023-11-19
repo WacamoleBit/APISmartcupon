@@ -42,7 +42,9 @@ public class DireccionWS {
      * Retrieves representation of an instance of ws.DireccionWS
      * @return an instance of java.lang.String
      */
-     @POST
+    
+    //Los siguientes tres metodos son para agregar una Direccion a un cliente
+    @POST
     @Path("obtenerDireccion")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -59,7 +61,7 @@ public class DireccionWS {
     }
     
     @POST
-    @Path("registrarDireccionCliente")
+    @Path("registrar")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Mensaje registrarDireccionCliente(String json){
@@ -75,7 +77,7 @@ public class DireccionWS {
     
     
     @PUT
-    @Path("editarDireccionCliente")
+    @Path("editar")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Mensaje modificarDireccionCliente(String json){
@@ -86,6 +88,13 @@ public class DireccionWS {
         }else{
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-        
     }
+    
+    //Para una empresa
+    
+    
+    
+    //Para una sucursal
+    
+    
 }

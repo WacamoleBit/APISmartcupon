@@ -36,57 +36,57 @@ public class DireccionDAO {
 
     
     public static Mensaje ingresarDireccionCliente(Direccion direccion) {
-        Mensaje msj = new Mensaje();
-        msj.setError(true);
+        Mensaje mensaje = new Mensaje();
+        mensaje.setError(true);
         SqlSession conexionBD = MyBatisUtil.getSession();
         if (conexionBD != null) {
             try {
                   
-                    int filasAfectas = conexionBD.insert("direccion.registrarDireccionCliente", direccion);
+                    int numeroFilasAfectadas = conexionBD.insert("direccion.registrarDireccionCliente", direccion);
                     conexionBD.commit();
-                    if(filasAfectas > 0){
-                        msj.setError(false);
-                        msj.setMensaje("Dirección registrado con éxito");
+                    if(numeroFilasAfectadas > 0){
+                        mensaje.setError(false);
+                        mensaje.setMensaje("Dirección registrado con éxito");
                     }else{
-                        msj.setMensaje("No se pudo registrar la dirección, favor de intentarlo mas tarde");
+                        mensaje.setMensaje("No se pudo registrar la dirección, favor de intentarlo mas tarde");
                     }
             } catch (Exception e) {
-                    msj.setMensaje("Error: " + e.getMessage());
+                    mensaje.setMensaje("Error: " + e.getMessage());
             }finally{
                 conexionBD.close();
             }
         }else{
-            msj.setMensaje("Por el momento no hay conexion con la base de datos");
+            mensaje.setMensaje("Error: Por el momento no hay conexion con la base de datos");
         }
 
-        return msj;
+        return mensaje;
     }
     
     public static Mensaje modificarDireccionCliente(Direccion direccion){
-        Mensaje msj = new Mensaje();
-        msj.setError(true);
+        Mensaje mensaje = new Mensaje();
+        mensaje.setError(true);
         SqlSession conexionBD = MyBatisUtil.getSession();
         if(conexionBD!=null){
             try {
-                int filasAfectadas = conexionBD.update("direccion.editarDireccionCliente", direccion);
+                int numeroFilasAfectadas = conexionBD.update("direccion.modificarDireccionCliente", direccion);
                 conexionBD.commit();
-                if(filasAfectadas > 0){
-                    msj.setError(false);
-                    msj.setMensaje("Direccion editada con éxito");
+                if(numeroFilasAfectadas > 0){
+                    mensaje.setError(false);
+                    mensaje.setMensaje("Direccion editada con éxito");
                 }
                 else{
-                   msj.setMensaje("No se pudo editar la dirección, favor de intentarlo mas tarde");
+                   mensaje.setMensaje("No se pudo editar la dirección, favor de intentarlo mas tarde");
                 }
             } catch (Exception e) {
-                msj.setMensaje("Error: " + e.getMessage());
+                mensaje.setMensaje("Error: " + e.getMessage());
             }finally{
                 conexionBD.close();
             }
         }else{
-            msj.setMensaje("Por el momento no hay conexión con la base de datos");
+            mensaje.setMensaje("Error: Por el momento no hay conexión con la base de datos");
         }
         
-        return msj;
+        return mensaje;
     }
     
     public static Mensaje ingresarDireccionEmpresa(){

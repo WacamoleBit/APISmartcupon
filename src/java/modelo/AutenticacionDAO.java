@@ -8,6 +8,7 @@ package modelo;
 import java.util.HashMap;
 import modelo.pojo.Cliente;
 import modelo.pojo.Mensaje;
+import modelo.pojo.Usuario;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 
@@ -17,22 +18,19 @@ import org.apache.ibatis.session.SqlSession;
  */
 public class AutenticacionDAO {
     
-    public static Mensaje verificarSesionMovilCliente(String email, String password){
+    public static Mensaje iniciarSesionCliente(Cliente cliente){
         Mensaje respuesta = new Mensaje();
         respuesta.setError(true);
         
         SqlSession conexionBD = MyBatisUtil.getSession();
         if(conexionBD != null){
             try {
-                HashMap<String,String> parametros = new HashMap<>();
-                parametros.put("email", email);
-                parametros.put("password", password);
                 
-                Cliente cliente = conexionBD.selectOne("autenticacion.loginMovilCliente",parametros);
+                Cliente sesionCliente = conexionBD.selectOne("autenticacion.iniciarSesion", cliente);
                 
-                if(cliente != null){
+                if(sesionCliente != null){
                     respuesta.setError(false);
-                    respuesta.setMensaje("Bienvenid(@) "+ cliente.getNombre()+" al sistema de promociones");
+                    respuesta.setMensaje("Bienvenid(@) "+ sesionCliente.getNombre()+" al sistema de promociones");
                 }else{
                     respuesta.setMensaje("Número de personal y/o contraseña incorrectos, favor de verificarlos");
                 }
@@ -47,5 +45,33 @@ public class AutenticacionDAO {
         }
         
         return respuesta;
+    }
+    
+    public static Mensaje iniciarSesionUsuario(Usuario usuario){
+        Mensaje mensaje = new Mensaje();
+        mensaje.setError(true);
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        if(conexionBD!=null){
+            try {
+                
+                Usuario sesionUsuario = conexionBD.selectOne("", usuario);
+                
+                if(sesionUsuario!=null){
+                    mensaje.setError(false);
+                    mensaje.setMensaje("Bienvenid(@) "+ sesionUsuario.getNombre()+" al sistema de promociones");
+                }else{
+                    mensaje.setMensaje("Número de personal y/o contraseña incorrectos, favor de verificarlos");
+                }
+                
+            } catch (Exception e) {
+                mensaje.setMensaje("Error: " + e.getMessage());
+            }finally{
+                conexionBD.close();
+            }
+        }else{
+            mensaje.setMensaje("Error: Por el momento no hay conexión con la base de datos");
+        }
+        
+        return mensaje;
     }
 }

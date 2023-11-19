@@ -28,7 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         VALUES (#{calle},#{numero},#{colonia},#{codigoPostal},#{ciudad},#{tipoDireccion})
     </insert>
    
-    <update id="editarDireccionCliente" parameterType="modelo.pojo.Direccion">
+    <update id="modificarDireccionCliente" parameterType="modelo.pojo.Direccion">
         UPDATE direccion SET calle=#{calle}, numero=#{numero} 
         WHERE idDireccion=#{idDireccion}
     </update>

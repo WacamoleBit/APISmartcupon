@@ -8,9 +8,8 @@ package ws;
 import com.google.gson.Gson;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
-import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.FormParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -18,57 +17,39 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import modelo.ClienteDAO;
-import modelo.pojo.Cliente;
+import modelo.SucursalDAO;
 import modelo.pojo.Mensaje;
+import modelo.pojo.Sucursal;
 
 /**
  * REST Web Service
  *
  * @author Dell
  */
-@Path("clientes")
-public class ClienteWS {
+@Path("sucursales")
+public class SucursalWS {
 
     @Context
     private UriInfo context;
 
     /**
-     * Creates a new instance of ClienteWS
+     * Creates a new instance of SucursalWS
      */
-    public ClienteWS() {
+    public SucursalWS() {
     }
 
     @POST
     @Path("registrar")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Mensaje registrarCliente(String json){
+    public Mensaje registrarSucursal(String json){
         Gson gson = new Gson();
-        Cliente cliente = gson.fromJson(json, Cliente.class);
-        if(cliente != null){
-            return ClienteDAO.registrarCliente(cliente);
+        Sucursal sucursal = gson.fromJson(json, Sucursal.class);
+        if(sucursal!=null && !sucursal.getNombre().isEmpty() && sucursal.getDireccion()!=0 && !sucursal.getTelefono().isEmpty() && 
+                sucursal.getLatitud()!=0 && sucursal.getLongitud()!=0 && sucursal.getEncargado()!=0){
+            return SucursalDAO.registrarSucursal(sucursal);
         }else{
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-        
     }
-    
-   
-    @PUT
-    @Path("editar")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Mensaje modificarCliente(String json){
-        
-        Gson gson = new Gson();
-        Cliente cliente= gson.fromJson(json, Cliente.class);
-        if(cliente != null){
-            return ClienteDAO.modificarCliente(cliente);
-        }else{
-            throw  new WebApplicationException(Response.Status.BAD_REQUEST);
-        }
-    }
-    
-    
 }

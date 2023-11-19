@@ -5,6 +5,7 @@
  */
 package ws;
 
+import com.google.gson.Gson;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
@@ -19,7 +20,9 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import modelo.AutenticacionDAO;
+import modelo.pojo.Cliente;
 import modelo.pojo.Mensaje;
+import modelo.pojo.Usuario;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 
@@ -41,35 +44,32 @@ public class AutenticacionWS {
     }
    
    @POST
-   @Path("verificarInicioSesionCliente")
+   @Path("inicioSesionCliente")
    @Produces(MediaType.APPLICATION_JSON)
-   public Mensaje verificarSesionCliente(@FormParam("email") String email,
-                                 @FormParam("password") String password){
-       Mensaje respuesta = null;
-       if(!email.isEmpty() && !password.isEmpty()){
-           respuesta = AutenticacionDAO.verificarSesionMovilCliente(email, password);
+   @Consumes(MediaType.APPLICATION_JSON)
+   public Mensaje inicioSesionCliente(String json){
+       Gson gson = new Gson();
+       Cliente cliente = gson.fromJson(json, Cliente.class);
+       if(cliente!= null && !cliente.getEmail().isEmpty() && !cliente.getPassword().isEmpty() ){
+           return AutenticacionDAO.iniciarSesionCliente(cliente);
        }else{
            throw new WebApplicationException(Response.Status.BAD_REQUEST);
        }
-       
-       return respuesta;
    }
    
    
-   @GET
-   @Path("verificarInicioSesionUsuario")
+   @POST
+   @Path("InicioSesionUsuario")
    @Produces(MediaType.APPLICATION_JSON)
-   public Mensaje verificarSesionUsuario(){
-       Mensaje msj = new Mensaje();
-       
-       SqlSession conexionBD = MyBatisUtil.getSession();
-       if(conexionBD!=null){
-           msj.setMensaje("Si hay conexion");
+   @Consumes(MediaType.APPLICATION_JSON)
+   public Mensaje verificarSesionUsuario(String json){
+       Gson gson= new Gson();
+       Usuario usuario = gson.fromJson(json, Usuario.class);
+       if(usuario!=null){
+           return AutenticacionDAO.iniciarSesionUsuario(usuario);
        }else{
-           msj.setMensaje("Estas pal perro");
+           throw  new WebApplicationException(Response.Status.BAD_REQUEST);
        }
-       
-       return msj;
    }
     
 }

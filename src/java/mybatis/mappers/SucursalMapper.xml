@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sucursal">
+
+    <insert id="registrarSucursal" parameterType="modelo.pojo.Sucursal">
+        INSERT INTO sucursal (nombre, direccion, telefono, latitud, longitud, encargado) 
+        VALUES (#{nombre},#{direccion}, #{telefono}, #{latitud}, #{longitud}, #{encargado})
+    </insert>
+
+    
+
+
+
+</mapper>
