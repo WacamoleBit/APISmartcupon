@@ -59,7 +59,7 @@ public class AutenticacionWS {
    
    
    @POST
-   @Path("InicioSesionUsuario")
+   @Path("inicioSesionUsuario")
    @Produces(MediaType.APPLICATION_JSON)
    @Consumes(MediaType.APPLICATION_JSON)
    public Mensaje verificarSesionUsuario(String json){
@@ -71,5 +71,4 @@ public class AutenticacionWS {
            throw  new WebApplicationException(Response.Status.BAD_REQUEST);
        }
    }
-    
 }

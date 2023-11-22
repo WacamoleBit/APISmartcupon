@@ -26,13 +26,13 @@ public class AutenticacionDAO {
         if(conexionBD != null){
             try {
                 
-                Cliente sesionCliente = conexionBD.selectOne("autenticacion.iniciarSesion", cliente);
+                Cliente sesionCliente = conexionBD.selectOne("autenticacion.iniciarSesionCliente", cliente);
                 
                 if(sesionCliente != null){
                     respuesta.setError(false);
-                    respuesta.setMensaje("Bienvenid(@) "+ sesionCliente.getNombre()+" al sistema de promociones");
+                    respuesta.setMensaje("Bienvenid(@) "+ sesionCliente.getNombre()+" al catálogo de promociones");
                 }else{
-                    respuesta.setMensaje("Número de personal y/o contraseña incorrectos, favor de verificarlos");
+                    respuesta.setMensaje("Correo electrónico y/o contraseña incorrectos, favor de verificarlos");
                 }
             } catch (Exception e) {
                 respuesta.setMensaje("Error: " + e.getMessage());
@@ -54,13 +54,13 @@ public class AutenticacionDAO {
         if(conexionBD!=null){
             try {
                 
-                Usuario sesionUsuario = conexionBD.selectOne("", usuario);
+                Usuario sesionUsuario = conexionBD.selectOne("iniciarSesionUsuario", usuario);
                 
                 if(sesionUsuario!=null){
                     mensaje.setError(false);
                     mensaje.setMensaje("Bienvenid(@) "+ sesionUsuario.getNombre()+" al sistema de promociones");
                 }else{
-                    mensaje.setMensaje("Número de personal y/o contraseña incorrectos, favor de verificarlos");
+                    mensaje.setMensaje("Usuario/Correo y/o contraseña incorrectos, favor de verificarlos");
                 }
                 
             } catch (Exception e) {
