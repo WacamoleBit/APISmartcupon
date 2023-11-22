@@ -32,11 +32,43 @@ public class UsuarioWS {
         Gson gson = new Gson();
         Usuario usuario = gson.fromJson(json, Usuario.class);
 
-        if (usuario != null) {
-            return UsuarioDAO.registrarUsuario(usuario);
-        } else {
+        if (usuario == null) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
+
+        if (usuario.getNombre() == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (usuario.getApellidoMaterno() == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (usuario.getCurp() == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (usuario.getEmail() == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (usuario.getUsername() == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (usuario.getPassword() == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (usuario.getRol() == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (usuario.getRol() == 1 && usuario.getEmpresa() == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        return UsuarioDAO.registrarUsuario(usuario);
     }
-    
+
 }
