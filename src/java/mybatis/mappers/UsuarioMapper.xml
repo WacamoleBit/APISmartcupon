@@ -10,4 +10,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         INSERT INTO usuario (nombre, apellidoPaterno, apellidoMaterno, curp, email, username, password, rol, empresa)
         VALUES (#{nombre}, #{apellidoPaterno}, #{apellidoMaterno}, #{curp}, #{email}, #{username}, #{password}, #{rol}, #{empresa})
     </insert>
+    
+    <update id="editarUsuario" parameterType="modelo.pojo.Usuario">
+        UPDATE usuario 
+        SET nombre = #{nombre}, apellidoPaterno = #{apellidoPaterno}, apellidoMaterno = #{apellidoMaterno}, curp = #{curp}, email = #{email}, username = #{username}, password = #{password}
+        WHERE idUsuario = #{idUsuario}
+    </update>
 </mapper>
