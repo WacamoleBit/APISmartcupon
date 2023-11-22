@@ -45,4 +45,34 @@ public class UsuarioDAO {
         
         return mensaje;
     }
+    
+    public static Mensaje editarUsuario(Usuario usuario) {
+        Mensaje mensaje = new Mensaje();
+        mensaje.setError(true);
+        
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        
+        if(conexionBD != null) {
+            try {
+                int filasAfectadas = conexionBD.update("usuario.editarUsuario", usuario);
+                conexionBD.commit();
+                
+                if(filasAfectadas > 0){    
+                    mensaje.setError(false);
+                    mensaje.setMensaje("La información del usuario se actualizó correctamente");
+                }else{
+                    mensaje.setMensaje("No se pudo actualizar la información del usuario");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                mensaje.setMensaje("Error: La base de datos no pudo actualizar la información del usuario");
+            }finally{
+                conexionBD.close();
+            }
+        } else {
+            mensaje.setMensaje("Error: Por el momento no hay conexion con la base de datos");
+        }
+        
+        return mensaje;
+    }
 }
