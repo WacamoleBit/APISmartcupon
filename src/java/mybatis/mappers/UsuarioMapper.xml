@@ -16,4 +16,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         SET nombre = #{nombre}, apellidoPaterno = #{apellidoPaterno}, apellidoMaterno = #{apellidoMaterno}, curp = #{curp}, email = #{email}, username = #{username}, password = #{password}
         WHERE idUsuario = #{idUsuario}
     </update>
+    
+    <delete id="eliminarUsuario" parameterType="int">
+        DELETE 
+        FROM usuario
+        WHERE idUsuario = #{idUsuario}
+    </delete>
 </mapper>

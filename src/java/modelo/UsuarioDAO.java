@@ -75,4 +75,34 @@ public class UsuarioDAO {
         
         return mensaje;
     }
+    
+    public static Mensaje eliminarUsuario(int idUsuario) {
+        Mensaje mensaje = new Mensaje();
+        mensaje.setError(true);
+        
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        
+        if(conexionBD != null) {
+            try {
+                int filasAfectadas = conexionBD.delete("usuario.eliminarUsuario", idUsuario);
+                conexionBD.commit();
+                
+                if(filasAfectadas > 0){    
+                    mensaje.setError(false);
+                    mensaje.setMensaje("El usuario se eliminó correctamente");
+                }else{
+                    mensaje.setMensaje("No se pudo eliminar el usuario");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                mensaje.setMensaje("Error: La base de datos no pudo eliminar el usuario");
+            }finally{
+                conexionBD.close();
+            }
+        } else {
+            mensaje.setMensaje("Error: Por el momento no hay conexion con la base de datos");
+        }
+        
+        return mensaje;
+    }
 }

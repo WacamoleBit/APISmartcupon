@@ -7,6 +7,7 @@ package ws;
 
 import com.google.gson.Gson;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -86,7 +87,7 @@ public class UsuarioWS {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        if (idUsuario == null || idUsuario <=0 ) {
+        if (idUsuario == null || idUsuario <= 0) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
@@ -121,10 +122,21 @@ public class UsuarioWS {
         if (usuario.getRol() == 1 && usuario.getEmpresa() == null) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-        
+
         usuario.setIdUsuario(idUsuario);
 
         return UsuarioDAO.registrarUsuario(usuario);
+    }
+
+    @DELETE
+    @Path("eliminarUsuario/{idUsuario}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje eliminarUsuario(@PathParam("idUsuario") Integer idUsuario) {
+        if (idUsuario == null || idUsuario <= 0) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        return UsuarioDAO.eliminarUsuario(idUsuario);
     }
 
 }
