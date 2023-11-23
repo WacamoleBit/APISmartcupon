@@ -10,6 +10,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
@@ -71,20 +72,59 @@ public class UsuarioWS {
 
         return UsuarioDAO.registrarUsuario(usuario);
     }
-    
+
     @PUT
-    @Path("editarUsuario")
+    @Path("editarUsuario/{idUsuario}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Mensaje editarUsuario(String json) {
+    public Mensaje editarUsuario(@PathParam("idUsuario") Integer idUsuario,
+            String json) {
         Gson gson = new Gson();
         Usuario usuario = gson.fromJson(json, Usuario.class);
 
-        if (usuario != null) {
-            return UsuarioDAO.editarUsuario(usuario);
-        } else {
+        if (usuario == null) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
+
+        if (idUsuario == null || idUsuario <=0 ) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (usuario.getNombre() == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (usuario.getApellidoMaterno() == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (usuario.getCurp() == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (usuario.getEmail() == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (usuario.getUsername() == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (usuario.getPassword() == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (usuario.getRol() == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (usuario.getRol() == 1 && usuario.getEmpresa() == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        usuario.setIdUsuario(idUsuario);
+
+        return UsuarioDAO.registrarUsuario(usuario);
     }
 
 }
