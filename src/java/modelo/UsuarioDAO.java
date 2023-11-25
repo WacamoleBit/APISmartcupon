@@ -6,6 +6,9 @@
 
 package modelo;
 
+import java.util.ArrayList;
+import java.util.List;
+import modelo.pojo.FiltroBuscarUsuario;
 import modelo.pojo.Mensaje;
 import modelo.pojo.Usuario;
 import mybatis.MyBatisUtil;
@@ -104,5 +107,19 @@ public class UsuarioDAO {
         }
         
         return mensaje;
+    }
+    
+    public static List<Usuario> buscarPorFiltro (FiltroBuscarUsuario cadenaFiltro) {
+        List<Usuario> usuarios = null;
+        
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        
+        if(conexionBD != null) {
+            usuarios = new ArrayList<>();
+            
+            usuarios = conexionBD.selectList("usuario.buscarPorFiltro", cadenaFiltro);
+        }
+        
+        return usuarios;
     }
 }

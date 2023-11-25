@@ -22,4 +22,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         FROM usuario
         WHERE idUsuario = #{idUsuario}
     </delete>
+    
+    <select id="buscarUsuarioPorFiltro" parameterType="modelo.pojo.FiltroBuscarPaciente" resultType="modelo.pojo.Usuario" statementType="CALLABLE">
+        {CALL buscarUsuarioPorFiltro(
+            #{cadenaBusqueda, mode=IN},
+            #{porNombre, mode=IN},
+            #{porUsuario, mode=IN},
+            #{porRol, mode=IN}
+        )}
+    </select>
 </mapper>

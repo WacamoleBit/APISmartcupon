@@ -6,17 +6,21 @@
 package ws;
 
 import com.google.gson.Gson;
+import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import modelo.UsuarioDAO;
+import modelo.pojo.FiltroBuscarUsuario;
 import modelo.pojo.Mensaje;
 import modelo.pojo.Usuario;
 
@@ -137,6 +141,41 @@ public class UsuarioWS {
         }
 
         return UsuarioDAO.eliminarUsuario(idUsuario);
+    }
+
+    @GET
+    @Path("buscarPorFiltro")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Usuario> buscarUsuarioPorFiltro(
+            @QueryParam("cadenaBusqueda") String cadenaBusqueda,
+            @QueryParam("porNombre") Boolean porNombre,
+            @QueryParam("porUsername") Boolean porUsername,
+            @QueryParam("porRol") Boolean porRol) {
+        
+        if (cadenaBusqueda == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        if (porNombre == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        if (porUsername == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        if (porRol == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        FiltroBuscarUsuario cadenaFiltro = new FiltroBuscarUsuario();
+        
+        cadenaFiltro.setCadenaBusqueda(cadenaBusqueda);
+        cadenaFiltro.setPorNombre(porNombre);
+        cadenaFiltro.setPorUsername(porUsername);
+        cadenaFiltro.setPorRol(porRol);
+
+        return UsuarioDAO.buscarPorFiltro(cadenaFiltro);
     }
 
 }
