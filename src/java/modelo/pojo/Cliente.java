@@ -11,7 +11,7 @@ package modelo.pojo;
  */
 public class Cliente {
         
-    private Integer id;
+    private Integer idCliente;
     private String nombre;
     private String apellidoPaterno;
     private String apellidoMaterno;
@@ -24,8 +24,8 @@ public class Cliente {
     public Cliente() {
     }
 
-    public Cliente(Integer id, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String email, Integer direccion, String fechaNacimiento, String password) {
-        this.id = id;
+    public Cliente(Integer idCliente, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String email, Integer direccion, String fechaNacimiento, String password) {
+        this.idCliente = idCliente;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
@@ -36,12 +36,12 @@ public class Cliente {
         this.password = password;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getIdCliente() {
+        return idCliente;
     }
 
     public void setId(Integer id) {
-        this.id = id;
+        this.idCliente = idCliente;
     }
 
     public String getNombre() {

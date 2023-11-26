@@ -53,8 +53,8 @@ public class DireccionWS {
         Gson gson = new Gson();
         Direccion direccion = null;
         Cliente cliente= gson.fromJson(json, Cliente.class);
-        if(cliente != null && cliente.getId() != null && cliente.getId()>0){
-            return direccion = DireccionDAO.obtenerDireccionPorId(cliente.getId());
+        if(cliente != null && cliente.getIdCliente() != null && cliente.getIdCliente()>0){
+            return direccion = DireccionDAO.obtenerDireccionPorId(cliente.getIdCliente());
         }else{
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
@@ -91,10 +91,10 @@ public class DireccionWS {
     }
     
     //Para una empresa
-    
+    //TODO
     
     
     //Para una sucursal
-    
+    //TODO
     
 }
