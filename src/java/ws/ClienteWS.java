@@ -69,6 +69,4 @@ public class ClienteWS {
             throw  new WebApplicationException(Response.Status.BAD_REQUEST);
         }
     }
-    
-    
 }

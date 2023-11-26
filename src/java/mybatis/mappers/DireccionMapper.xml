@@ -10,7 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         FROM cliente cl 
         INNER JOIN direccion d ON cl.direccion = d.idDireccion 
         INNER JOIN ciudad ci ON d.ciudad = ci.idCiudad 
-        INNER JOIN estado es ON ci.estado = es.idEstado WHERE cl.id=#{id}
+        INNER JOIN estado es ON ci.estado = es.idEstado WHERE cl.idCliente=#{idCliente}
     </select>
     
     <insert id="registrarDireccionCliente" parameterType="modelo.pojo.Direccion">
@@ -30,7 +30,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    
     <update id="modificarDireccionCliente" parameterType="modelo.pojo.Direccion">
         UPDATE direccion SET calle=#{calle}, numero=#{numero} 
-        WHERE idDireccion=#{idDireccion}
+        WHERE idDireccion=#{idDireccion} AND tipoDireccion=#{tipoDireccion}
+    </update>
+    
+    <update id="modificarDireccionSucursal" parameterType="modelo.pojo.Direccion">
+        UPDATE direccion SET calle=#{calle}, numero=#{numero}, colonia=#{colonia}, codigoPostal=#{codigoPostal},ciudad=#{ciudad} 
+        WHERE idDireccion=#{idDireccion} AND tipoDireccion=#{tipoDireccion}
     </update>
 </mapper>
 

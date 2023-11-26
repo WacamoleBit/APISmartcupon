@@ -16,41 +16,91 @@ import org.apache.ibatis.session.SqlSession;
  * @author Dell
  */
 public class SucursalDAO {
-    
-    
-    public static Sucursal obtenerSucursalPorDireccion(Direccion direccion){
+
+    public static Sucursal obtenerSucursalPorDireccion(Direccion direccion) {
         //TODO
-        
-        
+
         return null;
     }
+
+    public static Mensaje registrarSucursal(Sucursal sucursal) {
+        Mensaje mensaje = new Mensaje();
+        mensaje.setError(true);
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        if (conexionBD != null) {
+            try {
+                int numeroFilasAfectadas = conexionBD.insert("sucursal.registrarSucursal", sucursal);
+                conexionBD.commit();
+
+                if (numeroFilasAfectadas > 0) {
+                    mensaje.setError(false);
+                    mensaje.setMensaje("Sucursal registrada con éxito");
+                } else {
+                    mensaje.setMensaje("No se pudo registrar la sucursal");
+                }
+
+            } catch (Exception e) {
+                mensaje.setMensaje("Error: " + e.getMessage());
+            }finally{
+                conexionBD.close();
+            }
+        } else {
+            mensaje.setMensaje("Error: Por el momento no hay conexión con la base de datos");
+        }
+
+        return mensaje;
+    }
+
+    public static Mensaje modificarSucursal(Sucursal sucursal) {
+        Mensaje mensaje = new Mensaje();
+        mensaje.setError(true);
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        if (conexionBD != null) {
+            try {
+                int numeroFilasAfectadas = conexionBD.update("sucursal.modificarSucursal", sucursal);
+                conexionBD.commit();
+                if (numeroFilasAfectadas > 0) {
+                    mensaje.setError(false);
+                    mensaje.setMensaje("Sucursal modificada con éxito");
+                } else {
+                    mensaje.setMensaje("Error al modificar la sucursal");
+                }
+
+            } catch (Exception e) {
+
+            } finally {
+                conexionBD.close();
+            }
+        } else {
+            mensaje.setMensaje("Error: Por el momento no hay conexión con la base de datos, favor de intentarlo mas tarde");
+        }
+
+        return mensaje;
+    }
     
-    public static Mensaje registrarSucursal(Sucursal sucursal){
+    public static Mensaje eliminarSucursal(Sucursal sucursal) {
         Mensaje mensaje = new Mensaje();
         mensaje.setError(true);
         SqlSession conexionBD = MyBatisUtil.getSession();
         if(conexionBD != null){
-            
-            int numeroFilasAfectadas = conexionBD.insert("sucursal.registrarSucursal", sucursal);
-            conexionBD.commit();
-            
-            if(numeroFilasAfectadas > 0){
-                mensaje.setError(false);
-                mensaje.setMensaje("Sucursal registrada con éxito");
-            }else{
-                mensaje.setMensaje("No se pudo registrar la sucursal");
+            try {
+                int numeroFilasAfectadas = conexionBD.delete("sucursal.eliminarSucursal", sucursal);
+                conexionBD.commit();
+                if(numeroFilasAfectadas > 0 ){
+                    mensaje.setError(false);
+                    mensaje.setMensaje("Sucursal eliminada con éxito");
+                }else{
+                    mensaje.setMensaje("Error al eliminar la sucursal");
+                }
+            } catch (Exception e) {
+                mensaje.setMensaje("Error: " + e.getMessage());
+            }finally{
+                conexionBD.close();
             }
-            
         }else{
-            mensaje.setMensaje("Error: Por el momento no hay conexión con la base de datos");
+            mensaje.setMensaje("Error: Por el momento no hay conexión con la base de datos, favor de intentarlo mas tarde");
         }
         
-        return null;
-    }
-    
-    public static Mensaje modificarSucursal(){
-        //TODO
-        
-        return null;
+        return mensaje;
     }
 }

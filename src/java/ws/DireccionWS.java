@@ -53,8 +53,8 @@ public class DireccionWS {
         Gson gson = new Gson();
         Direccion direccion = null;
         Cliente cliente= gson.fromJson(json, Cliente.class);
-        if(cliente != null && cliente.getId() != null && cliente.getId()>0){
-            return direccion = DireccionDAO.obtenerDireccionPorId(cliente.getId());
+        if(cliente != null && cliente.getIdCliente() != null && cliente.getIdCliente()>0){
+            return direccion = DireccionDAO.obtenerDireccionPorId(cliente.getIdCliente());
         }else{
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
@@ -72,7 +72,6 @@ public class DireccionWS {
         }else{
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-        
     }
     
     
@@ -91,10 +90,35 @@ public class DireccionWS {
     }
     
     //Para una empresa
-    
+    //TODO
     
     
     //Para una sucursal
+    @POST
+    @Path("registrarDireccionSucursal")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Mensaje registrarDireccionSucursal(String json){
+        Gson gson = new Gson();
+        Direccion direccion = gson.fromJson(json, Direccion.class);
+        if(direccion!=null){
+            return DireccionDAO.ingresarDireccionSucursal(direccion);
+        }else{
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+    }
     
-    
+    @PUT
+    @Path("editarDireccionSucursal")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Mensaje modificarDireccionSucursal(String json){
+        Gson gson = new Gson();
+        Direccion direccion = gson.fromJson(json, Direccion.class);
+        if(direccion!= null){
+            return DireccionDAO.modificarDireccionSucursal(direccion);
+        }else{
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+    }
 }

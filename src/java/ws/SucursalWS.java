@@ -9,11 +9,11 @@ import com.google.gson.Gson;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.Produces;
-import javax.ws.rs.GET;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.Produces;;
 import javax.ws.rs.POST;
-import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -45,11 +45,41 @@ public class SucursalWS {
     public Mensaje registrarSucursal(String json){
         Gson gson = new Gson();
         Sucursal sucursal = gson.fromJson(json, Sucursal.class);
-        if(sucursal!=null && !sucursal.getNombre().isEmpty() && sucursal.getDireccion()!=0 && !sucursal.getTelefono().isEmpty() && 
-                sucursal.getLatitud()!=0 && sucursal.getLongitud()!=0 && sucursal.getEncargado()!=0){
+        if(sucursal!=null ){
             return SucursalDAO.registrarSucursal(sucursal);
         }else{
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
     }
+    
+    @PUT
+    @Path("editar")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Mensaje modificarSucursal(String json){
+        Gson gson = new Gson();
+        Sucursal sucursal = gson.fromJson(json, Sucursal.class);
+        if(sucursal!=null){
+            return SucursalDAO.modificarSucursal(sucursal);
+        }else{
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+    }
+    
+    
+    //Servicio de eliminar queda pendiente dado que hay que verificar que no tenga ninguna promocion asociada para la eliminacion
+    @DELETE
+    @Path("eliminar")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Mensaje eliminarSucursal(String json){
+        Gson gson = new Gson();
+        Sucursal sucursal = gson.fromJson(json, Sucursal.class);
+        if(sucursal != null){
+            return SucursalDAO.eliminarSucursal(sucursal);
+        }else{
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+    }
+    
 }
