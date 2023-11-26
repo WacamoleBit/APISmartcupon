@@ -32,5 +32,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         UPDATE direccion SET calle=#{calle}, numero=#{numero} 
         WHERE idDireccion=#{idDireccion} AND tipoDireccion=#{tipoDireccion}
     </update>
+    
+    <update id="modificarDireccionSucursal" parameterType="modelo.pojo.Direccion">
+        UPDATE direccion SET calle=#{calle}, numero=#{numero}, colonia=#{colonia}, codigoPostal=#{codigoPostal},ciudad=#{ciudad} 
+        WHERE idDireccion=#{idDireccion} AND tipoDireccion=#{tipoDireccion}
+    </update>
 </mapper>
 

@@ -72,7 +72,6 @@ public class DireccionWS {
         }else{
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-        
     }
     
     
@@ -95,6 +94,31 @@ public class DireccionWS {
     
     
     //Para una sucursal
-    //TODO
+    @POST
+    @Path("registrarDireccionSucursal")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Mensaje registrarDireccionSucursal(String json){
+        Gson gson = new Gson();
+        Direccion direccion = gson.fromJson(json, Direccion.class);
+        if(direccion!=null){
+            return DireccionDAO.ingresarDireccionSucursal(direccion);
+        }else{
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+    }
     
+    @PUT
+    @Path("editarDireccionSucursal")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Mensaje modificarDireccionSucursal(String json){
+        Gson gson = new Gson();
+        Direccion direccion = gson.fromJson(json, Direccion.class);
+        if(direccion!= null){
+            return DireccionDAO.modificarDireccionSucursal(direccion);
+        }else{
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+    }
 }

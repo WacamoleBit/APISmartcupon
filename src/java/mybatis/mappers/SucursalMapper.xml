@@ -5,13 +5,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="sucursal">
 
-    <insert id="registrarSucursal" parameterType="modelo.pojo.Sucursal">
-        INSERT INTO sucursal (nombre, direccion, telefono, latitud, longitud, encargado) 
-        VALUES (#{nombre},#{direccion}, #{telefono}, #{latitud}, #{longitud}, #{encargado})
-    </insert>
-
     
-
+    <insert id="registrarSucursal" parameterType="modelo.pojo.Sucursal">
+        INSERT INTO sucursal (nombre, telefono, latitud, longitud) 
+        VALUES (#{nombre}, #{telefono}, #{latitud}, #{longitud})
+    </insert>
+    
+    <insert id="registrarPersonaSucursal" parameterType="modelo.pojo.Persona">
+        INSERT INTO persona (nombre, apellidoPaterno, apellidoMaterno, tipoPersona) 
+        VALUES (#{nombre}, #{apellidoPaterno}, #{apellidoMaterno}, #{tipoPersona})
+    </insert>
+    
+    <update id="modificarSucursal" parameterType="modelo.pojo.Sucursal">
+        UPDATE sucursal SET nombre=#{nombre}, direccion=#{direccion}, telefono=#{telefono}, latitud=#{latitud}, longitud=#{longitud}, 
+        encargado=#{encargado} 
+        WHERE idSucursal=#{idSucursal}
+    </update>
+ 
+    <update id="modificarEncargadoSucursal" parameterType="modelo.pojo.Persona">
+        UPDATE persona SET nombre=#{nombre}, apellidoPaterno=#{apellidoPaterno},apellidoMaterno=#{apellidoMaterno} 
+        WHERE idPersona = #{idPersona} 
+    </update>
+    
+    
+    <delete id="eliminarSucursal" parameterType="modelo.pojo.Sucursal">
+        DELETE FROM sucursal WHERE idSucursal = #{idSucursal}
+    </delete>
 
 
 </mapper>
