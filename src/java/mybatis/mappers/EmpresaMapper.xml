@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="empresa">
+
+    
+    <insert id="registrarEmpresa" parameterType="modelo.pojo.Empresa">
+        INSERT INTO empresa (nombre, nombreComercial, logo, representante, email, direccion, telefono, paginaWeb, rfc, estatus) 
+        VALUES (#{nombre}, #{nombreComercial}, #{logo}, #{representante}, #{email}, #{direccion}, #{telefono}, #{paginaWeb}, #{rfc}, #{estatus})
+    </insert>
+    
+    <update id="editarEmpresa" parameterType="modelo.pojo.Empresa">
+        UPDATE empresa SET nombre=#{nombre}, nombreComercial=#{nombreComercial}, logo=#{logo}, representante=#{representante}, email=#{email}, direccion=#{direccion}, telefono=#{telefono}, paginaWeb=#{paginaWeb}, rfc=#{rfc}, estatus=#{estatus}
+        WHERE idEmpresa=#{idEmpresa}
+    </update>
+    
+    <delete id="eliminarEmpresa" parameterType="modelo.pojo.Empresa">
+        DELETE FROM empresa WHERE idEmpresa = #{idEmpresa}
+    </delete>
+
+
+</mapper>
