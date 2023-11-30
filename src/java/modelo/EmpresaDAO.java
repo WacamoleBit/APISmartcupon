@@ -34,7 +34,7 @@ public class EmpresaDAO {
                     mensaje.setMensaje("Error: No se pudo registrar la empresa, por favor intenta de nuevo.");
                 }
             }catch(Exception e){
-                mensaje.setMensaje("Error" + e.getMessage());
+                mensaje.setMensaje("Error: " + e.getMessage());
             }finally{
                 conexionDB.close();
             }
