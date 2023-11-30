@@ -16,6 +16,8 @@ import org.apache.ibatis.session.SqlSession;
  */
 public class EmpresaDAO {
     
+    //BUSCAR EMPRESA POR NOMBRE, RFC O NOMBRE DEL REPRESENTANTE
+    
     public static Mensaje registrarEmpresa(Empresa empresa){
         Mensaje mensaje = new Mensaje();
         mensaje.setError(true);
