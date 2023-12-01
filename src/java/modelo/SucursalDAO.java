@@ -12,7 +12,7 @@ import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 
 /**
- *
+ *ha
  * @author Dell
  */
 public class SucursalDAO {
@@ -22,7 +22,7 @@ public class SucursalDAO {
 
         return null;
     }
-
+    
     public static Mensaje registrarSucursal(Sucursal sucursal) {
         Mensaje mensaje = new Mensaje();
         mensaje.setError(true);
