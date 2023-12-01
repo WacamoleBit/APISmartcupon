@@ -117,7 +117,7 @@ public class UsuarioDAO {
         if(conexionBD != null) {
             usuarios = new ArrayList<>();
             
-            usuarios = conexionBD.selectList("usuario.buscarPorFiltro", cadenaFiltro);
+            usuarios = conexionBD.selectList("usuario.buscarUsuarioPorFiltro", cadenaFiltro);
         }
         
         return usuarios;

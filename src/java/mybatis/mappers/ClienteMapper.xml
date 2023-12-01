@@ -17,11 +17,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE idCliente = #{idCliente}
     </select>
     
-    <insert id="registrarCliente" parameterType="modelo.pojo.Cliente" >
-        
-        INSERT INTO cliente (nombre, apellidoPaterno, apellidoMaterno, telefono, email, fechaNacimiento, password) 
-        VALUES (#{nombre}, #{apellidoPaterno}, #{apellidoMaterno}, #{telefono}, #{email}, #{fechaNacimiento}, #{password})
-                
+    <insert id="registrarCliente" parameterType="modelo.pojo.DatosRegistroCliente" statementType="CALLABLE" >
+        {CALL registrarCliente(
+            #{cliente.nombre, mode=IN, jdbcType=VARCHAR},
+            #{cliente.apellidoPaterno, mode=IN, jdbcType=VARCHAR},
+            #{cliente.apellidoMaterno, mode=IN, jdbcType=VARCHAR},
+            #{cliente.telefono, mode=IN, jdbcType=VARCHAR},
+            #{cliente.email, mode=IN, jdbcType=VARCHAR},
+            #{cliente.fechaNacimiento, mode=IN, jdbcType=VARCHAR},
+            #{cliente.password, mode=IN, jdbcType=VARCHAR},
+            #{direccion.calle, mode=IN, jdbcType=VARCHAR},
+            #{direccion.numero, mode=IN, jdbcType=INTEGER},
+            #{direccion.tipoDireccion, mode=IN, jdbcType=INTEGER},
+            #{filasAfectadas, mode=INOUT, jdbcType=INTEGER}
+        )}
     </insert>
     
     

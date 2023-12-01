@@ -34,9 +34,9 @@ public class SucursalDAO {
 
                 if (numeroFilasAfectadas > 0) {
                     mensaje.setError(false);
-                    mensaje.setMensaje("Sucursal registrada con éxito");
+                    mensaje.setMensaje("Sucursal registrada con éxito.");
                 } else {
-                    mensaje.setMensaje("No se pudo registrar la sucursal");
+                    mensaje.setMensaje("No se pudo registrar la sucursal.");
                 }
 
             } catch (Exception e) {

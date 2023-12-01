@@ -20,6 +20,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import modelo.ClienteDAO;
 import modelo.pojo.Cliente;
+import modelo.pojo.DatosRegistroCliente;
+import modelo.pojo.Direccion;
 import modelo.pojo.Mensaje;
 
 /**
@@ -40,33 +42,85 @@ public class ClienteWS {
     }
 
     @POST
-    @Path("registrar")
+    @Path("registrarCliente")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Mensaje registrarCliente(String json){
+    public Mensaje registrarCliente(String json) {
         Gson gson = new Gson();
-        Cliente cliente = gson.fromJson(json, Cliente.class);
-        if(cliente != null){
-            return ClienteDAO.registrarCliente(cliente);
-        }else{
+        //Cliente cliente = gson.fromJson(json, Cliente.class);
+        DatosRegistroCliente datos = gson.fromJson(json, DatosRegistroCliente.class);
+        Cliente cliente = datos.getCliente();
+        Direccion direccion = datos.getDireccion();
+
+        if (cliente == null) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-        
+
+        if (cliente.getNombre() == null || cliente.getNombre().trim().isEmpty()) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (cliente.getApellidoPaterno() == null || cliente.getApellidoPaterno().trim().isEmpty()) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (cliente.getApellidoMaterno() == null || cliente.getApellidoMaterno().trim().isEmpty()) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (cliente.getTelefono() == null || cliente.getTelefono().trim().isEmpty()) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (cliente.getEmail() == null || cliente.getEmail().trim().isEmpty()) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (cliente.getFechaNacimiento() == null || cliente.getFechaNacimiento().trim().isEmpty()) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (cliente.getPassword() == null || cliente.getPassword().trim().isEmpty()) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (direccion == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (direccion.getCalle() == null || direccion.getCalle().trim().isEmpty()) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (direccion.getNumero() == null || direccion.getNumero() < 1) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (direccion.getTipoDireccion() == null || direccion.getTipoDireccion() != 4) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        direccion.setColonia(null);
+        direccion.setCodigoPostal(null);
+        direccion.setCiudad(null);
+        direccion.setEstado(null);
+
+        return ClienteDAO.registrarCliente(datos);
+
     }
-    
-   
+
     @PUT
     @Path("editar")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Mensaje modificarCliente(String json){
-        
+    public Mensaje modificarCliente(String json) {
+
         Gson gson = new Gson();
-        Cliente cliente= gson.fromJson(json, Cliente.class);
-        if(cliente != null){
+        Cliente cliente = gson.fromJson(json, Cliente.class);
+        if (cliente != null) {
             return ClienteDAO.modificarCliente(cliente);
-        }else{
-            throw  new WebApplicationException(Response.Status.BAD_REQUEST);
+        } else {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
     }
 }

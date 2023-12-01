@@ -27,7 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         {CALL buscarUsuarioPorFiltro(
             #{cadenaBusqueda, mode=IN},
             #{porNombre, mode=IN},
-            #{porUsuario, mode=IN},
+            #{porUsername, mode=IN},
             #{porRol, mode=IN}
         )}
     </select>
