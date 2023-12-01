@@ -8,6 +8,7 @@ package modelo;
 import java.util.HashMap;
 import modelo.pojo.Cliente;
 import modelo.pojo.Mensaje;
+import modelo.pojo.MensajeUsuario;
 import modelo.pojo.Usuario;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
@@ -47,8 +48,8 @@ public class AutenticacionDAO {
         return respuesta;
     }
     
-    public static Mensaje iniciarSesionUsuario(Usuario usuario){
-        Mensaje mensaje = new Mensaje();
+    public static MensajeUsuario iniciarSesionUsuario(Usuario usuario){
+        MensajeUsuario mensaje = new MensajeUsuario();
         mensaje.setError(true);
         SqlSession conexionBD = MyBatisUtil.getSession();
         if(conexionBD!=null){
@@ -58,6 +59,7 @@ public class AutenticacionDAO {
                 
                 if(sesionUsuario!=null){
                     mensaje.setError(false);
+                    mensaje.setUsuario(sesionUsuario);
                     mensaje.setMensaje("Bienvenid(@) "+ sesionUsuario.getNombre()+" al sistema de promociones");
                 }else{
                     mensaje.setMensaje("Usuario/Correo y/o contraseña incorrectos, favor de verificarlos");

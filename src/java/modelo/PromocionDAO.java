@@ -23,7 +23,7 @@ public class PromocionDAO {
         SqlSession conexionDB = MyBatisUtil.getSession();
         if(conexionDB != null){
             try{
-                int numeroFilasAfectadas  = conexionDB.insert("promocion.registrarPomocion", promocion);
+                int numeroFilasAfectadas  = conexionDB.insert("promocion.registrarPromocion", promocion);
                 conexionDB.commit();
                 if(numeroFilasAfectadas > 0){
                     mensaje.setError(false);
