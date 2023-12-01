@@ -22,6 +22,7 @@ import javax.ws.rs.core.Response;
 import modelo.AutenticacionDAO;
 import modelo.pojo.Cliente;
 import modelo.pojo.Mensaje;
+import modelo.pojo.MensajeCliente;
 import modelo.pojo.Usuario;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
@@ -47,7 +48,7 @@ public class AutenticacionWS {
    @Path("inicioSesionCliente")
    @Produces(MediaType.APPLICATION_JSON)
    @Consumes(MediaType.APPLICATION_JSON)
-   public Mensaje inicioSesionCliente(String json){
+   public MensajeCliente inicioSesionCliente(String json){
        Gson gson = new Gson();
        Cliente cliente = gson.fromJson(json, Cliente.class);
        if(cliente!= null && !cliente.getEmail().isEmpty() && !cliente.getPassword().isEmpty() ){

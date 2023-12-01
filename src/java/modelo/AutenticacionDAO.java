@@ -8,6 +8,7 @@ package modelo;
 import java.util.HashMap;
 import modelo.pojo.Cliente;
 import modelo.pojo.Mensaje;
+import modelo.pojo.MensajeCliente;
 import modelo.pojo.Usuario;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
@@ -18,8 +19,8 @@ import org.apache.ibatis.session.SqlSession;
  */
 public class AutenticacionDAO {
     
-    public static Mensaje iniciarSesionCliente(Cliente cliente){
-        Mensaje respuesta = new Mensaje();
+    public static MensajeCliente iniciarSesionCliente(Cliente cliente){
+        MensajeCliente respuesta = new MensajeCliente();
         respuesta.setError(true);
         
         SqlSession conexionBD = MyBatisUtil.getSession();
@@ -31,6 +32,7 @@ public class AutenticacionDAO {
                 if(sesionCliente != null){
                     respuesta.setError(false);
                     respuesta.setMensaje("Bienvenid(@) "+ sesionCliente.getNombre()+" al catálogo de promociones");
+                    respuesta.setCliente(sesionCliente);
                 }else{
                     respuesta.setMensaje("Correo electrónico y/o contraseña incorrectos, favor de verificarlos");
                 }

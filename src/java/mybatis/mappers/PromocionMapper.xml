@@ -5,10 +5,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="promocion">
     
-    <insert id="registrarPomocion" parameterType="modelo.pojo.Pomocion">
+    <insert id="registrarPromocion" parameterType="modelo.pojo.Promocion">
         INSERT INTO promocion (nombre, descripcion, imagen, fechaInicio, fechaTermino, restricciones, tipoPromocion, porcentajeDescuento, categoria, cuponesDisponibles, codigoPromocion, estatus, empresa) 
         VALUES (#{nombre}, #{descripcion}, #{imagen}, #{fechaInicio}, #{fechaTermino}, #{restricciones}, #{tipoPromocion}, #{porcentajeDescuento}, #{categoria}, #{cuponesDisponibles}, #{codigoPromocion}, #{estatus}, #{empresa}) 
     </insert>
-
 
 </mapper>
