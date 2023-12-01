@@ -29,4 +29,5 @@ VALUES ("Encargado"),
 INSERT INTO tipoDireccion (nombre)
 VALUES ("Empresa"),
 	   ("Sucursal"),
-       ("Usuario");
+       ("Usuario").
+       ("Cliente");

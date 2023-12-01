@@ -7,6 +7,7 @@ package modelo;
 
 import java.util.HashMap;
 import modelo.pojo.Cliente;
+import modelo.pojo.DatosRegistroCliente;
 import modelo.pojo.Mensaje;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
@@ -17,7 +18,7 @@ import org.apache.ibatis.session.SqlSession;
  */
 public class ClienteDAO {
 
-    public static Mensaje registrarCliente(Cliente cliente) {
+    public static Mensaje registrarCliente(DatosRegistroCliente datos) {
         Mensaje mensaje = new Mensaje();
         mensaje.setError(true);
 
@@ -25,10 +26,11 @@ public class ClienteDAO {
 
         if (conexionBD != null) {
             try {
-                int numeroFilasAfectadas = conexionBD.insert("cliente.registrarCliente", cliente);
+                //Usa procedimiento almacenado
+                conexionBD.insert("cliente.registrarCliente", datos);
                 conexionBD.commit();
 
-                if (numeroFilasAfectadas > 0) {
+                if (datos.getFilasAfectadas() > 0) {
                     mensaje.setError(false);
                     mensaje.setMensaje("Cliente registrado con exito");
                 } else {

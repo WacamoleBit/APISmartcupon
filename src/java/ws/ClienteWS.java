@@ -20,6 +20,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import modelo.ClienteDAO;
 import modelo.pojo.Cliente;
+import modelo.pojo.DatosRegistroCliente;
+import modelo.pojo.Direccion;
 import modelo.pojo.Mensaje;
 
 /**
@@ -40,12 +42,15 @@ public class ClienteWS {
     }
 
     @POST
-    @Path("registrar")
+    @Path("registrarCliente")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Mensaje registrarCliente(String json) {
         Gson gson = new Gson();
-        Cliente cliente = gson.fromJson(json, Cliente.class);
+        //Cliente cliente = gson.fromJson(json, Cliente.class);
+        DatosRegistroCliente datos = gson.fromJson(json, DatosRegistroCliente.class);
+        Cliente cliente = datos.getCliente();
+        Direccion direccion = datos.getDireccion();
 
         if (cliente == null) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
@@ -71,10 +76,6 @@ public class ClienteWS {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        if (cliente.getDireccion() == null || cliente.getDireccion() < 1) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        }
-
         if (cliente.getFechaNacimiento() == null || cliente.getFechaNacimiento().trim().isEmpty()) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
@@ -83,7 +84,28 @@ public class ClienteWS {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        return ClienteDAO.registrarCliente(cliente);
+        if (direccion == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (direccion.getCalle() == null || direccion.getCalle().trim().isEmpty()) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (direccion.getNumero() == null || direccion.getNumero() < 1) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (direccion.getTipoDireccion() == null || direccion.getTipoDireccion() != 4) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        direccion.setColonia(null);
+        direccion.setCodigoPostal(null);
+        direccion.setCiudad(null);
+        direccion.setEstado(null);
+
+        return ClienteDAO.registrarCliente(datos);
 
     }
 
