@@ -23,9 +23,8 @@ import modelo.AutenticacionDAO;
 import modelo.pojo.Cliente;
 import modelo.pojo.Mensaje;
 import modelo.pojo.MensajeUsuario;
+import modelo.pojo.MensajeCliente;
 import modelo.pojo.Usuario;
-import mybatis.MyBatisUtil;
-import org.apache.ibatis.session.SqlSession;
 
 /**
  * REST Web Service
@@ -43,33 +42,32 @@ public class AutenticacionWS {
      */
     public AutenticacionWS() {
     }
-   
-   @POST
-   @Path("inicioSesionCliente")
-   @Produces(MediaType.APPLICATION_JSON)
-   @Consumes(MediaType.APPLICATION_JSON)
-   public Mensaje inicioSesionCliente(String json){
-       Gson gson = new Gson();
-       Cliente cliente = gson.fromJson(json, Cliente.class);
-       if(cliente!= null && !cliente.getEmail().isEmpty() && !cliente.getPassword().isEmpty() ){
-           return AutenticacionDAO.iniciarSesionCliente(cliente);
-       }else{
-           throw new WebApplicationException(Response.Status.BAD_REQUEST);
-       }
-   }
-   
-   
-   @POST
-   @Path("inicioSesionUsuario")
-   @Produces(MediaType.APPLICATION_JSON)
-   @Consumes(MediaType.APPLICATION_JSON)
-   public MensajeUsuario verificarSesionUsuario(String json){
-       Gson gson= new Gson();
-       Usuario usuario = gson.fromJson(json, Usuario.class);
-       if(usuario!=null){
-           return AutenticacionDAO.iniciarSesionUsuario(usuario);
-       }else{
-           throw  new WebApplicationException(Response.Status.BAD_REQUEST);
-       }
-   }
+
+    @POST
+    @Path("inicioSesionCliente")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public MensajeCliente inicioSesionCliente(String json) {
+        Gson gson = new Gson();
+        Cliente cliente = gson.fromJson(json, Cliente.class);
+        if (cliente != null && !cliente.getEmail().isEmpty() && !cliente.getPassword().isEmpty()) {
+            return AutenticacionDAO.iniciarSesionCliente(cliente);
+        } else {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+    }
+
+    @POST
+    @Path("inicioSesionUsuario")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public MensajeUsuario verificarSesionUsuario(String json) {
+        Gson gson = new Gson();
+        Usuario usuario = gson.fromJson(json, Usuario.class);
+        if (usuario != null) {
+            return AutenticacionDAO.iniciarSesionUsuario(usuario);
+        } else {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+    }
 }

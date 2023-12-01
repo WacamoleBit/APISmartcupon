@@ -10,5 +10,4 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         VALUES (#{nombre}, #{descripcion}, #{imagen}, #{fechaInicio}, #{fechaTermino}, #{restricciones}, #{tipoPromocion}, #{porcentajeDescuento}, #{categoria}, #{cuponesDisponibles}, #{codigoPromocion}, #{estatus}, #{empresa}) 
     </insert>
 
-
 </mapper>
