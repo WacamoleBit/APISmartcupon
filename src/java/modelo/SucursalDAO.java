@@ -5,6 +5,7 @@
  */
 package modelo;
 
+import modelo.pojo.DatosRegistroSucursal;
 import modelo.pojo.Direccion;
 import modelo.pojo.Mensaje;
 import modelo.pojo.Sucursal;
@@ -23,16 +24,16 @@ public class SucursalDAO {
         return null;
     }
     
-    public static Mensaje registrarSucursal(Sucursal sucursal) {
+    public static Mensaje registrarSucursal(DatosRegistroSucursal datos) {
         Mensaje mensaje = new Mensaje();
         mensaje.setError(true);
         SqlSession conexionBD = MyBatisUtil.getSession();
         if (conexionBD != null) {
             try {
-                int numeroFilasAfectadas = conexionBD.insert("sucursal.registrarSucursal", sucursal);
+                conexionBD.insert("sucursal.registrarSucursal", datos);
                 conexionBD.commit();
 
-                if (numeroFilasAfectadas > 0) {
+                if (datos.getFilasAfectadas() > 0) {
                     mensaje.setError(false);
                     mensaje.setMensaje("Sucursal registrada con éxito.");
                 } else {

@@ -14,15 +14,17 @@ public class Persona {
     private String nombre;
     private String apellidoPaterno;
     private String apellidoMaterno;
-
+    private Integer tipoPersona;
+    
     public Persona() {
     }
 
-    public Persona(Integer idPersona, String nombre, String apellidoPaterno, String apellidoMaterno) {
+    public Persona(Integer idPersona, String nombre, String apellidoPaterno, String apellidoMaterno, Integer tipoPersona) {
         this.idPersona = idPersona;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
+        this.tipoPersona = tipoPersona;
     }
 
     public Integer getIdPersona() {
@@ -56,6 +58,14 @@ public class Persona {
     public void setApellidoMaterno(String apellidoMaterno) {
         this.apellidoMaterno = apellidoMaterno;
     }
-    
+
+    public Integer getTipoPersona() {
+        return tipoPersona;
+    }
+
+    public void setTipoPersona(Integer tipoPersona) {
+        this.tipoPersona = tipoPersona;
+    }
+
     
 }

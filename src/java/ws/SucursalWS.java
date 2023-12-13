@@ -18,7 +18,10 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import modelo.SucursalDAO;
+import modelo.pojo.DatosRegistroSucursal;
+import modelo.pojo.Direccion;
 import modelo.pojo.Mensaje;
+import modelo.pojo.Persona;
 import modelo.pojo.Sucursal;
 
 /**
@@ -39,17 +42,64 @@ public class SucursalWS {
     }
 
     @POST
-    @Path("registrar")
+    @Path("registrarSucursal")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Mensaje registrarSucursal(String json){
         Gson gson = new Gson();
-        Sucursal sucursal = gson.fromJson(json, Sucursal.class);
-        if(sucursal!=null ){
-            return SucursalDAO.registrarSucursal(sucursal);
-        }else{
+        DatosRegistroSucursal datos = gson.fromJson(json, DatosRegistroSucursal.class);
+        Sucursal sucursal = datos.getSucursal();
+        Direccion direccion = datos.getDireccion();
+        Persona persona = datos.getPersona();
+        if (datos == null) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
+        /*
+        if (sucursal.getNombre() == null || sucursal.getNombre().trim().isEmpty()) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (sucursal.getTelefono() == null || sucursal.getTelefono().trim().isEmpty()) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if(sucursal.getLatitud() == null ){
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        if(sucursal.getLongitud() == null){
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (direccion == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (direccion.getCalle() == null || direccion.getCalle().trim().isEmpty()) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (direccion.getNumero() == null || direccion.getNumero() < 1) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        //Falta validar que lo que manda eson numeros
+        if(direccion.getCodigoPostal() == null || direccion.getCodigoPostal().trim().isEmpty() || (direccion.getCodigoPostal().length()<5 || direccion.getCodigoPostal().length()>5)){
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if(direccion.getColonia() == null || direccion.getColonia().trim().isEmpty()){
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        if (direccion.getCiudad() == null || direccion.getCiudad()<1) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        if (direccion.getTipoDireccion() == null || direccion.getTipoDireccion() != 2) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        */
+        return SucursalDAO.registrarSucursal(datos);
     }
     
     @PUT

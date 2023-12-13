@@ -6,9 +6,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="sucursal">
 
     
-    <insert id="registrarSucursal" parameterType="modelo.pojo.Sucursal">
-        INSERT INTO sucursal (nombre, telefono, latitud, longitud) 
-        VALUES (#{nombre}, #{telefono}, #{latitud}, #{longitud})
+    <insert id="registrarSucursal" parameterType="modelo.pojo.DatosRegistroSucursal" statementType="CALLABLE">
+           {CALL registrarSucursal(
+            #{sucursal.nombre, mode=IN, jdbcType=VARCHAR},
+            #{direccion.calle, mode=IN, jdbcType=VARCHAR},
+            #{direccion.numero, mode=IN, jdbcType=INTEGER},
+            #{direccion.codigoPostal, mode=IN, jdbcType=VARCHAR},
+            #{direccion.colonia, mode=IN, jdbcType=VARCHAR},
+            #{direccion.ciudad, mode=IN, jdbcType=INTEGER},
+            #{direccion.tipoDireccion, mode=IN, jdbcType=INTEGER},
+            #{sucursal.telefono, mode=IN, jdbcType=VARCHAR},
+            #{sucursal.latitud, mode=IN, jdbcType=DOUBLE},
+            #{sucursal.longitud, mode=IN, jdbcType=DOUBLE},
+            #{persona.nombre, mode=IN, jdbcType=VARCHAR},
+            #{persona.apellidoPaterno, mode=IN, jdbcType=VARCHAR},
+            #{persona.apellidoMaterno, mode=IN, jdbcType=VARCHAR},
+            #{persona.tipoPersona, mode=IN, jdbcType=INTEGER},
+            #{filasAfectadas, mode=INOUT, jdbcType=INTEGER}
+    )}
     </insert>
     
     <insert id="registrarPersonaSucursal" parameterType="modelo.pojo.Persona">
@@ -27,10 +42,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE idPersona = #{idPersona} 
     </update>
     
-    
     <delete id="eliminarSucursal" parameterType="modelo.pojo.Sucursal">
         DELETE FROM sucursal WHERE idSucursal = #{idSucursal}
     </delete>
-
 
 </mapper>

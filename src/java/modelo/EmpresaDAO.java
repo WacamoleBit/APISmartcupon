@@ -5,6 +5,7 @@
  */
 package modelo;
 
+import modelo.pojo.DatosRegistroEmpresa;
 import modelo.pojo.Empresa;
 import modelo.pojo.Mensaje;
 import mybatis.MyBatisUtil;
@@ -18,16 +19,16 @@ public class EmpresaDAO {
     
     //BUSCAR EMPRESA POR NOMBRE, RFC O NOMBRE DEL REPRESENTANTE
     
-    public static Mensaje registrarEmpresa(Empresa empresa){
+    public static Mensaje registrarEmpresa(DatosRegistroEmpresa datos){
         Mensaje mensaje = new Mensaje();
         mensaje.setError(true);
         SqlSession conexionDB = MyBatisUtil.getSession();
         if (conexionDB != null){
             try{
-                int numeroFilasAfectadas = conexionDB.insert("empresa.resgistrarEmpresa", empresa);
+                conexionDB.insert("empresa.registrarEmpresa", datos);
                 conexionDB.commit();
                 
-                if(numeroFilasAfectadas > 0){
+                if(datos.getFilasAfectadas() > 0){
                     mensaje.setError(false);
                     mensaje.setMensaje("Empresa registrada con éxito.");
                 }else{
