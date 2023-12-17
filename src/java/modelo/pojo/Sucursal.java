@@ -17,8 +17,9 @@ public class Sucursal {
     private Double latitud;
     private Double longitud;
     private Integer encargado;
+    private Integer empresa;
 
-    public Sucursal(Integer idSucursal, String nombre, Integer direccion, String telefono, Double latitud, Double longitud, Integer encargado) {
+    public Sucursal(Integer idSucursal, String nombre, Integer direccion, String telefono, Double latitud, Double longitud, Integer encargado, Integer empresa) {
         this.idSucursal = idSucursal;
         this.nombre = nombre;
         this.direccion = direccion;
@@ -26,7 +27,17 @@ public class Sucursal {
         this.latitud = latitud;
         this.longitud = longitud;
         this.encargado = encargado;
+        this.empresa = empresa;
     }
+
+    public Integer getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Integer empresa) {
+        this.empresa = empresa;
+    }
+
 
     public Sucursal() {
     }

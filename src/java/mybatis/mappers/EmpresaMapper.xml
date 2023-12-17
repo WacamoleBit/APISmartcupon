@@ -12,23 +12,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{empresa.nombreComercial, mode=IN, jdbcType=VARCHAR},
             #{empresa.logo, mode=IN, jdbcType=BLOB},
             #{empresa.email, mode=IN, jdbcType=VARCHAR},
-        
+            #{empresa.telefono, mode=IN, jdbcType=VARCHAR},
+            #{empresa.paginaWeb, mode=IN, jdbcType=VARCHAR},
+            #{empresa.rfc, mode=IN, jdbcType=VARCHAR},
+            #{empresa.estatus, mode=IN, jdbcType=INTEGER},
+      
             #{persona.nombre, mode=IN, jdbcType=VARCHAR},
             #{persona.apellidoPaterno, mode=IN, jdbcType=VARCHAR},
             #{persona.apellidoMaterno, mode=IN, jdbcType=VARCHAR},
-            #{persona.tipoPersona, mode=IN, jdbcType=INTEGER},
             
             #{direccion.calle, mode=IN, jdbcType=VARCHAR},
             #{direccion.numero, mode=IN, jdbcType=INTEGER},
             #{direccion.codigoPostal, mode=IN, jdbcType=VARCHAR},
             #{direccion.ciudad, mode=IN, jdbcType=INTEGER},
-            #{direccion.tipoDireccion, mode=IN, jdbcType=INTEGER},
         
-            #{empresa.telefono, mode=IN, jdbcType=VARCHAR},
-            #{empresa.paginaWeb, mode=IN, jdbcType=VARCHAR},
-            #{empresa.rfc, mode=IN, jdbcType=VARCHAR},
-            #{empresa.estatus, mode=IN, jdbcType=INTEGER},
-        
+            
             #{filasAfectadas, mode=INOUT, jdbcType=INTEGER}
     )}
 

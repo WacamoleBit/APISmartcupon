@@ -9,41 +9,48 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="registrarSucursal" parameterType="modelo.pojo.DatosRegistroSucursal" statementType="CALLABLE">
            {CALL registrarSucursal(
             #{sucursal.nombre, mode=IN, jdbcType=VARCHAR},
+            #{sucursal.telefono, mode=IN, jdbcType=VARCHAR},
+            #{sucursal.latitud, mode=IN, jdbcType=DOUBLE},
+            #{sucursal.longitud, mode=IN, jdbcType=DOUBLE},
+            #{sucursal.empresa, mode=IN, jdbcType=INTEGER},
+        
             #{direccion.calle, mode=IN, jdbcType=VARCHAR},
             #{direccion.numero, mode=IN, jdbcType=INTEGER},
             #{direccion.codigoPostal, mode=IN, jdbcType=VARCHAR},
             #{direccion.colonia, mode=IN, jdbcType=VARCHAR},
             #{direccion.ciudad, mode=IN, jdbcType=INTEGER},
-            #{direccion.tipoDireccion, mode=IN, jdbcType=INTEGER},
-            #{sucursal.telefono, mode=IN, jdbcType=VARCHAR},
-            #{sucursal.latitud, mode=IN, jdbcType=DOUBLE},
-            #{sucursal.longitud, mode=IN, jdbcType=DOUBLE},
+            
             #{persona.nombre, mode=IN, jdbcType=VARCHAR},
             #{persona.apellidoPaterno, mode=IN, jdbcType=VARCHAR},
             #{persona.apellidoMaterno, mode=IN, jdbcType=VARCHAR},
-            #{persona.tipoPersona, mode=IN, jdbcType=INTEGER},
+            
             #{filasAfectadas, mode=INOUT, jdbcType=INTEGER}
     )}
     </insert>
     
-    <insert id="registrarPersonaSucursal" parameterType="modelo.pojo.Persona">
-        INSERT INTO persona (nombre, apellidoPaterno, apellidoMaterno, tipoPersona) 
-        VALUES (#{nombre}, #{apellidoPaterno}, #{apellidoMaterno}, #{tipoPersona})
-    </insert>
-    
-    <update id="modificarSucursal" parameterType="modelo.pojo.Sucursal">
-        UPDATE sucursal SET nombre=#{nombre}, direccion=#{direccion}, telefono=#{telefono}, latitud=#{latitud}, longitud=#{longitud}, 
-        encargado=#{encargado} 
-        WHERE idSucursal=#{idSucursal}
+    <update id="modificarSucursal" parameterType="modelo.pojo.DatosRegistroSucursal" statementType="CALLABLE">
+        {CALL modificarSucursal(
+            #{sucursal.idSucursal, mode=IN, jdbcType=INTEGER},
+            #{sucursal.nombre, mode=IN, jdbcType=VARCHAR},
+            #{sucursal.telefono, mode=IN, jdbcType=VARCHAR},
+            #{sucursal.latitud, mode=IN, jdbcType=DOUBLE},
+            #{sucursal.longitud, mode=IN, jdbcType=DOUBLE},
+            #{sucursal.empresa, mode=IN, jdbcType=INTEGER},
+        
+            #{direccion.idDireccion, mode=IN, jdbcType=INTEGER},
+            #{direccion.calle, mode=IN, jdbcType=VARCHAR},
+            #{direccion.numero, mode=IN, jdbcType=INTEGER},
+            #{direccion.codigoPostal, mode=IN, jdbcType=VARCHAR},
+            #{direccion.colonia, mode=IN, jdbcType=VARCHAR},
+            #{direccion.ciudad, mode=IN, jdbcType=INTEGER},
+            
+            #{persona.idPersona, mode=IN, jdbcType=INTEGER},
+            #{persona.nombre, mode=IN, jdbcType=VARCHAR},
+            #{persona.apellidoPaterno, mode=IN, jdbcType=VARCHAR},
+            #{persona.apellidoMaterno, mode=IN, jdbcType=VARCHAR},
+            
+            #{filasAfectadas, mode=INOUT, jdbcType=INTEGER}
+    )}
     </update>
- 
-    <update id="modificarEncargadoSucursal" parameterType="modelo.pojo.Persona">
-        UPDATE persona SET nombre=#{nombre}, apellidoPaterno=#{apellidoPaterno},apellidoMaterno=#{apellidoMaterno} 
-        WHERE idPersona = #{idPersona} 
-    </update>
     
-    <delete id="eliminarSucursal" parameterType="modelo.pojo.Sucursal">
-        DELETE FROM sucursal WHERE idSucursal = #{idSucursal}
-    </delete>
-
 </mapper>

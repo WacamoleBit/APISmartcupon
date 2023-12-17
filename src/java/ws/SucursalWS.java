@@ -108,12 +108,12 @@ public class SucursalWS {
     @Consumes(MediaType.APPLICATION_JSON)
     public Mensaje modificarSucursal(String json){
         Gson gson = new Gson();
-        Sucursal sucursal = gson.fromJson(json, Sucursal.class);
-        if(sucursal!=null){
-            return SucursalDAO.modificarSucursal(sucursal);
-        }else{
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        }
+        DatosRegistroSucursal datos = gson.fromJson(json, DatosRegistroSucursal.class);
+        Sucursal sucursal = datos.getSucursal();
+        Direccion direccion = datos.getDireccion();
+        Persona persona = datos.getPersona();
+        
+        return SucursalDAO.modificarSucursal(datos);
     }
     
     
