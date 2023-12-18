@@ -49,4 +49,32 @@ public class EmpresaWS {
         }
     }
     
+    @PUT
+    @Path("editar")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Mensaje editarEmpresa(String json){
+        Gson gson = new Gson();
+        Empresa empresa = gson.fromJson(json, Empresa.class);
+        if(empresa != null){
+            return EmpresaDAO.editarEmpresa(empresa);
+        }else{
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+    }
+    
+    @DELETE
+    @Path("eliminar")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Mensaje eliminarEmppresa(String json){
+        Gson gson = new Gson();
+        Empresa empresa = gson.fromJson(json, Empresa.class);
+        if(empresa != null){
+            return EmpresaDAO.eliminarEmpresa(empresa);
+        }else{
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+    }
+    
 }
