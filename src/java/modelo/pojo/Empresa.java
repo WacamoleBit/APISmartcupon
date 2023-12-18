@@ -11,27 +11,26 @@ package modelo.pojo;
  */
 public class Empresa {
     private Integer idEmpresa;
-    private String noombre;
+    private String nombre;
     private String nombreComercial;
     private byte [] logo;
-    private String logoBase64;
-    private String representante;
+    private Integer representante;
     private String email;
-    private String direccion;
-    private Integer telefono;
+    private Integer direccion;
+    private String telefono;
     private String paginaWeb;
     private String rfc;
     private Integer estatus;
-
+    private String logoBase64;
+    
     public Empresa() {
     }
 
-    public Empresa(Integer idEmpresa, String noombre, String nombreComercial, byte[] logo, String logoBase64, String representante, String email, String direccion, Integer telefono, String paginaWeb, String rfc, Integer estatus) {
+    public Empresa(Integer idEmpresa, String nombre, String nombreComercial, byte[] logo, Integer representante, String email, Integer direccion, String telefono, String paginaWeb, String rfc, Integer estatus) {
         this.idEmpresa = idEmpresa;
-        this.noombre = noombre;
+        this.nombre = nombre;
         this.nombreComercial = nombreComercial;
         this.logo = logo;
-        this.logoBase64 = logoBase64;
         this.representante = representante;
         this.email = email;
         this.direccion = direccion;
@@ -45,97 +44,96 @@ public class Empresa {
         return idEmpresa;
     }
 
-    public String getNoombre() {
-        return noombre;
+    public void setIdEmpresa(Integer idEmpresa) {
+        this.idEmpresa = idEmpresa;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getNombreComercial() {
         return nombreComercial;
     }
 
-    public byte[] getLogo() {
-        return logo;
-    }
-
-    public String getLogoBase64() {
-        return logoBase64;
-    }
-
-    public String getRepresentante() {
-        return representante;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public Integer getTelefono() {
-        return telefono;
-    }
-
-    public String getPaginaWeb() {
-        return paginaWeb;
-    }
-
-    public String getRfc() {
-        return rfc;
-    }
-
-    public Integer getEstatus() {
-        return estatus;
-    }
-
-    public void setIdEmpresa(Integer idEmpresa) {
-        this.idEmpresa = idEmpresa;
-    }
-
-    public void setNoombre(String noombre) {
-        this.noombre = noombre;
-    }
-
     public void setNombreComercial(String nombreComercial) {
         this.nombreComercial = nombreComercial;
+    }
+
+    public byte[] getLogo() {
+        return logo;
     }
 
     public void setLogo(byte[] logo) {
         this.logo = logo;
     }
 
-    public void setLogoBase64(String logoBase64) {
-        this.logoBase64 = logoBase64;
+    public Integer getRepresentante() {
+        return representante;
     }
 
-    public void setRepresentante(String representante) {
+    public void setRepresentante(Integer representante) {
         this.representante = representante;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
     }
 
-    public void setDireccion(String direccion) {
+    public Integer getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(Integer direccion) {
         this.direccion = direccion;
     }
 
-    public void setTelefono(Integer telefono) {
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public String getPaginaWeb() {
+        return paginaWeb;
     }
 
     public void setPaginaWeb(String paginaWeb) {
         this.paginaWeb = paginaWeb;
     }
 
+    public String getRfc() {
+        return rfc;
+    }
+
     public void setRfc(String rfc) {
         this.rfc = rfc;
+    }
+
+    public Integer getEstatus() {
+        return estatus;
     }
 
     public void setEstatus(Integer estatus) {
         this.estatus = estatus;
     }
-    
+
+    public String getLogoBase64() {
+        return logoBase64;
+    }
+
+    public void setLogoBase64(String logoBase64) {
+        this.logoBase64 = logoBase64;
+    }
     
 }

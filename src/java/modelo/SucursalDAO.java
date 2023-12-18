@@ -5,6 +5,7 @@
  */
 package modelo;
 
+import modelo.pojo.DatosRegistroSucursal;
 import modelo.pojo.Direccion;
 import modelo.pojo.Mensaje;
 import modelo.pojo.Sucursal;
@@ -23,16 +24,16 @@ public class SucursalDAO {
         return null;
     }
     
-    public static Mensaje registrarSucursal(Sucursal sucursal) {
+    public static Mensaje registrarSucursal(DatosRegistroSucursal datos) {
         Mensaje mensaje = new Mensaje();
         mensaje.setError(true);
         SqlSession conexionBD = MyBatisUtil.getSession();
         if (conexionBD != null) {
             try {
-                int numeroFilasAfectadas = conexionBD.insert("sucursal.registrarSucursal", sucursal);
+                conexionBD.insert("sucursal.registrarSucursal", datos);
                 conexionBD.commit();
 
-                if (numeroFilasAfectadas > 0) {
+                if (datos.getFilasAfectadas() > 0) {
                     mensaje.setError(false);
                     mensaje.setMensaje("Sucursal registrada con éxito.");
                 } else {
@@ -51,23 +52,24 @@ public class SucursalDAO {
         return mensaje;
     }
 
-    public static Mensaje modificarSucursal(Sucursal sucursal) {
+    public static Mensaje modificarSucursal(DatosRegistroSucursal datos) {
         Mensaje mensaje = new Mensaje();
         mensaje.setError(true);
         SqlSession conexionBD = MyBatisUtil.getSession();
         if (conexionBD != null) {
             try {
-                int numeroFilasAfectadas = conexionBD.update("sucursal.modificarSucursal", sucursal);
+                conexionBD.update("sucursal.modificarSucursal", datos);
                 conexionBD.commit();
-                if (numeroFilasAfectadas > 0) {
+                
+                if(datos.getFilasAfectadas()>0){
                     mensaje.setError(false);
-                    mensaje.setMensaje("Sucursal modificada con éxito");
-                } else {
-                    mensaje.setMensaje("Error al modificar la sucursal");
+                    mensaje.setMensaje("Información actualizada con éxito");
+                }else{
+                    mensaje.setMensaje("Error al actualizar la información");
                 }
 
             } catch (Exception e) {
-
+                    mensaje.setMensaje("Error: " + e.getMessage());
             } finally {
                 conexionBD.close();
             }

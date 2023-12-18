@@ -18,8 +18,11 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import modelo.EmpresaDAO;
+import modelo.pojo.DatosRegistroEmpresa;
+import modelo.pojo.Direccion;
 import modelo.pojo.Mensaje;
 import modelo.pojo.Empresa;
+import modelo.pojo.Persona;
 
 /**
  *
@@ -40,10 +43,14 @@ public class EmpresaWS {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Mensaje registrarEmpresa(String json){
+        
         Gson gson = new Gson();
-        Empresa empresa = gson.fromJson(json, Empresa.class);
-        if(empresa!=null ){
-            return EmpresaDAO.registrarEmpresa(empresa);
+        DatosRegistroEmpresa datos = gson.fromJson(json, DatosRegistroEmpresa.class);
+        Empresa empresa = datos.getEmpresa();
+        Persona persona = datos.getPersona();
+        Direccion direccion = datos.getDireccion();
+        if(datos!=null ){
+            return EmpresaDAO.registrarEmpresa(datos);
         }else{
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }

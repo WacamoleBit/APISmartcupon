@@ -10,8 +10,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
@@ -47,7 +45,6 @@ public class ClienteWS {
     @Consumes(MediaType.APPLICATION_JSON)
     public Mensaje registrarCliente(String json) {
         Gson gson = new Gson();
-        //Cliente cliente = gson.fromJson(json, Cliente.class);
         DatosRegistroCliente datos = gson.fromJson(json, DatosRegistroCliente.class);
         Cliente cliente = datos.getCliente();
         Direccion direccion = datos.getDireccion();

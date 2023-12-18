@@ -6,9 +6,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="empresa">
 
     
-    <insert id="registrarEmpresa" parameterType="modelo.pojo.Empresa">
-        INSERT INTO empresa (nombre, nombreComercial, logo, representante, email, direccion, telefono, paginaWeb, rfc, estatus) 
-        VALUES (#{nombre}, #{nombreComercial}, #{logo}, #{representante}, #{email}, #{direccion}, #{telefono}, #{paginaWeb}, #{rfc}, #{estatus})
+    <insert id="registrarEmpresa" parameterType="modelo.pojo.DatosRegistroEmpresa" statementType="CALLABLE">
+         {CALL registrarEmpresa(
+            #{empresa.nombre, mode=IN, jdbcType=VARCHAR},
+            #{empresa.nombreComercial, mode=IN, jdbcType=VARCHAR},
+            #{empresa.logo, mode=IN, jdbcType=BLOB},
+            #{empresa.email, mode=IN, jdbcType=VARCHAR},
+            #{empresa.telefono, mode=IN, jdbcType=VARCHAR},
+            #{empresa.paginaWeb, mode=IN, jdbcType=VARCHAR},
+            #{empresa.rfc, mode=IN, jdbcType=VARCHAR},
+            #{empresa.estatus, mode=IN, jdbcType=INTEGER},
+      
+            #{persona.nombre, mode=IN, jdbcType=VARCHAR},
+            #{persona.apellidoPaterno, mode=IN, jdbcType=VARCHAR},
+            #{persona.apellidoMaterno, mode=IN, jdbcType=VARCHAR},
+            
+            #{direccion.calle, mode=IN, jdbcType=VARCHAR},
+            #{direccion.numero, mode=IN, jdbcType=INTEGER},
+            #{direccion.codigoPostal, mode=IN, jdbcType=VARCHAR},
+            #{direccion.ciudad, mode=IN, jdbcType=INTEGER},
+        
+            
+            #{filasAfectadas, mode=INOUT, jdbcType=INTEGER}
+    )}
+
     </insert>
     
     <update id="editarEmpresa" parameterType="modelo.pojo.Empresa">

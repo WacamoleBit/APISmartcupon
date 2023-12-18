@@ -60,23 +60,10 @@ public class DireccionWS {
         }
     }
     
-    @POST
-    @Path("registrar")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Mensaje registrarDireccionCliente(String json){
-        Gson gson = new Gson();
-        Direccion direccion = gson.fromJson(json, Direccion.class);
-        if(direccion != null && !direccion.getCalle().isEmpty() && !direccion.getCalle().isEmpty() && direccion.getTipoDireccion()!=0 && direccion.getTipoDireccion()>0){
-            return DireccionDAO.ingresarDireccionCliente(direccion);
-        }else{
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        }
-    }
     
     
     @PUT
-    @Path("editar")
+    @Path("editarDireccionCliente")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Mensaje modificarDireccionCliente(String json){
