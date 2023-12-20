@@ -60,18 +60,18 @@ public class AutenticacionDAO {
                 if (sesionUsuario != null) {
                     mensaje.setError(false);
                     mensaje.setUsuario(sesionUsuario);
-                    mensaje.setMensaje("Bienvenid(@) " + sesionUsuario.getNombre() + " al sistema de promociones");
+                    mensaje.setContenido("Bienvenid(@) " + sesionUsuario.getNombre() + " al sistema de promociones");
                 } else {
-                    mensaje.setMensaje("Usuario/Correo y/o contraseña incorrectos, favor de verificarlos");
+                    mensaje.setContenido("Usuario/Correo y/o contraseña incorrectos, favor de verificarlos");
                 }
 
             } catch (Exception e) {
-                mensaje.setMensaje("Error: " + e.getMessage());
+                mensaje.setContenido("Error: " + e.getMessage());
             } finally {
                 conexionBD.close();
             }
         } else {
-            mensaje.setMensaje("Error: Por el momento no hay conexión con la base de datos");
+            mensaje.setContenido("Error: Por el momento no hay conexión con la base de datos");
         }
 
         return mensaje;

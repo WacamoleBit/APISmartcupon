@@ -12,15 +12,15 @@ package modelo.pojo;
 public class MensajeUsuario {
 
     private Boolean error;
-    private String mensaje;
+    private String contenido;
     private Usuario usuario;
 
     public MensajeUsuario() {
     }
 
-    public MensajeUsuario(Boolean error, String mensaje, Usuario usuario) {
+    public MensajeUsuario(Boolean error, String contenido, Usuario usuario) {
         this.error = error;
-        this.mensaje = mensaje;
+        this.contenido = contenido;
         this.usuario = usuario;
     }
 
@@ -32,12 +32,12 @@ public class MensajeUsuario {
         this.error = error;
     }
 
-    public String getMensaje() {
-        return mensaje;
+    public String getContenido() {
+        return contenido;
     }
 
-    public void setMensaje(String mensaje) {
-        this.mensaje = mensaje;
+    public void setContenido(String mensaje) {
+        this.contenido = mensaje;
     }
 
     public Usuario getUsuario() {

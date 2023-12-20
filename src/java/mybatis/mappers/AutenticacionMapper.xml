@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="iniciarSesionUsuario" resultType="modelo.pojo.Usuario" parameterType="modelo.pojo.Usuario">
         SELECT * 
         FROM usuario 
-        WHERE username=#{username} AND password=#{password} OR email=#{email} AND password=#{password}
+        WHERE username=#{username} AND password=#{password}
     </select>
     
 </mapper>
