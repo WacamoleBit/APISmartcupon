@@ -94,9 +94,9 @@ CREATE TABLE
         paginaWeb VARCHAR(100) NULL, -- No es NOT NULL, porque dice (si tiene)
         rfc VARCHAR(12) NOT NULL,
         estatus INT NOT NULL,
-        FOREIGN KEY (direccion) REFERENCES direccion(idDireccion) ON DELETE CASCADE,
+        FOREIGN KEY (direccion) REFERENCES direccion(idDireccion),
         FOREIGN KEY (estatus) REFERENCES estatus(idEstatus),
-        FOREIGN KEY (representante) REFERENCES persona(idPersona) ON DELETE CASCADE
+        FOREIGN KEY (representante) REFERENCES persona(idPersona)
     );
 
 CREATE TABLE
@@ -109,8 +109,8 @@ CREATE TABLE
         longitud DOUBLE NOT NULL,
         empresa INT NOT NULL,
         encargado INT NOT NULL, -- Se obtendra de un combo box
-        FOREIGN KEY (direccion) REFERENCES direccion(idDireccion) ON DELETE CASCADE,
-        FOREIGN KEY (encargado) REFERENCES persona(idPersona) ON DELETE CASCADE,
+        FOREIGN KEY (direccion) REFERENCES direccion(idDireccion),
+        FOREIGN KEY (encargado) REFERENCES persona(idPersona),
         FOREIGN KEY (empresa) REFERENCES empresa(idEmpresa)
     );
 
@@ -163,7 +163,7 @@ CREATE TABLE
         direccion INT NULL, -- PENDIENTE ver si debe tener dirreción a fuerza, o puede no tener
         fechaNacimiento DATE NOT NULL,
         password VARCHAR(20) NOT NULL,
-        FOREIGN KEY (direccion) REFERENCES direccion(idDireccion) ON DELETE CASCADE
+        FOREIGN KEY (direccion) REFERENCES direccion(idDireccion)
     );
 
 CREATE TABLE
@@ -172,7 +172,7 @@ CREATE TABLE
         idPromocion INT NOT NULL,
         PRIMARY KEY (idSucursal, idPromocion),
         FOREIGN KEY (idSucursal) REFERENCES sucursal(idSucursal),
-        FOREIGN KEY (idPromocion) REFERENCES promocion(idPromocion) ON DELETE CASCADE
+        FOREIGN KEY (idPromocion) REFERENCES promocion(idPromocion)
     );
 
 CREATE TABLE
