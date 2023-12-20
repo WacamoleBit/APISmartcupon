@@ -1,5 +1,7 @@
 -- Crear base de datos
 
+DROP DATABASE IF EXISTS smartcupon_db;
+
 CREATE DATABASE smartcupon_db;
 
 -- Crear tablas
@@ -92,22 +94,24 @@ CREATE TABLE
         paginaWeb VARCHAR(100) NULL, -- No es NOT NULL, porque dice (si tiene)
         rfc VARCHAR(12) NOT NULL,
         estatus INT NOT NULL,
-        FOREIGN KEY (direccion) REFERENCES direccion(idDireccion),
+        FOREIGN KEY (direccion) REFERENCES direccion(idDireccion) ON DELETE CASCADE,
         FOREIGN KEY (estatus) REFERENCES estatus(idEstatus),
-        FOREIGN KEY (representante) REFERENCES persona(idPersona)
+        FOREIGN KEY (representante) REFERENCES persona(idPersona) ON DELETE CASCADE
     );
 
 CREATE TABLE
     sucursal (
         idSucursal INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
         nombre VARCHAR(50) NOT NULL,
-        direccion INT NULL, -- Al final debe de ser NOT NULL 
+        direccion INT NOT NULL, -- Al final debe de ser NOT NULL 
         telefono VARCHAR(10) NOT NULL,
         latitud DOUBLE NOT NULL,
         longitud DOUBLE NOT NULL,
+        empresa INT NOT NULL,
         encargado INT NOT NULL, -- Se obtendra de un combo box
-        FOREIGN KEY (direccion) REFERENCES direccion(idDireccion),
-        FOREIGN KEY (encargado) REFERENCES persona(idPersona)
+        FOREIGN KEY (direccion) REFERENCES direccion(idDireccion) ON DELETE CASCADE,
+        FOREIGN KEY (encargado) REFERENCES persona(idPersona) ON DELETE CASCADE,
+        FOREIGN KEY (empresa) REFERENCES empresa(idEmpresa)
     );
 
 CREATE TABLE
@@ -159,7 +163,7 @@ CREATE TABLE
         direccion INT NULL, -- PENDIENTE ver si debe tener dirreción a fuerza, o puede no tener
         fechaNacimiento DATE NOT NULL,
         password VARCHAR(20) NOT NULL,
-        FOREIGN KEY (direccion) REFERENCES direccion(iddireccion)
+        FOREIGN KEY (direccion) REFERENCES direccion(idDireccion) ON DELETE CASCADE
     );
 
 CREATE TABLE
@@ -168,7 +172,7 @@ CREATE TABLE
         idPromocion INT NOT NULL,
         PRIMARY KEY (idSucursal, idPromocion),
         FOREIGN KEY (idSucursal) REFERENCES sucursal(idSucursal),
-        FOREIGN KEY (idPromocion) REFERENCES promocion(idPromocion)
+        FOREIGN KEY (idPromocion) REFERENCES promocion(idPromocion) ON DELETE CASCADE
     );
 
 CREATE TABLE
@@ -190,5 +194,3 @@ CREATE TABLE
         FOREIGN KEY (cupon) REFERENCES cupon(idCupon),
         FOREIGN KEY (usuario) REFERENCES usuario(idUsuario)
     );
-    
--- DROP DATABASE smartcupon_db;
