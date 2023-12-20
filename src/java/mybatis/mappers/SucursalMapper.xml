@@ -28,7 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     )}
     </insert>
     
-    <update id="modificarSucursal" parameterType="modelo.pojo.DatosRegistroSucursal" statementType="CALLABLE">
+    <update id="editarSucursal" parameterType="modelo.pojo.DatosRegistroSucursal" statementType="CALLABLE">
         {CALL modificarSucursal(
             #{sucursal.idSucursal, mode=IN, jdbcType=INTEGER},
             #{sucursal.nombre, mode=IN, jdbcType=VARCHAR},
@@ -37,6 +37,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{sucursal.longitud, mode=IN, jdbcType=DOUBLE},
             #{sucursal.empresa, mode=IN, jdbcType=INTEGER},
         
+            #{persona.idPersona, mode=IN, jdbcType=INTEGER},
+            #{persona.nombre, mode=IN, jdbcType=VARCHAR},
+            #{persona.apellidoPaterno, mode=IN, jdbcType=VARCHAR},
+            #{persona.apellidoMaterno, mode=IN, jdbcType=VARCHAR},
+        
             #{direccion.idDireccion, mode=IN, jdbcType=INTEGER},
             #{direccion.calle, mode=IN, jdbcType=VARCHAR},
             #{direccion.numero, mode=IN, jdbcType=INTEGER},
@@ -44,12 +49,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{direccion.colonia, mode=IN, jdbcType=VARCHAR},
             #{direccion.ciudad, mode=IN, jdbcType=INTEGER},
             
-            #{persona.idPersona, mode=IN, jdbcType=INTEGER},
-            #{persona.nombre, mode=IN, jdbcType=VARCHAR},
-            #{persona.apellidoPaterno, mode=IN, jdbcType=VARCHAR},
-            #{persona.apellidoMaterno, mode=IN, jdbcType=VARCHAR},
-            
-            #{filasAfectadas, mode=INOUT, jdbcType=INTEGER}
+            #{filasAfectadas, mode=INOUT, jdbcType=INTEGER},
+            #{error, mode=INOUT, jdbcType=INTEGER}
     )}
     </update>
     

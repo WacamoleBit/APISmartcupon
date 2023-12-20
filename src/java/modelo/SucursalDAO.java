@@ -58,10 +58,10 @@ public class SucursalDAO {
         SqlSession conexionBD = MyBatisUtil.getSession();
         if (conexionBD != null) {
             try {
-                conexionBD.update("sucursal.modificarSucursal", datos);
+                conexionBD.update("sucursal.editarSucursal", datos);
                 conexionBD.commit();
                 
-                if(datos.getFilasAfectadas()>0){
+                if(datos.getFilasAfectadas()>0 && datos.getError().isEmpty()){
                     mensaje.setError(false);
                     mensaje.setMensaje("Información actualizada con éxito");
                 }else{
@@ -69,6 +69,7 @@ public class SucursalDAO {
                 }
 
             } catch (Exception e) {
+                e.printStackTrace();
                     mensaje.setMensaje("Error: " + e.getMessage());
             } finally {
                 conexionBD.close();

@@ -56,4 +56,16 @@ public class EmpresaWS {
         }
     }
     
+    
+    @PUT
+    @Path("editar")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Mensaje modificarEmpresa(String json){
+    
+        Gson gson = new Gson();
+        DatosRegistroEmpresa datos = gson.fromJson(json, DatosRegistroEmpresa.class);
+        
+        return EmpresaDAO.editarEmpresa(datos);
+    }
 }

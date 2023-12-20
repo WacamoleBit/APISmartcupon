@@ -45,19 +45,19 @@ public class EmpresaDAO {
         return  mensaje;
     }
 
-    public static Mensaje editarEmpresa(Empresa empresa){
+    public static Mensaje editarEmpresa(DatosRegistroEmpresa datos){
         Mensaje mensaje = new Mensaje();
         mensaje.setError(true);
         SqlSession conexionBD = MyBatisUtil.getSession();
         if(conexionBD != null){
             try{
-                int numeroFilasAfectadas = conexionBD.update("empresa.editarEmpresa", empresa);
+                conexionBD.update("empresa.editarEmpresa", datos);
                 conexionBD.commit();
-                if(numeroFilasAfectadas > 0){
+                if(datos.getFilasAfectadas() > 0 && datos.getError().isEmpty()){
                 mensaje.setError(false);
                 mensaje.setMensaje("Empresa modificada con éxito.");
                 }else{
-                    mensaje.setMensaje("Error: No se pudo modificar la empresa, por favor intenta de nuevo.");
+                    mensaje.setMensaje(datos.getError());
                 }
             }catch(Exception e){
                 mensaje.setMensaje("Error" + e.getMessage());
