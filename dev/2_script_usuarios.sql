@@ -1,6 +1,7 @@
 
     CREATE USER 'adminGeneral'@'localhost' IDENTIFIED BY 'smartcupon';
     GRANT ALL PRIVILEGES ON smartcupon_db.* TO 'adminGeneral'@'localhost';
+    GRANT SUPER ON *.* TO 'adminGeneral'@'localhost';
     FLUSH PRIVILEGES;
 
     CREATE USER 'adminSucursal'@'localhost' IDENTIFIED BY 'smartcupon';
