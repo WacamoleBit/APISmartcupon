@@ -1,7 +1,10 @@
 -- SCRIPTS Empresa
 
+USE smartcupon_db;
+
 DROP PROCEDURE IF EXISTS registrarEmpresa;
 DROP PROCEDURE IF EXISTS modificarEmpresa;
+DROP PROCEDURE IF EXISTS eliminarEmpresa;
 DROP TRIGGER IF EXISTS delete_empresa_trigger;
 
 DELIMITER //

@@ -1,7 +1,11 @@
 -- SCRIPT Sucursal
 
+USE smartcupon_db;
+
 DROP PROCEDURE IF EXISTS registrarSucursal;
 DROP PROCEDURE IF EXISTS modificarSucursal;
+DROP PROCEDURE IF EXISTS eliminarSucursal;
+DROP TRIGGER IF EXISTS delete_sucursal_trigger;
 
 DELIMITER //
 
