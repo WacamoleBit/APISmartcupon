@@ -30,15 +30,15 @@ public class ClienteDAO {
                 conexionBD.insert("cliente.registrarCliente", datos);
                 conexionBD.commit();
 
-                if (datos.getFilasAfectadas() > 0) {
+                if (datos.getFilasAfectadas() > 0 && datos.getError().isEmpty()) {
                     mensaje.setError(false);
                     mensaje.setMensaje("Cliente registrado con exito");
                 } else {
-                    mensaje.setMensaje("No se pudo registrar la informacion del cliente");
+                    mensaje.setMensaje(datos.getError());
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                mensaje.setMensaje("Error: La base de datos no pudo guardar la información del cliente");
+                mensaje.setMensaje("Error: " + e.getMessage());
             } finally {
                 conexionBD.close();
             }
@@ -49,33 +49,28 @@ public class ClienteDAO {
         return mensaje;
     }
 
-    public static Mensaje modificarCliente(Cliente cliente) {
+    public static Mensaje modificarCliente(DatosRegistroCliente datos) {
 
         Mensaje mensaje = new Mensaje();
         mensaje.setError(true);
         SqlSession conexionBD = MyBatisUtil.getSession();
         if (conexionBD != null) {
 
-            Cliente clienteExistente = conexionBD.selectOne("cliente.obtenerClientePorId", cliente);
-
-            if (clienteExistente != null) {
-                try {
-                    int numeroFilasAfectadas = conexionBD.update("cliente.modificarCliente", cliente);
-                    conexionBD.commit();
-                    if (numeroFilasAfectadas > 0) {
-                        mensaje.setError(false);
-                        mensaje.setMensaje("Cliente modificado con exito");
-                    } else {
-                        mensaje.setMensaje("Error al actualizar el cliente");
-                    }
-                } catch (Exception e) {
-                    mensaje.setMensaje("Error: " + e.getMessage());
-                } finally {
-                    conexionBD.close();
+            try {
+                conexionBD.update("cliente.editarCliente", datos);
+                conexionBD.commit();
+                if (datos.getFilasAfectadas() > 0 && datos.getError().isEmpty()) {
+                    mensaje.setError(false);
+                    mensaje.setMensaje("Cliente modificado con exito");
+                } else {
+                    mensaje.setMensaje(datos.getError());
                 }
-            } else {
-                mensaje.setMensaje("El cliente no esta registrado");
+            } catch (Exception e) {
+                mensaje.setMensaje("Error: " + e.getMessage());
+            } finally {
+                conexionBD.close();
             }
+
         } else {
             mensaje.setMensaje("Error: Por el momento no hay conexión con la base de datos");
         }
