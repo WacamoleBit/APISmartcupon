@@ -48,7 +48,8 @@ public class ClienteWS {
         DatosRegistroCliente datos = gson.fromJson(json, DatosRegistroCliente.class);
         Cliente cliente = datos.getCliente();
         Direccion direccion = datos.getDireccion();
-
+        
+        /*
         if (cliente == null) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
@@ -88,7 +89,7 @@ public class ClienteWS {
         if (direccion.getCalle() == null || direccion.getCalle().trim().isEmpty()) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-
+        
         if (direccion.getNumero() == null || direccion.getNumero() < 1) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
@@ -101,7 +102,8 @@ public class ClienteWS {
         direccion.setCodigoPostal(null);
         direccion.setCiudad(null);
         direccion.setEstado(null);
-
+        
+        */
         return ClienteDAO.registrarCliente(datos);
 
     }
@@ -113,11 +115,9 @@ public class ClienteWS {
     public Mensaje modificarCliente(String json) {
 
         Gson gson = new Gson();
-        Cliente cliente = gson.fromJson(json, Cliente.class);
-        if (cliente != null) {
-            return ClienteDAO.modificarCliente(cliente);
-        } else {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        }
+        
+        DatosRegistroCliente datos = gson.fromJson(json, DatosRegistroCliente.class);
+        
+        return ClienteDAO.modificarCliente(datos);
     }
 }

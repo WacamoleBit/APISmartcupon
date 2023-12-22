@@ -56,40 +56,11 @@ public class EmpresaWS {
         }
     }
     
-<<<<<<< HEAD
-=======
     
->>>>>>> f6767da1bdb968a76a5b5a24bf22fca17b23e2a9
     @PUT
     @Path("editar")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-<<<<<<< HEAD
-    public Mensaje editarEmpresa(String json){
-        Gson gson = new Gson();
-        Empresa empresa = gson.fromJson(json, Empresa.class);
-        if(empresa != null){
-            return EmpresaDAO.editarEmpresa(empresa);
-        }else{
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        }
-    }
-    
-    @DELETE
-    @Path("eliminar")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Mensaje eliminarEmppresa(String json){
-        Gson gson = new Gson();
-        Empresa empresa = gson.fromJson(json, Empresa.class);
-        if(empresa != null){
-            return EmpresaDAO.eliminarEmpresa(empresa);
-        }else{
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        }
-    }
-    
-=======
     public Mensaje modificarEmpresa(String json){
     
         Gson gson = new Gson();
@@ -97,5 +68,4 @@ public class EmpresaWS {
         
         return EmpresaDAO.editarEmpresa(datos);
     }
->>>>>>> f6767da1bdb968a76a5b5a24bf22fca17b23e2a9
 }

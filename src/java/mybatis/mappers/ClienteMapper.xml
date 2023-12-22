@@ -28,16 +28,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{cliente.password, mode=IN, jdbcType=VARCHAR},
             #{direccion.calle, mode=IN, jdbcType=VARCHAR},
             #{direccion.numero, mode=IN, jdbcType=INTEGER},
-            #{direccion.tipoDireccion, mode=IN, jdbcType=INTEGER},
-            #{filasAfectadas, mode=INOUT, jdbcType=INTEGER}
+            #{filasAfectadas, mode=INOUT, jdbcType=INTEGER},
+            #{error, mode=INOUT, jdbcType=VARCHAR}
         )}
     </insert>
     
     
-    <update id="modificarCliente" parameterType="modelo.pojo.Cliente">
-        UPDATE cliente SET nombre=#{nombre}, apellidoPaterno=#{apellidoPaterno}, apellidoMaterno=#{apellidoMaterno}, 
-        telefono=#{telefono}, direccion=#{direccion}, fechaNacimiento=#{fechaNacimiento}, password=#{password} 
-        WHERE idCliente=#{idCliente}
+    <update id="editarCliente" parameterType="modelo.pojo.DatosRegistroCliente" statementType="CALLABLE">
+        {CALL modificarCliente(
+            #{cliente.idCliente, mode=IN, jdbcType=INTEGER},
+            #{cliente.nombre, mode=IN, jdbcType=VARCHAR},
+            #{cliente.apellidoPaterno, mode=IN, jdbcType=VARCHAR},
+            #{cliente.apellidoMaterno, mode=IN, jdbcType=VARCHAR},
+            #{cliente.telefono, mode=IN, jdbcType=VARCHAR},
+            #{cliente.fechaNacimiento, mode=IN, jdbcType=VARCHAR},
+            #{cliente.password, mode=IN, jdbcType=VARCHAR},
+            #{direccion.idDireccion, mode=IN, jdbcType=INTEGER},
+            #{direccion.calle, mode=IN, jdbcType=VARCHAR},
+            #{direccion.numero, mode=IN, jdbcType=INTEGER},
+            #{filasAfectadas, mode=INOUT, jdbcType=INTEGER},
+            #{error, mode=INOUT, jdbcType=VARCHAR}
+        )}
     </update>
     
 </mapper>

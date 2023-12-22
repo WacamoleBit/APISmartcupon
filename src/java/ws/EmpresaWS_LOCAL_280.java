@@ -56,15 +56,10 @@ public class EmpresaWS {
         }
     }
     
-<<<<<<< HEAD
-=======
-    
->>>>>>> f6767da1bdb968a76a5b5a24bf22fca17b23e2a9
     @PUT
     @Path("editar")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-<<<<<<< HEAD
     public Mensaje editarEmpresa(String json){
         Gson gson = new Gson();
         Empresa empresa = gson.fromJson(json, Empresa.class);
@@ -89,13 +84,4 @@ public class EmpresaWS {
         }
     }
     
-=======
-    public Mensaje modificarEmpresa(String json){
-    
-        Gson gson = new Gson();
-        DatosRegistroEmpresa datos = gson.fromJson(json, DatosRegistroEmpresa.class);
-        
-        return EmpresaDAO.editarEmpresa(datos);
-    }
->>>>>>> f6767da1bdb968a76a5b5a24bf22fca17b23e2a9
 }

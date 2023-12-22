@@ -27,14 +27,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{direccion.ciudad, mode=IN, jdbcType=INTEGER},
         
             
-            #{filasAfectadas, mode=INOUT, jdbcType=INTEGER}
+            #{filasAfectadas, mode=INOUT, jdbcType=INTEGER},
+            #{error, mode=INOUT, jdbcType=VARCHAR}
     )}
 
     </insert>
     
-    <update id="editarEmpresa" parameterType="modelo.pojo.Empresa">
-        UPDATE empresa SET nombre=#{nombre}, nombreComercial=#{nombreComercial}, logo=#{logo}, representante=#{representante}, email=#{email}, direccion=#{direccion}, telefono=#{telefono}, paginaWeb=#{paginaWeb}, rfc=#{rfc}, estatus=#{estatus}
-        WHERE idEmpresa=#{idEmpresa}
+    <update id="editarEmpresa" parameterType="modelo.pojo.DatosRegistroEmpresa" statementType="CALLABLE">
+        {CALL modificarEmpresa(
+            #{empresa.idEmpresa, mode=IN, jdbcType=INTEGER},
+            #{empresa.nombre, mode=IN, jdbcType=VARCHAR},
+            #{empresa.nombreComercial, mode=IN, jdbcType=VARCHAR},
+            #{empresa.email, mode=IN, jdbcType=VARCHAR},
+            #{empresa.telefono, mode=IN, jdbcType=VARCHAR},
+            #{empresa.paginaWeb, mode=IN, jdbcType=VARCHAR},
+            #{empresa.estatus, mode=IN, jdbcType=INTEGER},
+            
+            #{direccion.idDireccion, mode=IN, jdbcType=INTEGER},
+            #{direccion.calle, mode=IN, jdbcType=VARCHAR},
+            #{direccion.numero, mode=IN, jdbcType=INTEGER},
+            #{direccion.codigoPostal, mode=IN, jdbcType=VARCHAR},
+            #{direccion.ciudad, mode=IN, jdbcType=INTEGER},
+        
+            #{persona.idPersona, mode=IN, jdbcType=INTEGER},
+            #{persona.nombre, mode=IN, jdbcType=VARCHAR},
+            #{persona.apellidoPaterno, mode=IN, jdbcType=VARCHAR},
+            #{persona.apellidoMaterno, mode=IN, jdbcType=VARCHAR},
+            
+            #{filasAfectadas, mode=INOUT, jdbcType=INTEGER},
+            #{error, mode=INOUT, jdbcType=VARCHAR}
+    )}
     </update>
     
     <delete id="eliminarEmpresa" parameterType="modelo.pojo.Empresa">

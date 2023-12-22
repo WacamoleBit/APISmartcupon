@@ -15,17 +15,27 @@ public class DatosRegistroSucursal {
     private Direccion direccion;
     private Persona persona;
     private Integer filasAfectadas;
-
+    private String error;
+    
     public DatosRegistroSucursal() {
     }
 
-    public DatosRegistroSucursal(Sucursal sucursal, Direccion direccion, Persona persona, Integer filasAfectadas) {
+    public DatosRegistroSucursal(Sucursal sucursal, Direccion direccion, Persona persona, Integer filasAfectadas, String error) {
         this.sucursal = sucursal;
         this.direccion = direccion;
         this.persona = persona;
         this.filasAfectadas = filasAfectadas;
+        this.error = error;
     }
 
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
+    
     public Sucursal getSucursal() {
         return sucursal;
     }

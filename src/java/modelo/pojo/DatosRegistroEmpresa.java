@@ -14,19 +14,30 @@ public class DatosRegistroEmpresa {
     private Persona persona;
     private Direccion direccion;
     private Integer filasAfectadas;
-
+    private String error;
+    
     public DatosRegistroEmpresa() {
     }
 
-    public DatosRegistroEmpresa(Empresa empresa, Persona persona, Direccion direccion, Integer filasAfectadas) {
+    public DatosRegistroEmpresa(Empresa empresa, Persona persona, Direccion direccion, Integer filasAfectadas, String error) {
         this.empresa = empresa;
         this.persona = persona;
         this.direccion = direccion;
         this.filasAfectadas = filasAfectadas;
+        this.error = error;
     }
+
 
     public Empresa getEmpresa() {
         return empresa;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
     }
 
     public void setEmpresa(Empresa empresa) {
