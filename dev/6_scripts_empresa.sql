@@ -12,13 +12,6 @@ DELIMITER //
 -- INSERT
 
 CREATE PROCEDURE registrarEmpresa (
-    IN _nombreRepresentante VARCHAR(50),
-    IN _apellidoPaterno VARCHAR(50),
-    IN _apellidoMaterno VARCHAR(50),
-    IN _calle VARCHAR(100),
-    IN _numero INT,
-    IN _codigoPostal VARCHAR(5),
-    IN _ciudad INT,
     IN _nombre VARCHAR(50),
     IN _nombreComercial VARCHAR(50),
     IN _logo LONGBLOB,
@@ -26,6 +19,13 @@ CREATE PROCEDURE registrarEmpresa (
     IN _telefono VARCHAR(10),
     IN _paginaWeb VARCHAR(100),
     IN _rfc VARCHAR(12),
+	IN _nombreRepresentante VARCHAR(50),
+    IN _apellidoPaterno VARCHAR(50),
+    IN _apellidoMaterno VARCHAR(50),
+    IN _calle VARCHAR(100),
+    IN _numero INT,
+    IN _codigoPostal VARCHAR(5),
+    IN _ciudad INT,
     
     INOUT _filasAfectadas INT,
     INOUT _error VARCHAR(255)
@@ -104,7 +104,7 @@ BEGIN
 			ELSE
 				-- Insertar en la tabla empresa
 				INSERT INTO empresa (nombre, nombreComercial, logo, representante, email, direccion, telefono, paginaWeb, rfc, estatus)
-				VALUES (_nombre, _nombreComercial, _logo, @personaID, _email, @direccionID, _telefono, _paginaWeb, _rfc, true);
+				VALUES (_nombre, _nombreComercial, _logo, @personaID, _email, @direccionID, _telefono, _paginaWeb, _rfc, 1);
 					
 				SET @filasEmpresa = ROW_COUNT();
 				SET _filasAfectadas = @filasDireccion + @filasPersona + @filasEmpresa;

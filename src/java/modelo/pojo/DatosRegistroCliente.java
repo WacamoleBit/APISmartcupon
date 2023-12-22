@@ -14,13 +14,24 @@ public class DatosRegistroCliente {
     private Cliente cliente;
     private Direccion direccion;
     private Integer filasAfectadas;
-
+    private String error;
+    
     public DatosRegistroCliente() {
     }
 
-    public DatosRegistroCliente(Cliente cliente, Direccion direccion) {
+    public DatosRegistroCliente(Cliente cliente, Direccion direccion, Integer filasAfectadas, String error) {
         this.cliente = cliente;
         this.direccion = direccion;
+        this.filasAfectadas = filasAfectadas;
+        this.error = error;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
     }
 
     public Cliente getCliente() {
