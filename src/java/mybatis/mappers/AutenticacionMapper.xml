@@ -12,8 +12,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <select id="iniciarSesionUsuario" resultType="modelo.pojo.Usuario" parameterType="modelo.pojo.Usuario">
-        SELECT * 
-        FROM usuario 
+        SELECT idUsuario, u.nombre, apellidoPaterno, apellidoMaterno, curp, email, username, password, rol, r.nombre as nombreRol, empresa
+        FROM usuario u
+        INNER JOIN rol r ON u.rol = r.idRol
         WHERE username=#{username} AND password=#{password}
     </select>
     
