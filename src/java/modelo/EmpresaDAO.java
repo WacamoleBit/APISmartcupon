@@ -10,6 +10,7 @@ import modelo.pojo.Empresa;
 import modelo.pojo.Mensaje;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
+import java.util.List;
 
 /**
  *
@@ -18,6 +19,23 @@ import org.apache.ibatis.session.SqlSession;
 public class EmpresaDAO {
     
     //BUSCAR EMPRESA POR NOMBRE, RFC O NOMBRE DEL REPRESENTANTE
+    
+    public static List<Empresa> obtenerEmpresas(List<Empresa> empresas){
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        if(conexionBD!=null){
+            try {
+                
+                empresas = conexionBD.selectList("empresa.obtenerEmpresas");
+                
+            } catch (Exception e) {
+                e.printStackTrace();
+            }finally{
+                conexionBD.close();
+            }
+        }
+        
+        return empresas;
+    }
     
     public static Mensaje registrarEmpresa(DatosRegistroEmpresa datos){
         Mensaje mensaje = new Mensaje();

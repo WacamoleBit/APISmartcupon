@@ -5,6 +5,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="empresa">
 
+    <select id="obtenerEmpresas" resultType="modelo.pojo.Empresa" >
+        SELECT * FROM empresa
+    </select>
     
     <insert id="registrarEmpresa" parameterType="modelo.pojo.DatosRegistroEmpresa" statementType="CALLABLE">
          {CALL registrarEmpresa(
