@@ -95,25 +95,15 @@ public class PromocionWS {
         return PromocionDAO.registrarPromocion(datos);
     }
 
-    /**
-     * Retrieves representation of an instance of ws.PromocionWS
-     *
-     * @return an instance of java.lang.String
-     */
-    @GET
+    @PUT
+    @Path("modificar")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getJson() {
-        //TODO return proper representation object
-        throw new UnsupportedOperationException();
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Mensaje modificarPromocion(String json) {
+        Gson gson = new Gson();
+        DatosRegistroPromocion datos = gson.fromJson(json, DatosRegistroPromocion.class);
+
+        return PromocionDAO.modificarPromocion(datos);
     }
 
-    /**
-     * PUT method for updating or creating an instance of PromocionWS
-     *
-     * @param content representation for the resource
-     */
-    @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void putJson(String content) {
-    }
 }

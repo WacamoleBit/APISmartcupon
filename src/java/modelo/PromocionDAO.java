@@ -31,11 +31,11 @@ public class PromocionDAO {
                     mensaje.setError(false);
                     mensaje.setMensaje("Promoción registrada con éxito.");
                 } else {
-                    mensaje.setMensaje("Error: No se pudo registrar la empresa, por favor intenta de nuevo.");
+                    mensaje.setMensaje("Error: " + datos.getError());
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                mensaje.setMensaje("Error: Hay error en la base de datos");
+                mensaje.setMensaje("Error: La base de datos no pudo guardar la información de la promocion");
             } finally {
                 conexionDB.close();
             }
@@ -45,4 +45,33 @@ public class PromocionDAO {
         return mensaje;
     }
 
+    public static Mensaje modificarPromocion(DatosRegistroPromocion datos) {
+        Mensaje mensaje = new Mensaje();
+        mensaje.setError(true);
+        
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        
+        if (conexionBD != null) {
+            try {
+                conexionBD.update("promocion.modificarPromocion", datos);
+                conexionBD.commit();
+
+                if (datos.getFilasAfectadas() > 0) {
+                    mensaje.setError(false);
+                    mensaje.setMensaje("Promoción modificada con éxito.");
+                } else {
+                    mensaje.setMensaje("Error: " + datos.getError());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                mensaje.setMensaje("Error: La base de datos no pudo modificar la información de la promocion");
+            } finally {
+                conexionBD.close();
+            }
+        } else {
+            mensaje.setMensaje("Error: Por el momento no hay conexión con la base de datos, intenta mas tarde.");
+        }
+        
+        return mensaje;
+    }
 }
