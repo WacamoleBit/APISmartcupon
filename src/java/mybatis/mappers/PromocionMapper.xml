@@ -6,9 +6,44 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="promocion">
     
     <insert id="registrarPromocion" parameterType="modelo.pojo.DatosRegistroPromocion" statementType="CALLABLE">
-        {CALL registrarPromocion(
+        {CALL registrarPromocion (
+            #{promocion.nombre, mode=IN, jdbcType=VARCHAR},
+            #{promocion.descripcion, mode=IN, jdbcType=VARCHAR},
+            #{promocion.imagen, mode=IN, jdbcType=BLOB},
+            #{promocion.fechaInicio, mode=IN, jdbcType=VARCHAR},
+            #{promocion.fechaTermino, mode=IN, jdbcType=VARCHAR},
+            #{promocion.restricciones, mode=IN, jdbcType=VARCHAR},
+            #{promocion.tipoPromocion, mode=IN, jdbcType=INTEGER},
+            #{promocion.porcentajeDescuento, mode=IN, jdbcType=INTEGER},
+            #{promocion.categoria, mode=IN, jdbcType=INTEGER},
+            #{promocion.cuponesDisponibles, mode=IN, jdbcType=INTEGER},
+            #{promocion.codigoPromocion, mode=IN, jdbcType=VARCHAR},
+            #{promocion.empresa, mode=IN, jdbcType=INTEGER},
             
-    )}
+            #{filasAfectadas, mode=INOUT, jdbcType=INTEGER},
+            #{error, mode=INOUT, jdbcType=VARCHAR}
+        )}
     </insert>
 
+    <update id="modificarPromocion" parameterType="modelo.pojo.DatosRegistroPromocion" statementType="CALLABLE">
+        {CALL modificarPromocion (
+            #{promocion.idPromocion, mode=IN, jdbcType=INTEGER},
+            #{promocion.nombre, mode=IN, jdbcType=VARCHAR},
+            #{promocion.descripcion, mode=IN, jdbcType=VARCHAR},
+            #{promocion.imagen, mode=IN, jdbcType=BLOB},
+            #{promocion.fechaInicio, mode=IN, jdbcType=VARCHAR},
+            #{promocion.fechaTermino, mode=IN, jdbcType=VARCHAR},
+            #{promocion.restricciones, mode=IN, jdbcType=VARCHAR},
+            #{promocion.tipoPromocion, mode=IN, jdbcType=INTEGER},
+            #{promocion.porcentajeDescuento, mode=IN, jdbcType=INTEGER},
+            #{promocion.categoria, mode=IN, jdbcType=INTEGER},
+            #{promocion.cuponesDisponibles, mode=IN, jdbcType=INTEGER},
+            #{promocion.codigoPromocion, mode=IN, jdbcType=VARCHAR},
+            #{promocion.estatus, mode=IN, jdbcType=INTEGER},
+            #{promocion.empresa, mode=IN, jdbcType=INTEGER},
+            
+            #{filasAfectadas, mode=INOUT, jdbcType=INTEGER},
+            #{error, mode=INOUT, jdbcType=VARCHAR}
+        )}
+    </update>
 </mapper>
