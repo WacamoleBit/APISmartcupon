@@ -4,9 +4,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="empresa">
-
-    <select id="obtenerEmpresas" resultType="modelo.pojo.Empresa" >
-        SELECT * FROM empresa
+    
+    <select id="obtenerListaEmpresas" resultType="modelo.pojo.Empresa" statementType="CALLABLE">
+        SELECT e.idEmpresa, e.nombre, e.nombreComercial, e.logo,e.email,e.telefono, e.paginaWeb, e.rfc, es.idEstatus, es.nombre AS nombreEstatus 
+        FROM empresa e 
+        INNER JOIN estatus es ON es.idEstatus=e.estatus; 
     </select>
     
     <insert id="registrarEmpresa" parameterType="modelo.pojo.DatosRegistroEmpresa" statementType="CALLABLE">
@@ -18,7 +20,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{empresa.telefono, mode=IN, jdbcType=VARCHAR},
             #{empresa.paginaWeb, mode=IN, jdbcType=VARCHAR},
             #{empresa.rfc, mode=IN, jdbcType=VARCHAR},
-            #{empresa.estatus, mode=IN, jdbcType=INTEGER},
       
             #{persona.nombre, mode=IN, jdbcType=VARCHAR},
             #{persona.apellidoPaterno, mode=IN, jdbcType=VARCHAR},
@@ -44,7 +45,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{empresa.email, mode=IN, jdbcType=VARCHAR},
             #{empresa.telefono, mode=IN, jdbcType=VARCHAR},
             #{empresa.paginaWeb, mode=IN, jdbcType=VARCHAR},
-            #{empresa.estatus, mode=IN, jdbcType=INTEGER},
+            #{empresa.idEstatus, mode=IN, jdbcType=INTEGER},
             
             #{direccion.idDireccion, mode=IN, jdbcType=INTEGER},
             #{direccion.calle, mode=IN, jdbcType=VARCHAR},
@@ -65,6 +66,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <delete id="eliminarEmpresa" parameterType="modelo.pojo.Empresa">
         DELETE FROM empresa WHERE idEmpresa = #{idEmpresa}
     </delete>
-
+    
+    <select id="obtenerRepresentantePorId" resultType="modelo.pojo.Persona" parameterType="int">
+        SELECT pe.idPersona, pe.nombre, pe.apellidoPaterno, pe.apellidoMaterno 
+        FROM persona pe 
+        INNER JOIN empresa e ON pe.idPersona=e.representante 
+        WHERE e.idEmpresa=#{idEmpresa};
+    </select>
+    
+    <select id="obtenerDireccionPorId" resultType="modelo.pojo.Direccion" parameterType="int">
+        SELECT di.idDireccion, di.calle, di.numero, di.codigoPostal, di.ciudad 
+        FROM direccion di 
+        INNER JOIN empresa e ON e.direccion = di.idDireccion 
+        WHERE e.idEmpresa = #{idEmpresa} 
+    </select>
 
 </mapper>

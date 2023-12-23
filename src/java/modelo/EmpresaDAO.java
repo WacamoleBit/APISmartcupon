@@ -5,108 +5,132 @@
  */
 package modelo;
 
+import java.util.ArrayList;
 import modelo.pojo.DatosRegistroEmpresa;
 import modelo.pojo.Empresa;
 import modelo.pojo.Mensaje;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 import java.util.List;
+import modelo.pojo.Direccion;
+import modelo.pojo.Persona;
 
 /**
  *
  * @author jegal
  */
 public class EmpresaDAO {
-    
+
     //BUSCAR EMPRESA POR NOMBRE, RFC O NOMBRE DEL REPRESENTANTE
-    
-    public static List<Empresa> obtenerEmpresas(List<Empresa> empresas){
+    public static List<Empresa> obtenerEmpresas() {
+        List<Empresa> empresas = new ArrayList<>();
         SqlSession conexionBD = MyBatisUtil.getSession();
-        if(conexionBD!=null){
+        if (conexionBD != null) {
             try {
-                
-                empresas = conexionBD.selectList("empresa.obtenerEmpresas");
-                
+
+                empresas = conexionBD.selectList("empresa.obtenerListaEmpresas");
+
             } catch (Exception e) {
                 e.printStackTrace();
-            }finally{
+            } finally {
                 conexionBD.close();
             }
         }
-        
+
         return empresas;
     }
-    
-    public static Mensaje registrarEmpresa(DatosRegistroEmpresa datos){
+
+    public static DatosRegistroEmpresa obtenerDatosEmpresa(Integer idEmpresa) {
+        DatosRegistroEmpresa empresa = new DatosRegistroEmpresa();
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        if (conexionBD != null) {
+            try {
+
+                Persona persona = conexionBD.selectOne("empresa.obtenerRepresentantePorId", idEmpresa);
+                Direccion direccion = conexionBD.selectOne("empresa.obtenerDireccionPorId", idEmpresa);
+
+                empresa.setPersona(persona);
+                empresa.setDireccion(direccion);
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                conexionBD.close();
+            }
+        }
+
+        return empresa;
+    }
+
+    public static Mensaje registrarEmpresa(DatosRegistroEmpresa datos) {
         Mensaje mensaje = new Mensaje();
         mensaje.setError(true);
         SqlSession conexionDB = MyBatisUtil.getSession();
-        if (conexionDB != null){
-            try{
+        if (conexionDB != null) {
+            try {
                 conexionDB.insert("empresa.registrarEmpresa", datos);
                 conexionDB.commit();
-                
-                if(datos.getFilasAfectadas() > 0){
+
+                if (datos.getFilasAfectadas() > 0) {
                     mensaje.setError(false);
                     mensaje.setMensaje("Empresa registrada con éxito.");
-                }else{
+                } else {
                     mensaje.setMensaje("Error: No se pudo registrar la empresa, por favor intenta de nuevo.");
                 }
-            }catch(Exception e){
+            } catch (Exception e) {
                 mensaje.setMensaje("Error: " + e.getMessage());
-            }finally{
+            } finally {
                 conexionDB.close();
             }
-        }else{
-            mensaje.setMensaje("Error: Por el momento no hay conexión con la base de datos, intenta mas tarde.");
-        }
-        return  mensaje;
-    }
-
-    public static Mensaje editarEmpresa(DatosRegistroEmpresa datos){
-        Mensaje mensaje = new Mensaje();
-        mensaje.setError(true);
-        SqlSession conexionBD = MyBatisUtil.getSession();
-        if(conexionBD != null){
-            try{
-                conexionBD.update("empresa.editarEmpresa", datos);
-                conexionBD.commit();
-                if(datos.getFilasAfectadas() > 0 && datos.getError().isEmpty()){
-                mensaje.setError(false);
-                mensaje.setMensaje("Empresa modificada con éxito.");
-                }else{
-                    mensaje.setMensaje(datos.getError());
-                }
-            }catch(Exception e){
-                mensaje.setMensaje("Error" + e.getMessage());
-            }finally{
-                conexionBD.close();
-            }
-        }else{
+        } else {
             mensaje.setMensaje("Error: Por el momento no hay conexión con la base de datos, intenta mas tarde.");
         }
         return mensaje;
     }
-    
-    public static Mensaje eliminarEmpresa(Empresa empresa){
+
+    public static Mensaje editarEmpresa(DatosRegistroEmpresa datos) {
         Mensaje mensaje = new Mensaje();
         mensaje.setError(true);
         SqlSession conexionBD = MyBatisUtil.getSession();
-        if(conexionBD != null){
-            try{
-                int numeroFilasAfectadas = conexionBD.delete("empresa.emilinarEmpresa", empresa);
-                if(numeroFilasAfectadas > 0){
+        if (conexionBD != null) {
+            try {
+                conexionBD.update("empresa.editarEmpresa", datos);
+                conexionBD.commit();
+                if (datos.getFilasAfectadas() > 0 && datos.getError().isEmpty()) {
                     mensaje.setError(false);
-                    mensaje.setMensaje("Empresa eliminada con éxito.");
-                }else{
-                    mensaje.setMensaje("Error: No se pudo eliminar la empresa, por favor intenta de nuevo.");
+                    mensaje.setMensaje("Empresa modificada con éxito.");
+                } else {
+                    mensaje.setMensaje(datos.getError());
                 }
-            }catch(Exception e){
+            } catch (Exception e) {
                 mensaje.setMensaje("Error" + e.getMessage());
-            }finally{
+            } finally {
                 conexionBD.close();
             }
-        }else{
+        } else {
+            mensaje.setMensaje("Error: Por el momento no hay conexión con la base de datos, intenta mas tarde.");
+        }
+        return mensaje;
+    }
+
+    public static Mensaje eliminarEmpresa(Empresa empresa) {
+        Mensaje mensaje = new Mensaje();
+        mensaje.setError(true);
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        if (conexionBD != null) {
+            try {
+                int numeroFilasAfectadas = conexionBD.delete("empresa.emilinarEmpresa", empresa);
+                if (numeroFilasAfectadas > 0) {
+                    mensaje.setError(false);
+                    mensaje.setMensaje("Empresa eliminada con éxito.");
+                } else {
+                    mensaje.setMensaje("Error: No se pudo eliminar la empresa, por favor intenta de nuevo.");
+                }
+            } catch (Exception e) {
+                mensaje.setMensaje("Error" + e.getMessage());
+            } finally {
+                conexionBD.close();
+            }
+        } else {
             mensaje.setMensaje("Error: Por el momento no hay conexión con la base de datos, intenta mas tarde.");
         }
         return mensaje;
