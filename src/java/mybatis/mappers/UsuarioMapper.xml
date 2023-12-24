@@ -31,4 +31,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{porRol, mode=IN}
         )}
     </select>
+    
+    <select id="obtenerTodos" resultType="modelo.pojo.Usuario">
+        SELECT idUsuario, u.nombre, apellidoPaterno, apellidoMaterno, curp, u.email, username, password, rol, r.nombre as nombreRol, empresa, e.nombreComercial as nombreEmpresa 
+        FROM usuario u
+        INNER JOIN rol r ON u.rol = r.idRol
+        LEFT JOIN empresa e ON u.empresa = e.idEmpresa;
+    </select>
+    
+    <select id="obtenerPorId" resultType="modelo.pojo.Usuario" parameterType="int">
+        SELECT *
+        FROM usuario
+        WHERE idUsuario = #{idUsuario};
+    </select>
 </mapper>

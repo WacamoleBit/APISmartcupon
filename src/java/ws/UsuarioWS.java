@@ -151,25 +151,25 @@ public class UsuarioWS {
             @QueryParam("porNombre") Boolean porNombre,
             @QueryParam("porUsername") Boolean porUsername,
             @QueryParam("porRol") Boolean porRol) {
-        
+
         if (cadenaBusqueda == null) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-        
+
         if (porNombre == null) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-        
+
         if (porUsername == null) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-        
+
         if (porRol == null) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-        
+
         FiltroBuscarUsuario cadenaFiltro = new FiltroBuscarUsuario();
-        
+
         cadenaFiltro.setCadenaBusqueda(cadenaBusqueda);
         cadenaFiltro.setPorNombre(porNombre);
         cadenaFiltro.setPorUsername(porUsername);
@@ -178,4 +178,21 @@ public class UsuarioWS {
         return UsuarioDAO.buscarPorFiltro(cadenaFiltro);
     }
 
+    @GET
+    @Path("obtenerTodos")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Usuario> obtenerTodos() {
+        return UsuarioDAO.obtenerTodos();
+    }
+
+    @GET
+    @Path("obtenerPorId/{idUsuario}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Usuario obtenerPorId(@PathParam("idUsuario") Integer idUsuario) {
+        if (idUsuario == null || idUsuario < 1) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        return UsuarioDAO.obtenerPorId(idUsuario);
+    }
 }
