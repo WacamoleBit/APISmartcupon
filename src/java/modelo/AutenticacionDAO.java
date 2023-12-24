@@ -55,7 +55,7 @@ public class AutenticacionDAO {
         if (conexionBD != null) {
             try {
 
-                Usuario sesionUsuario = conexionBD.selectOne("iniciarSesionUsuario", usuario);
+                Usuario sesionUsuario = conexionBD.selectOne("autenticacion.iniciarSesionUsuario", usuario);
 
                 if (sesionUsuario != null) {
                     mensaje.setError(false);
