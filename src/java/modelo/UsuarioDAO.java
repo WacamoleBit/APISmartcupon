@@ -122,4 +122,30 @@ public class UsuarioDAO {
         
         return usuarios;
     }
+    
+    public static List<Usuario> obtenerTodos () {
+        List<Usuario> usuarios = null;
+        
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        
+        if(conexionBD != null) {
+            usuarios = new ArrayList<>();
+            
+            usuarios = conexionBD.selectList("usuario.obtenerTodos");
+        }
+        
+        return usuarios;
+    }
+    
+    public static Usuario obtenerPorId (int idUsuario) {
+        Usuario usuario = null;
+        
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        
+        if(conexionBD != null) {
+            usuario = conexionBD.selectOne("usuario.obtenerPorId", idUsuario);
+        }
+        
+        return usuario;
+    }
 }
