@@ -129,7 +129,7 @@ public class UsuarioWS {
 
         usuario.setIdUsuario(idUsuario);
 
-        return UsuarioDAO.registrarUsuario(usuario);
+        return UsuarioDAO.editarUsuario(usuario);
     }
 
     @DELETE

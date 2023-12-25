@@ -13,7 +13,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <update id="editarUsuario" parameterType="modelo.pojo.Usuario">
         UPDATE usuario 
-        SET nombre = #{nombre}, apellidoPaterno = #{apellidoPaterno}, apellidoMaterno = #{apellidoMaterno}, curp = #{curp}, email = #{email}, username = #{username}, password = #{password}
+        SET nombre = #{nombre}, apellidoPaterno = #{apellidoPaterno}, 
+        apellidoMaterno = #{apellidoMaterno}, curp = #{curp}, email = #{email}, 
+        username = #{username}, password = #{password}, rol = #{rol}, empresa = #{empresa}
         WHERE idUsuario = #{idUsuario}
     </update>
     
@@ -36,7 +38,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         SELECT idUsuario, u.nombre, apellidoPaterno, apellidoMaterno, curp, u.email, username, password, rol, r.nombre as nombreRol, empresa, e.nombreComercial as nombreEmpresa 
         FROM usuario u
         INNER JOIN rol r ON u.rol = r.idRol
-        LEFT JOIN empresa e ON u.empresa = e.idEmpresa;
+        LEFT JOIN empresa e ON u.empresa = e.idEmpresa
+        ORDER BY idUsuario;
     </select>
     
     <select id="obtenerPorId" resultType="modelo.pojo.Usuario" parameterType="int">
