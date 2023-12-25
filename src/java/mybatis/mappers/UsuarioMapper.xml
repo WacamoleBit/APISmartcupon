@@ -26,7 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
     
     <select id="buscarUsuarioPorFiltro" parameterType="modelo.pojo.FiltroBuscarUsuario" resultType="modelo.pojo.Usuario" statementType="CALLABLE">
-        {CALL buscarUsuarioPorFiltro(
+        {CALL buscarPorFiltro(
             #{cadenaBusqueda, mode=IN},
             #{porNombre, mode=IN},
             #{porUsername, mode=IN},
