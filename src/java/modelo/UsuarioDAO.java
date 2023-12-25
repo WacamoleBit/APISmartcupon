@@ -27,7 +27,7 @@ public class UsuarioDAO {
         
         if(conexionBD != null) {
             try {
-                int filasAfectadas = conexionBD.insert("usuario.editararUsuario", usuario);
+                int filasAfectadas = conexionBD.insert("usuario.registrarUsuario", usuario);
                 conexionBD.commit();
                 
                 if(filasAfectadas > 0){    
