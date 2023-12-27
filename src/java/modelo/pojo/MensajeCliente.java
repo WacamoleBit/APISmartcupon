@@ -13,6 +13,16 @@ public class MensajeCliente {
     
     private Boolean error;
     private String mensaje;
+    private Cliente cliente;
+    
+    public MensajeCliente() {
+    }
+
+    public MensajeCliente(Boolean error, String mensaje, Cliente cliente) {
+        this.error = error;
+        this.mensaje = mensaje;
+        this.cliente = cliente;
+    }
 
     public Boolean getError() {
         return error;
@@ -29,16 +39,6 @@ public class MensajeCliente {
     public void setMensaje(String mensaje) {
         this.mensaje = mensaje;
     }
-    private Cliente cliente;
-    
-    public MensajeCliente() {
-    }
-
-    public MensajeCliente(Cliente cliente, boolean error, String mensaje) {
-        this.error = error;
-        this.mensaje=mensaje;
-        this.cliente = cliente;
-    }
 
     public Cliente getCliente() {
         return cliente;
@@ -46,6 +46,6 @@ public class MensajeCliente {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
-    }    
-    
+    }
+
 }

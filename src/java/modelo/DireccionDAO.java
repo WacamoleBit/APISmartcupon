@@ -5,7 +5,11 @@
  */
 package modelo;
 
+import java.util.ArrayList;
+import java.util.List;
+import modelo.pojo.Ciudad;
 import modelo.pojo.Direccion;
+import modelo.pojo.Estado;
 import modelo.pojo.Mensaje;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
@@ -18,7 +22,6 @@ public class DireccionDAO {
 
     public static Direccion obtenerDireccionPorId(Integer id) {
         Direccion direccion = null;
-        System.err.println(id);
         SqlSession conexionBD = MyBatisUtil.getSession();
         if (conexionBD != null) {
             try {
@@ -150,5 +153,43 @@ public class DireccionDAO {
         }
 
         return mensaje;
+    }
+    
+    public static List<Estado> obtenerEstados(){
+        List<Estado> estados = new ArrayList<>();
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        if(conexionBD!= null){
+            try {
+                
+                estados = conexionBD.selectList("direccion.obtenerEstados");
+                
+            } catch (Exception e) {
+                e.printStackTrace();
+            }finally{
+                conexionBD.close();
+            }
+        }
+        
+        
+        return estados;
+    }
+    
+    
+    public static List<Ciudad> obtenerCiudades(Integer idEstado){
+        List<Ciudad> ciudades = new ArrayList<>();
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        if(conexionBD!= null){
+            try {
+                
+                ciudades = conexionBD.selectList("direccion.obtenerCiudades", idEstado);
+                
+            } catch (Exception e) {
+                e.printStackTrace();
+            }finally{
+                conexionBD.close();
+            }
+        }
+           
+        return ciudades;
     }
 }

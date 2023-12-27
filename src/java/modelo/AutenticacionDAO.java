@@ -6,6 +6,8 @@
 package modelo;
 
 import modelo.pojo.Cliente;
+import modelo.pojo.DatosRegistroCliente;
+import modelo.pojo.Direccion;
 import modelo.pojo.MensajeUsuario;
 import modelo.pojo.MensajeCliente;
 import modelo.pojo.Usuario;
@@ -26,12 +28,14 @@ public class AutenticacionDAO {
         if (conexionBD != null) {
             try {
 
-                Cliente sesionCliente = conexionBD.selectOne("autenticacion.iniciarSesionCliente", cliente);
-
-                if (sesionCliente != null) {
+                Cliente clienteSesion = conexionBD.selectOne("autenticacion.iniciarSesionCliente", cliente);
+                 
+                
+                if (clienteSesion != null) {
                     respuesta.setError(false);
-                    respuesta.setMensaje("Bienvenid(@) " + sesionCliente.getNombre() + " al catálogo de promociones");
-                    respuesta.setCliente(sesionCliente);
+                    respuesta.setMensaje("Bienvenid(@) " + clienteSesion.getNombre() + " al catálogo de promociones");
+                    respuesta.setCliente(clienteSesion);
+                    
                 } else {
                     respuesta.setMensaje("Correo electrónico y/o contraseña incorrectos, favor de verificarlos");
                 }

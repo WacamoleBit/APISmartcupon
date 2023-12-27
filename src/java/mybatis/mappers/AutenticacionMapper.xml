@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="autenticacion">
     
     <select id="iniciarSesionCliente" resultType="modelo.pojo.Cliente" parameterType="modelo.pojo.Cliente">
-        SELECT * 
+        SELECT idCliente, nombre, apellidoPaterno, apellidoMaterno, telefono, email, direccion, fechaNacimiento, password
         FROM cliente 
         WHERE email = #{email} AND password=#{password}
     </select>

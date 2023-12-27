@@ -4,7 +4,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="sucursal">
-
+    
+    <select id="obtenerSucursales" resultType="modelo.pojo.Sucursal">
+        SELECT idSucursal, nombre, direccion, telefono, latitud, longitud, encargado, empresa FROM sucursal;
+    </select>
     
     <insert id="registrarSucursal" parameterType="modelo.pojo.DatosRegistroSucursal" statementType="CALLABLE">
            {CALL registrarSucursal(
@@ -53,5 +56,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{error, mode=INOUT, jdbcType=INTEGER}
     )}
     </update>
+    
+      <select id="obtenerEncargadoPorId" resultType="modelo.pojo.Persona" parameterType="int">
+        SELECT pe.idPersona, pe.nombre, pe.apellidoPaterno, pe.apellidoMaterno 
+        FROM persona pe 
+        INNER JOIN sucursal s ON pe.idPersona=s.encargado 
+        WHERE s.idSucursal=#{idSucursal};
+    </select>
+    
+    <select id="obtenerDireccionPorId" resultType="modelo.pojo.Direccion" parameterType="int">
+        SELECT di.idDireccion, di.calle, di.numero, di.colonia, di.codigoPostal, di.ciudad, c.estado
+        FROM direccion di 
+        INNER JOIN sucursal s ON s.direccion = di.idDireccion 
+        INNER JOIN ciudad c ON di.ciudad = c.idCiudad 
+        WHERE s.idSucursal = #{idSucursal} 
+    </select>
+
     
 </mapper>

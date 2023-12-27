@@ -5,9 +5,12 @@
  */
 package modelo;
 
+import java.util.ArrayList;
+import java.util.List;
 import modelo.pojo.DatosRegistroSucursal;
 import modelo.pojo.Direccion;
 import modelo.pojo.Mensaje;
+import modelo.pojo.Persona;
 import modelo.pojo.Sucursal;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
@@ -18,10 +21,43 @@ import org.apache.ibatis.session.SqlSession;
  */
 public class SucursalDAO {
 
-    public static Sucursal obtenerSucursalPorDireccion(Direccion direccion) {
-        //TODO
-
-        return null;
+    public static List<Sucursal> obtenerSucursales(){
+        List<Sucursal> sucursales = new ArrayList<>();
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        if(conexionBD!=null){
+            try{
+                
+                sucursales = conexionBD.selectList("sucursal.obtenerSucursales");
+                
+            }catch(Exception e){
+                e.printStackTrace();
+            }finally{
+                conexionBD.close();
+            }
+        }
+        
+        return sucursales;
+    }
+    
+    public static DatosRegistroSucursal obtenerSucursalPorId(Integer idSucursal){
+        DatosRegistroSucursal datosSucursal = new DatosRegistroSucursal();
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        if(conexionBD!= null){
+            try {
+                
+                Persona persona = conexionBD.selectOne("sucursal.obtenerEncargadoPorId", idSucursal);
+                Direccion direccion = conexionBD.selectOne("sucursal.obtenerDireccionPorId", idSucursal);
+                
+                datosSucursal.setPersona(persona);
+                datosSucursal.setDireccion(direccion);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }finally{
+                conexionBD.close();
+            }
+        }
+        
+        return datosSucursal;
     }
     
     public static Mensaje registrarSucursal(DatosRegistroSucursal datos) {

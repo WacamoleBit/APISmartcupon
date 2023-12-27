@@ -75,9 +75,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
     
     <select id="obtenerDireccionPorId" resultType="modelo.pojo.Direccion" parameterType="int">
-        SELECT di.idDireccion, di.calle, di.numero, di.codigoPostal, di.ciudad 
+        SELECT di.idDireccion, di.calle, di.numero, di.codigoPostal, di.ciudad, c.estado
         FROM direccion di 
         INNER JOIN empresa e ON e.direccion = di.idDireccion 
+        INNER JOIN ciudad c ON di.ciudad = c.idCiudad 
         WHERE e.idEmpresa = #{idEmpresa} 
     </select>
 

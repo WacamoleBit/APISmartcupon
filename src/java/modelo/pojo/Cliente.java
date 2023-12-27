@@ -40,7 +40,7 @@ public class Cliente {
         return idCliente;
     }
 
-    public void setId(Integer id) {
+    public void setIdCliente(Integer idCliente) {
         this.idCliente = idCliente;
     }
 
@@ -107,5 +107,7 @@ public class Cliente {
     public void setPassword(String password) {
         this.password = password;
     }
+
+  
     
 }
