@@ -107,4 +107,11 @@ public class PromocionWS {
         return PromocionDAO.modificarPromocion(datos);
     }
 
+    @GET
+    @Path("obtenerPromociones")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public List<Promocion> obtenerPromociones() {
+        return PromocionDAO.obtenerPromociones();
+    }
+
 }

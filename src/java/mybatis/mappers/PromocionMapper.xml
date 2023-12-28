@@ -46,4 +46,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{error, mode=INOUT, jdbcType=VARCHAR}
         )}
     </update>
+    
+    <select id="obtenerPromociones" resultType="modelo.pojo.Promocion">
+        SELECT p.idPromocion, p.nombre, p.descripcion, p.fechaInicio, p.fechaTermino, 
+            p.restricciones, p.tipoPromocion, tp.nombre as tipoPromocionNombre, 
+            p.porcentajeDescuento, p.categoria, c.nombre as nombreCategoria,
+            p.cuponesDisponibles, p.codigoPromocion, p.estatus, es.nombre as estatusNombre, 
+            p.empresa, em.nombreComercial as empresaNombre FROM promocion p
+            INNER JOIN tipoPromocion tp ON p.tipoPromocion = tp.idTipoPromocion
+            INNER JOIN categoriapromocion c ON p.categoria = c.idCategoria
+            INNER JOIN estatus es ON p.estatus = es.idEstatus
+            INNER JOIN empresa em ON p.empresa = em.idEmpresa;
+    </select>
 </mapper>
