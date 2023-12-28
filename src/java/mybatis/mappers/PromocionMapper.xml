@@ -50,7 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="obtenerPromociones" resultType="modelo.pojo.Promocion">
         SELECT p.idPromocion, p.nombre, p.descripcion, p.fechaInicio, p.fechaTermino, 
             p.restricciones, p.tipoPromocion, tp.nombre as tipoPromocionNombre, 
-            p.porcentajeDescuento, p.categoria, c.nombre as nombreCategoria,
+            p.porcentajeDescuento, p.categoria, c.nombre as categoriaNombre,
             p.cuponesDisponibles, p.codigoPromocion, p.estatus, es.nombre as estatusNombre, 
             p.empresa, em.nombreComercial as empresaNombre FROM promocion p
             INNER JOIN tipoPromocion tp ON p.tipoPromocion = tp.idTipoPromocion
