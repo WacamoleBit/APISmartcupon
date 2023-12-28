@@ -20,7 +20,7 @@ CREATE PROCEDURE registrarPromocion(
     IN _tipoPromocion INT,
     IN _porcentajeDescuento INT,
     IN _categoria INT,
-    IN _cuponesDisponibles INT,
+    IN _maximoCupones INT,
     IN _codigoPromocion VARCHAR(8),
     IN _empresa INT,
 
@@ -66,12 +66,12 @@ BEGIN
 		BEGIN
 			INSERT INTO promocion (
 				nombre, descripcion, imagen, fechaInicio, fechaTermino, restricciones,
-				tipoPromocion, porcentajeDescuento, categoria, cuponesDisponibles, codigoPromocion,
+				tipoPromocion, porcentajeDescuento, categoria, cuponesDisponibles, maximoCupones, codigoPromocion,
 				estatus, empresa
 			)
 			VALUES (
 				_nombre, _descripcion, _imagen, _fechaInicio, _fechaTermino, _restricciones,
-				_tipoPromocion, _porcentajeDescuento, _categoria, _cuponesDisponibles, _codigoPromocion,
+				_tipoPromocion, _porcentajeDescuento, _categoria, _maximoCupones, _maximoCupones, _codigoPromocion,
 				1, _empresa
 			);
 

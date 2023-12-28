@@ -5,6 +5,8 @@
  */
 package modelo;
 
+import java.util.ArrayList;
+import java.util.List;
 import modelo.pojo.DatosRegistroPromocion;
 import modelo.pojo.Mensaje;
 import modelo.pojo.Promocion;
@@ -73,5 +75,19 @@ public class PromocionDAO {
         }
         
         return mensaje;
+    }
+    
+    public static List<Promocion> obtenerPromociones() {
+        List<Promocion> promociones = null;
+
+        SqlSession conexionBD = MyBatisUtil.getSession();
+
+        if (conexionBD != null) {
+            promociones = new ArrayList<>();
+            
+            promociones = conexionBD.selectList("promocion.obtenerPromociones");
+        }
+
+        return promociones;
     }
 }

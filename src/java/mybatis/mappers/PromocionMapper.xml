@@ -16,7 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{promocion.tipoPromocion, mode=IN, jdbcType=INTEGER},
             #{promocion.porcentajeDescuento, mode=IN, jdbcType=INTEGER},
             #{promocion.categoria, mode=IN, jdbcType=INTEGER},
-            #{promocion.cuponesDisponibles, mode=IN, jdbcType=INTEGER},
+            #{promocion.maximoCupones, mode=IN, jdbcType=INTEGER},
             #{promocion.codigoPromocion, mode=IN, jdbcType=VARCHAR},
             #{promocion.empresa, mode=IN, jdbcType=INTEGER},
             

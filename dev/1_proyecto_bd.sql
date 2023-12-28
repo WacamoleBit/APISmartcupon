@@ -127,6 +127,7 @@ CREATE TABLE
         porcentajeDescuento INT NOT NULL,
         categoria INT NOT NULL,
         cuponesDisponibles INT NOT NULL,
+        maximoCupones INT NOT NULL,
         codigoPromocion VARCHAR(8) UNIQUE NOT NULL,
         estatus INT NOT NULL,
         empresa INT NOT NULL,

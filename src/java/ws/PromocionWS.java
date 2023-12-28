@@ -6,6 +6,7 @@
 package ws;
 
 import com.google.gson.Gson;
+import java.util.List;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Consumes;
@@ -80,7 +81,7 @@ public class PromocionWS {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        if (promocion.getCuponesDisponibles() == null || promocion.getCuponesDisponibles() < 1) {
+        if (promocion.getMaximoCupones() == null || promocion.getMaximoCupones() < 1) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
