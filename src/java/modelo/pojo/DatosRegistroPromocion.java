@@ -15,6 +15,9 @@ public class DatosRegistroPromocion {
     private Integer filasAfectadas;
     private String error;
 
+    public DatosRegistroPromocion() {
+    }
+
     public DatosRegistroPromocion(Promocion promocion, Integer filasAfectadas, String error) {
         this.promocion = promocion;
         this.filasAfectadas = filasAfectadas;

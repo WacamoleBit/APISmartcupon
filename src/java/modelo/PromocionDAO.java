@@ -28,7 +28,7 @@ public class PromocionDAO {
         SqlSession conexionDB = MyBatisUtil.getSession();
         if (conexionDB != null) {
             try {
-                conexionDB.insert("promocion.registrarPromocion", datos);
+                conexionDB.insert("promociones.registrarPromocion", datos);
                 conexionDB.commit();
 
                 if (datos.getFilasAfectadas() > 0) {
@@ -52,12 +52,12 @@ public class PromocionDAO {
     public static Mensaje modificarPromocion(DatosRegistroPromocion datos) {
         Mensaje mensaje = new Mensaje();
         mensaje.setError(true);
-        
+
         SqlSession conexionBD = MyBatisUtil.getSession();
-        
+
         if (conexionBD != null) {
             try {
-                conexionBD.update("promocion.modificarPromocion", datos);
+                conexionBD.update("promociones.modificarPromocion", datos);
                 conexionBD.commit();
 
                 if (datos.getFilasAfectadas() > 0) {
@@ -75,10 +75,40 @@ public class PromocionDAO {
         } else {
             mensaje.setMensaje("Error: Por el momento no hay conexión con la base de datos, intenta mas tarde.");
         }
-        
+
         return mensaje;
     }
-    
+
+    public static Mensaje eliminarPromocion(DatosRegistroPromocion datos) {
+        Mensaje mensaje = new Mensaje();
+        mensaje.setError(true);
+
+        SqlSession conexionBD = MyBatisUtil.getSession();
+
+        if (conexionBD != null) {
+            try {
+                conexionBD.delete("promociones.eliminarPromocion", datos);
+                conexionBD.commit();
+
+                if (datos.getFilasAfectadas() > 0) {
+                    mensaje.setError(false);
+                    mensaje.setMensaje("La promoción se eliminó correctamente");
+                } else {
+                    mensaje.setMensaje(datos.getError());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                mensaje.setMensaje("Error: La base de datos no pudo eliminar la promoción");
+            } finally {
+                conexionBD.close();
+            }
+        } else {
+            mensaje.setMensaje("Error: Por el momento no hay conexion con la base de datos");
+        }
+
+        return mensaje;
+    }
+
     public static List<Promocion> obtenerPromociones() {
         List<Promocion> promociones = null;
 
@@ -86,13 +116,13 @@ public class PromocionDAO {
 
         if (conexionBD != null) {
             promociones = new ArrayList<>();
-            
-            promociones = conexionBD.selectList("promocion.obtenerPromociones");
+
+            promociones = conexionBD.selectList("promociones.obtenerPromociones");
         }
 
         return promociones;
     }
-    
+
     public static List<TipoPromocion> obtenerTiposPromocion() {
         List<TipoPromocion> tiposPromocion = null;
 
@@ -100,13 +130,13 @@ public class PromocionDAO {
 
         if (conexionBD != null) {
             tiposPromocion = new ArrayList<>();
-            
-            tiposPromocion = conexionBD.selectList("promocion.obtenerTiposPromocion");
+
+            tiposPromocion = conexionBD.selectList("promociones.obtenerTiposPromocion");
         }
 
         return tiposPromocion;
     }
-    
+
     public static List<Categoria> obtenerCategorias() {
         List<Categoria> categorias = null;
 
@@ -114,8 +144,8 @@ public class PromocionDAO {
 
         if (conexionBD != null) {
             categorias = new ArrayList<>();
-            
-            categorias = conexionBD.selectList("promocion.obtenerCategorias");
+
+            categorias = conexionBD.selectList("promociones.obtenerCategorias");
         }
 
         return categorias;

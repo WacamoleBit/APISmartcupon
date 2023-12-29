@@ -4,7 +4,8 @@ USE smartcupon_db;
 
 DROP PROCEDURE IF EXISTS registrarPromocion;
 DROP PROCEDURE IF EXISTS modificarPromocion;
-
+DROP PROCEDURE IF EXISTS eliminarPromocion;
+DROP TRIGGER IF EXISTS delete_promocion_trigger;
 
 DELIMITER //
 
@@ -174,5 +175,31 @@ BEGIN
 END//
 
 -- DELETE
+
+CREATE TRIGGER delete_promocion_trigger
+AFTER DELETE ON promocion FOR EACH ROW
+BEGIN
+	DELETE FROM promocionsucursal WHERE idPromocion = OLD.idPromocion;
+END; //
+
+
+CREATE PROCEDURE eliminarPromocion (
+	IN _idPromocion INT,
+    
+    INOUT _filasAfectadas INT,
+    INOUT _error VARCHAR(255)
+)
+BEGIN
+	SET _filasAfectadas = 0;
+    SET _error = '';
+    
+	IF NOT EXISTS (SELECT * FROM promocion WHERE idPromocion = _idPromocion) THEN
+		SET _error = CONCAT(_error, "No existe la promoción proporcionada");
+	ELSE
+		DELETE FROM promocion WHERE idPromocion = _idPromocion;
+            
+		SET _filasAfectadas = ROW_COUNT();
+    END IF;
+END //
 
 DELIMITER ;

@@ -10,11 +10,13 @@ import java.util.List;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -107,6 +109,23 @@ public class PromocionWS {
         DatosRegistroPromocion datos = gson.fromJson(json, DatosRegistroPromocion.class);
 
         return PromocionDAO.modificarPromocion(datos);
+    }
+    
+    @DELETE
+    @Path("eliminarPromocion/{idPromocion}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje eliminarPromocion(@PathParam("idPromocion") Integer idPromocion) {
+        if (idPromocion == null || idPromocion <= 0) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        Promocion promocion = new Promocion();
+        promocion.setIdPromocion(idPromocion);
+        
+        DatosRegistroPromocion datos = new DatosRegistroPromocion();
+        datos.setPromocion(promocion);
+        
+        return PromocionDAO.eliminarPromocion(datos);
     }
 
     @GET
