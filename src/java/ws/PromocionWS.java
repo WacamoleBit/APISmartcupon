@@ -19,9 +19,11 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import modelo.PromocionDAO;
+import modelo.pojo.Categoria;
 import modelo.pojo.DatosRegistroPromocion;
 import modelo.pojo.Mensaje;
 import modelo.pojo.Promocion;
+import modelo.pojo.TipoPromocion;
 
 /**
  * REST Web Service
@@ -41,7 +43,7 @@ public class PromocionWS {
     }
 
     @POST
-    @Path("registrar")
+    @Path("registrarPromocion")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Mensaje registrarPromocion(String json) {
@@ -97,7 +99,7 @@ public class PromocionWS {
     }
 
     @PUT
-    @Path("modificar")
+    @Path("modificarPromocion")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Mensaje modificarPromocion(String json) {
@@ -109,9 +111,22 @@ public class PromocionWS {
 
     @GET
     @Path("obtenerPromociones")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public List<Promocion> obtenerPromociones() {
         return PromocionDAO.obtenerPromociones();
     }
-
+    
+    @GET
+    @Path("obtenerTiposPromocion")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<TipoPromocion> obtenerTiposPromocion() {
+        return PromocionDAO.obtenerTiposPromocion();
+    }
+    
+    @GET
+    @Path("obtenerCategorias")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Categoria> obtenerCategirias() {
+        return PromocionDAO.obtenerCategorias();
+    }
 }

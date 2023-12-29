@@ -7,9 +7,11 @@ package modelo;
 
 import java.util.ArrayList;
 import java.util.List;
+import modelo.pojo.Categoria;
 import modelo.pojo.DatosRegistroPromocion;
 import modelo.pojo.Mensaje;
 import modelo.pojo.Promocion;
+import modelo.pojo.TipoPromocion;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 
@@ -89,5 +91,33 @@ public class PromocionDAO {
         }
 
         return promociones;
+    }
+    
+    public static List<TipoPromocion> obtenerTiposPromocion() {
+        List<TipoPromocion> tiposPromocion = null;
+
+        SqlSession conexionBD = MyBatisUtil.getSession();
+
+        if (conexionBD != null) {
+            tiposPromocion = new ArrayList<>();
+            
+            tiposPromocion = conexionBD.selectList("promocion.obtenerTiposPromocion");
+        }
+
+        return tiposPromocion;
+    }
+    
+    public static List<Categoria> obtenerCategorias() {
+        List<Categoria> categorias = null;
+
+        SqlSession conexionBD = MyBatisUtil.getSession();
+
+        if (conexionBD != null) {
+            categorias = new ArrayList<>();
+            
+            categorias = conexionBD.selectList("promocion.obtenerCategorias");
+        }
+
+        return categorias;
     }
 }

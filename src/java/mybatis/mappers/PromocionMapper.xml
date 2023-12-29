@@ -58,4 +58,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             INNER JOIN estatus es ON p.estatus = es.idEstatus
             INNER JOIN empresa em ON p.empresa = em.idEmpresa;
     </select>
+    
+    <select id="obtenerTiposPromocion" resultType="modelo.pojo.TipoPromocion">
+        SELECT * FROM tipopromocion;
+    </select>
+    
+    <select id="obtenerCategorias" resultType="modelo.pojo.Categoria">
+        SELECT * FROM categoriapromocion
+    </select>
 </mapper>
