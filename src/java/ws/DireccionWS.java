@@ -46,89 +46,25 @@ public class DireccionWS {
 
     /**
      * Retrieves representation of an instance of ws.DireccionWS
+     *
      * @return an instance of java.lang.String
      */
-    
-    
     @GET
     @Path("obtenerEstados")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Estado> obtenerEstados(){
-        
+    public List<Estado> obtenerEstados() {
+
         return DireccionDAO.obtenerEstados();
     }
-    
+
     @GET
     @Path("obtenerCiudades/{idEstado}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Ciudad> obtenerCiudades(@PathParam("idEstado") Integer idEstado){
-    
-        return DireccionDAO.obtenerCiudades(idEstado);
-    }
-    
-    //Los siguientes tres metodos son para agregar una Direccion a un cliente
-    @POST
-    @Path("obtenerDireccion")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Direccion obtenerDomicilioPorId(String json){
+    public List<Ciudad> obtenerCiudades(@PathParam("idEstado") Integer idEstado) {
+        if (idEstado == null && idEstado < 1) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        } 
         
-        Gson gson = new Gson();
-        Direccion direccion = null;
-        Cliente cliente= gson.fromJson(json, Cliente.class);
-        if(cliente != null && cliente.getIdCliente() != null && cliente.getIdCliente()>0){
-            return direccion = DireccionDAO.obtenerDireccionPorId(cliente.getIdCliente());
-        }else{
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        }
-    }
-    
-    
-    
-    @PUT
-    @Path("editarDireccionCliente")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Mensaje modificarDireccionCliente(String json){
-        Gson gson = new Gson();
-        Direccion direccion = gson.fromJson(json, Direccion.class);
-        if(direccion!=null && direccion.getIdDomicilio()!=0 && direccion.getIdDomicilio()>0 && !direccion.getCalle().isEmpty() && direccion.getNumero()!=0){
-            return DireccionDAO.modificarDireccionCliente(direccion);
-        }else{
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        }
-    }
-    
-    //Para una empresa
-    //TODO
-    
-    
-    //Para una sucursal
-    @POST
-    @Path("registrarDireccionSucursal")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Mensaje registrarDireccionSucursal(String json){
-        Gson gson = new Gson();
-        Direccion direccion = gson.fromJson(json, Direccion.class);
-        if(direccion!=null){
-            return DireccionDAO.ingresarDireccionSucursal(direccion);
-        }else{
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        }
-    }
-    
-    @PUT
-    @Path("editarDireccionSucursal")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Mensaje modificarDireccionSucursal(String json){
-        Gson gson = new Gson();
-        Direccion direccion = gson.fromJson(json, Direccion.class);
-        if(direccion!= null){
-            return DireccionDAO.modificarDireccionSucursal(direccion);
-        }else{
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        }
+        return DireccionDAO.obtenerCiudades(idEstado);
     }
 }

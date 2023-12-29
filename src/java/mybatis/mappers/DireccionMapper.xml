@@ -5,37 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="direccion">
     
-    <select id="obtenerDireccionPorId" parameterType="int" resultType="modelo.pojo.Direccion">
-        SELECT idDireccion, calle, numero 
-        FROM direccion 
-        WHERE idDireccion=#{direccion}
-    </select>
-    
-    <insert id="registrarDireccionCliente" parameterType="modelo.pojo.Direccion">
-        INSERT INTO direccion(calle, numero, ciudad, tipoDireccion ) 
-        VALUES (#{calle},#{numero},#{ciudad},#{tipoDireccion})
-    </insert>
-    
-    <insert id="registrarDireccionEmpresa" parameterType="modelo.pojo.Direccion">
-        INSERT INTO direccion(calle, numero, codigoPostal, ciudad, tipoDireccion ) 
-        VALUES (#{calle},#{numero},#{codigoPostal},#{ciudad},#{tipoDireccion})
-    </insert>
-    
-    <insert id="registrarDireccionSucursal" parameterType="modelo.pojo.Direccion">
-        INSERT INTO direccion(calle, numero, colonia, codigoPostal, ciudad, tipoDireccion ) 
-        VALUES (#{calle},#{numero},#{colonia},#{codigoPostal},#{ciudad},#{tipoDireccion})
-    </insert>
    
-    <update id="modificarDireccionCliente" parameterType="modelo.pojo.Direccion">
-        UPDATE direccion SET calle=#{calle}, numero=#{numero} 
-        WHERE idDireccion=#{idDireccion} AND tipoDireccion=#{tipoDireccion}
-    </update>
-    
-    <update id="modificarDireccionSucursal" parameterType="modelo.pojo.Direccion">
-        UPDATE direccion SET calle=#{calle}, numero=#{numero}, colonia=#{colonia}, codigoPostal=#{codigoPostal},ciudad=#{ciudad} 
-        WHERE idDireccion=#{idDireccion} AND tipoDireccion=#{tipoDireccion}
-    </update>
-    
     <select id="obtenerEstados" resultType="modelo.pojo.Estado">
         SELECT idEstado, nombre FROM estado
     </select>

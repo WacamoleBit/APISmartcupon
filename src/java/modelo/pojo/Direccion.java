@@ -32,12 +32,12 @@ public class Direccion {
         this.tipoDireccion = tipoDireccion;
     }
 
-    public Integer getIdDomicilio() {
+    public Integer getIdDireccion() {
         return idDireccion;
     }
 
-    public void setIdDomicilio(Integer idDomicilio) {
-        this.idDireccion = idDomicilio;
+    public void setIdDireccion(Integer idDireccion) {
+        this.idDireccion = idDireccion;
     }
 
     public String getCalle() {

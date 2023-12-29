@@ -8,6 +8,7 @@ package modelo;
 import java.util.HashMap;
 import modelo.pojo.Cliente;
 import modelo.pojo.DatosRegistroCliente;
+import modelo.pojo.Direccion;
 import modelo.pojo.Mensaje;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
@@ -17,6 +18,24 @@ import org.apache.ibatis.session.SqlSession;
  * @author Dell
  */
 public class ClienteDAO {
+    
+    public static Direccion obtenerDireccion(Integer idDireccion){
+        Direccion direccion = new Direccion();
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        if (conexionBD!= null ) {
+            try {
+                
+                direccion = conexionBD.selectOne("cliente.obtenerDireccionPorId", idDireccion);
+                
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else{
+            
+        }
+        
+        return direccion;
+    }
 
     public static Mensaje registrarCliente(DatosRegistroCliente datos) {
         Mensaje mensaje = new Mensaje();

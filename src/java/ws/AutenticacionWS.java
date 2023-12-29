@@ -45,12 +45,23 @@ public class AutenticacionWS {
     @Consumes(MediaType.APPLICATION_JSON)
     public MensajeCliente inicioSesionCliente(String json) {
         Gson gson = new Gson();
-        Cliente cliente = gson.fromJson(json, Cliente.class);
-        if (cliente != null && !cliente.getEmail().isEmpty() && !cliente.getPassword().isEmpty()) {
+        if (json != null) {
+            Cliente cliente = gson.fromJson(json, Cliente.class);
+            if (cliente == null) {
+                throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            }
+            if (cliente.getEmail() == null || cliente.getEmail().trim().isEmpty()) {
+                throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            }
+            if (cliente.getPassword() == null || cliente.getPassword().trim().isEmpty()) {
+                throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            }
+
             return AutenticacionDAO.iniciarSesionCliente(cliente);
         } else {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
+
     }
 
     @POST
@@ -61,6 +72,13 @@ public class AutenticacionWS {
         Gson gson = new Gson();
         Usuario usuario = gson.fromJson(json, Usuario.class);
         if (usuario != null) {
+            if(usuario.getUsername() == null || usuario.getUsername().trim().isEmpty()){
+                throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            }
+            if(usuario.getPassword() == null || usuario.getPassword().trim().isEmpty()){
+                throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            }
+            
             return AutenticacionDAO.iniciarSesionUsuario(usuario);
         } else {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);

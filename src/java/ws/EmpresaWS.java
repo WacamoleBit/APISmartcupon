@@ -56,8 +56,12 @@ public class EmpresaWS {
     @Path("obtenerInformacionEmpresa/{idEmpresa}")
     @Produces(MediaType.APPLICATION_JSON)
     public DatosRegistroEmpresa datosEmpresa(@PathParam("idEmpresa") Integer idEmpresa){
-    
-        return EmpresaDAO.obtenerDatosEmpresa(idEmpresa);
+        
+        if(idEmpresa!=null && idEmpresa>0){
+            return EmpresaDAO.obtenerDatosEmpresa(idEmpresa);
+        }else{
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
     }
     
     @POST
