@@ -101,14 +101,14 @@ public class PromocionWS {
     }
 
     @PUT
-    @Path("modificarPromocion")
+    @Path("editarPromocion")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Mensaje modificarPromocion(String json) {
+    public Mensaje editarPromocion(String json) {
         Gson gson = new Gson();
         DatosRegistroPromocion datos = gson.fromJson(json, DatosRegistroPromocion.class);
 
-        return PromocionDAO.modificarPromocion(datos);
+        return PromocionDAO.editarPromocion(datos);
     }
     
     @DELETE
@@ -126,6 +126,17 @@ public class PromocionWS {
         datos.setPromocion(promocion);
         
         return PromocionDAO.eliminarPromocion(datos);
+    }
+    
+    @GET
+    @Path("obtenerPorId/{idPromocion}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Promocion obtenerPorId(@PathParam("idPromocion") Integer idPromocion) {
+        if (idPromocion == null || idPromocion <= 0) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        return PromocionDAO.obtenerPorId(idPromocion);
     }
 
     @GET

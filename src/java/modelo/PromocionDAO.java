@@ -49,7 +49,7 @@ public class PromocionDAO {
         return mensaje;
     }
 
-    public static Mensaje modificarPromocion(DatosRegistroPromocion datos) {
+    public static Mensaje editarPromocion(DatosRegistroPromocion datos) {
         Mensaje mensaje = new Mensaje();
         mensaje.setError(true);
 
@@ -107,6 +107,20 @@ public class PromocionDAO {
         }
 
         return mensaje;
+    }
+    
+    public static Promocion obtenerPorId(Integer idPromocion) {
+        Promocion promocion = null;
+
+        SqlSession conexionBD = MyBatisUtil.getSession();
+
+        if (conexionBD != null) {
+            promocion = new Promocion();
+
+            promocion = conexionBD.selectOne("promociones.obtenerPorId", idPromocion);
+        }
+
+        return promocion;
     }
 
     public static List<Promocion> obtenerPromociones() {

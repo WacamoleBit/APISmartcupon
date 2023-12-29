@@ -55,6 +55,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         )}
     </delete>
     
+    <select id="obtenerPorId" resultType="modelo.pojo.Promocion" parameterType="int">
+        SELECT * FROM promocion WHERE idPromocion = #{idPromocion}
+    </select>
+    
     <select id="obtenerPromociones" resultType="modelo.pojo.Promocion">
         SELECT p.idPromocion, p.nombre, p.descripcion, p.fechaInicio, p.fechaTermino, 
             p.restricciones, p.tipoPromocion, tp.nombre as tipoPromocionNombre, 
