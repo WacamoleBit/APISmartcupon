@@ -41,17 +41,17 @@ public class ClienteWS {
      */
     public ClienteWS() {
     }
-
+    
     @GET
-    @Path("obtenerDireccion/{idDireccion}")
+    @Path("obtenerDatos/{idCliente}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Direccion obtenerDireccionPorId(@PathParam("idDireccion") Integer idDireccion) {
+    public DatosRegistroCliente obtenerDatosCliente(@PathParam("idCliente") Integer idCliente) {
 
-        if (idDireccion != null) {
-            return ClienteDAO.obtenerDireccion(idDireccion);
-        } else {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        if (idCliente == null || idCliente < 1) {
+             throw new WebApplicationException(Response.Status.BAD_REQUEST);  
         }
+        
+        return ClienteDAO.obtenerDatos(idCliente);
 
     }
 

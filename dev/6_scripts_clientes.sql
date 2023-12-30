@@ -84,7 +84,7 @@ BEGIN
 		BEGIN
 			IF EXISTS (SELECT * FROM cliente WHERE idCliente = _idCliente) THEN
 		
-				IF NOT EXISTS (SELECT * FROM cliente WHERE nombre=_nombre AND apellidoPaterno=_apellidoPaterno AND apellidoMaterno = _apellidoMaterno AND telefono=_telefono) THEN
+				IF NOT EXISTS (SELECT * FROM cliente WHERE nombre=_nombre AND apellidoPaterno=_apellidoPaterno AND apellidoMaterno = _apellidoMaterno AND telefono=_telefono AND idCliente!=_idCliente) THEN
 					UPDATE cliente SET 
 					nombre=IFNULL(_nombre, nombre),
 					apellidoPaterno=IFNULL(_apellidoPaterno, apellidoPaterno),
@@ -109,7 +109,7 @@ BEGIN
 		BEGIN
 			IF EXISTS (SELECT * FROM direccion WHERE idDireccion = _idDireccion) THEN 
 
-				IF NOT EXISTS (SELECT * FROM direccion WHERE calle=_calle AND numero=_numero) THEN 
+				IF NOT EXISTS (SELECT * FROM direccion WHERE calle=_calle AND numero=_numero AND idDireccion!=_idDireccion) THEN 
 					UPDATE direccion SET 
 					calle=IFNULL(_calle, calle),
 					numero=IFNULL(_numero, numero)

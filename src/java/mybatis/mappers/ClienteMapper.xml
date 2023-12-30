@@ -5,22 +5,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="cliente">
     
-    <select id="verificarClienteExistente" resultType="modelo.pojo.Cliente" parameterType="map">
-        SELECT * 
-        FROM cliente 
-        WHERE email = #{email}
+    <select id="obtenerClientePorId" parameterType="int" resultType="modelo.pojo.Cliente">
+        SELECT c.idCliente, c.nombre, c.apellidoPaterno, c.apellidoMaterno, c.telefono, c.email, c.direccion, c.fechaNacimiento, c.password
+        FROM cliente c 
+        WHERE c.idCliente = #{idCliente} 
+        
     </select>
     
-    <select id="obtenerDatosPorId" resultType="modelo.pojo.Cliente" parameterType="int" >
-        SELECT * 
-        FROM cliente 
-        WHERE idCliente = #{idCliente}
-    </select>
-    
-     <select id="obtenerDireccionPorId" parameterType="int" resultType="modelo.pojo.Direccion">
-        SELECT idDireccion, calle, numero 
-        FROM direccion 
-        WHERE idDireccion=#{direccion}
+     <select id="obtenerDireccionPorIdCliente" parameterType="int" resultType="modelo.pojo.Direccion">
+        SELECT d.idDireccion, d.calle, d.numero 
+        FROM direccion d 
+        INNER JOIN 
+        cliente c ON d.idDireccion = c.direccion 
+        WHERE c.idCliente = #{idCliente}
     </select>
     
     

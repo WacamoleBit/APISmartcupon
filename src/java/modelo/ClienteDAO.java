@@ -19,22 +19,26 @@ import org.apache.ibatis.session.SqlSession;
  */
 public class ClienteDAO {
     
-    public static Direccion obtenerDireccion(Integer idDireccion){
-        Direccion direccion = new Direccion();
+    public static DatosRegistroCliente obtenerDatos(Integer idCliente){
+        DatosRegistroCliente datosCliente = new DatosRegistroCliente();
         SqlSession conexionBD = MyBatisUtil.getSession();
         if (conexionBD!= null ) {
             try {
                 
-                direccion = conexionBD.selectOne("cliente.obtenerDireccionPorId", idDireccion);
+                Cliente cliente = conexionBD.selectOne("cliente.obtenerClientePorId", idCliente);
+                Direccion direccion = conexionBD.selectOne("cliente.obtenerDireccionPorIdCliente", idCliente);
+                
+                datosCliente.setCliente(cliente);
+                datosCliente.setDireccion(direccion);
                 
             } catch (Exception e) {
                 e.printStackTrace();
+            }finally{
+                conexionBD.close();
             }
-        }else{
-            
         }
         
-        return direccion;
+        return datosCliente;
     }
 
     public static Mensaje registrarCliente(DatosRegistroCliente datos) {
