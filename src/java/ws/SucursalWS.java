@@ -32,8 +32,6 @@ import modelo.pojo.Sucursal;
  *
  * @author Dell
  */
-
-
 @Path("sucursales")
 public class SucursalWS {
 
@@ -169,20 +167,23 @@ public class SucursalWS {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
     }
-
-    //Servicio de eliminar queda pendiente dado que hay que verificar que no tenga ninguna promocion asociada para la eliminacion
+    
     @DELETE
-    @Path("eliminar")
+    @Path("eliminarSucursal/{idSucursal}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Mensaje eliminarSucursal(String json) {
-        Gson gson = new Gson();
-        Sucursal sucursal = gson.fromJson(json, Sucursal.class);
-        if (sucursal != null) {
-            return SucursalDAO.eliminarSucursal(sucursal);
-        } else {
+    public Mensaje eliminarSucursal(@PathParam("idSucursal") Integer idSucursal) {
+        if (idSucursal == null || idSucursal <= 0) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
+        
+        Sucursal sucursal = new Sucursal();
+        sucursal.setIdSucursal(idSucursal);
+        
+        DatosRegistroSucursal datos = new DatosRegistroSucursal();
+        datos.setSucursal(sucursal);
+        
+        return SucursalDAO.eliminarSucursal(datos);
     }
 
 }

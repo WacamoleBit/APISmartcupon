@@ -120,15 +120,17 @@ public class SucursalDAO {
         return mensaje;
     }
 
-    public static Mensaje eliminarSucursal(Sucursal sucursal) {
+    public static Mensaje eliminarSucursal(DatosRegistroSucursal datos) {
         Mensaje mensaje = new Mensaje();
         mensaje.setError(true);
+        
         SqlSession conexionBD = MyBatisUtil.getSession();
+        
         if (conexionBD != null) {
             try {
-                int numeroFilasAfectadas = conexionBD.delete("sucursal.eliminarSucursal", sucursal);
+                conexionBD.delete("sucursal.eliminarSucursal", datos);
                 conexionBD.commit();
-                if (numeroFilasAfectadas > 0) {
+                if (datos.getFilasAfectadas() > 0) {
                     mensaje.setError(false);
                     mensaje.setMensaje("Sucursal eliminada con éxito");
                 } else {

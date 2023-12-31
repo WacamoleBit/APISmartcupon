@@ -55,7 +55,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             
             #{filasAfectadas, mode=INOUT, jdbcType=INTEGER},
             #{error, mode=INOUT, jdbcType=INTEGER}
-    )}
+        )}
     </update>
     
       <select id="obtenerEncargadoPorId" resultType="modelo.pojo.Persona" parameterType="int">
@@ -69,6 +69,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <select id="obtenerSucursalPorId" resultType="modelo.pojo.Sucursal" parameterType="int">
-        select * from sucursal where idSucursal = #{idSucursal}; 
+        SELECT * FROM sucursal 
+        WHERE idSucursal = #{idSucursal}; 
     </select>
+    
+    <delete id="eliminarSucursal" parameterType="modelo.pojo.DatosRegistroSucursal" statementType="CALLABLE">
+        {CALL eliminarSucursal(
+            #{sucursal.idSucursal, mode=IN, jdbcType=INTEGER},
+            
+            #{filasAfectadas, mode=INOUT, jdbcType=INTEGER},
+            #{error, mode=INOUT, jdbcType=INTEGER}
+        )}
+    </delete>
 </mapper>
