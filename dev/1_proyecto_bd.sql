@@ -86,7 +86,7 @@ CREATE TABLE
         idEmpresa INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
         nombre VARCHAR(50) NOT NULL,
         nombreComercial VARCHAR(100) NOT NULL,
-        logo LONGBLOB NOT NULL,
+        logo LONGBLOB NULL,
         representante INT NOT NULL,
         email VARCHAR(50) NOT NULL, -- Es de la empresa
         direccion INT NOT NULL,
@@ -119,7 +119,7 @@ CREATE TABLE
         idPromocion INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
         nombre VARCHAR (50) NOT NULL,
         descripcion VARCHAR(255) NOT NULL,
-        imagen LONGBLOB,
+        imagen LONGBLOB NULL,
         fechaInicio DATE NOT NULL,
         fechaTermino DATE NOT NULL,
         restricciones VARCHAR(255) NULL, -- PENDIENTE

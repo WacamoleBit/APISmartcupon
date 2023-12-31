@@ -13,7 +13,6 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.Produces;
-;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -56,10 +55,9 @@ public class SucursalWS {
     }
 
     @GET
-    @Path("obtenerInformacionSucursal/{idSucursal}")
+    @Path("obtenerPorId/{idSucursal}")
     @Produces(MediaType.APPLICATION_JSON)
-    public DatosRegistroSucursal obtenerInformacionSucursal(@PathParam("idSucursal") Integer idSucursal) {
-
+    public DatosRegistroSucursal obtenerPorId(@PathParam("idSucursal") Integer idSucursal) {
         return SucursalDAO.obtenerSucursalPorId(idSucursal);
     }
 
@@ -92,6 +90,10 @@ public class SucursalWS {
                 throw new WebApplicationException(Response.Status.BAD_REQUEST);
             }
 
+            if (sucursal.getEmpresa() == null || sucursal.getEmpresa() < 1) {
+                throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            }
+
             if (direccion == null) {
                 throw new WebApplicationException(Response.Status.BAD_REQUEST);
             }
@@ -103,8 +105,9 @@ public class SucursalWS {
             if (direccion.getNumero() == null || direccion.getNumero() < 1) {
                 throw new WebApplicationException(Response.Status.BAD_REQUEST);
             }
-            //Falta validar que lo que manda eson numeros
-            if (direccion.getCodigoPostal() == null || direccion.getCodigoPostal().trim().isEmpty() || (direccion.getCodigoPostal().length() < 5 || direccion.getCodigoPostal().length() > 5)) {
+
+            if (direccion.getCodigoPostal() == null || direccion.getCodigoPostal().trim().isEmpty()
+                    || direccion.getCodigoPostal().length() != 5) {
                 throw new WebApplicationException(Response.Status.BAD_REQUEST);
             }
 

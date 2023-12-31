@@ -10,6 +10,7 @@ package modelo.pojo;
  * @author Dell
  */
 public class Sucursal {
+
     private Integer idSucursal;
     private String nombre;
     private Integer direccion;
@@ -38,10 +39,9 @@ public class Sucursal {
         this.empresa = empresa;
     }
 
-
     public Sucursal() {
     }
-    
+
     public Integer getIdSucursal() {
         return idSucursal;
     }
@@ -97,6 +97,5 @@ public class Sucursal {
     public void setEncargado(Integer encargado) {
         this.encargado = encargado;
     }
-    
-    
+
 }

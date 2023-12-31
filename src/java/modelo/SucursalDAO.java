@@ -16,50 +16,53 @@ import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 
 /**
- *ha
+ * ha
+ *
  * @author Dell
  */
 public class SucursalDAO {
 
-    public static List<Sucursal> obtenerSucursales(){
+    public static List<Sucursal> obtenerSucursales() {
         List<Sucursal> sucursales = new ArrayList<>();
         SqlSession conexionBD = MyBatisUtil.getSession();
-        if(conexionBD!=null){
-            try{
-                
+        if (conexionBD != null) {
+            try {
+
                 sucursales = conexionBD.selectList("sucursal.obtenerSucursales");
-                
-            }catch(Exception e){
+
+            } catch (Exception e) {
                 e.printStackTrace();
-            }finally{
+            } finally {
                 conexionBD.close();
             }
         }
-        
+
         return sucursales;
     }
-    
-    public static DatosRegistroSucursal obtenerSucursalPorId(Integer idSucursal){
+
+    public static DatosRegistroSucursal obtenerSucursalPorId(Integer idSucursal) {
         DatosRegistroSucursal datosSucursal = new DatosRegistroSucursal();
         SqlSession conexionBD = MyBatisUtil.getSession();
-        if(conexionBD!= null){
+        if (conexionBD != null) {
             try {
-                
-                Persona persona = conexionBD.selectOne("sucursal.obtenerEncargadoPorId", idSucursal);
-                Direccion direccion = conexionBD.selectOne("sucursal.obtenerDireccionPorId", idSucursal);
-                
-                datosSucursal.setPersona(persona);
+                Sucursal sucursal = conexionBD.selectOne("sucursal.obtenerSucursalPorId", idSucursal);
+                System.out.println(sucursal.getEncargado());
+                Persona encargado = conexionBD.selectOne("sucursal.obtenerEncargadoPorId", sucursal.getEncargado());
+                Direccion direccion = conexionBD.selectOne("sucursal.obtenerDireccionPorId", sucursal.getDireccion());
+
+                datosSucursal.setSucursal(sucursal);
+                datosSucursal.setPersona(encargado);
                 datosSucursal.setDireccion(direccion);
             } catch (Exception e) {
                 e.printStackTrace();
-            }finally{
+            } finally {
                 conexionBD.close();
             }
         }
-        
+
         return datosSucursal;
     }
-    
+
     public static Mensaje registrarSucursal(DatosRegistroSucursal datos) {
         Mensaje mensaje = new Mensaje();
         mensaje.setError(true);
@@ -73,12 +76,13 @@ public class SucursalDAO {
                     mensaje.setError(false);
                     mensaje.setMensaje("Sucursal registrada con éxito.");
                 } else {
-                    mensaje.setMensaje("No se pudo registrar la sucursal.");
+                    mensaje.setMensaje("Error: " + datos.getError());
                 }
 
             } catch (Exception e) {
+                e.printStackTrace();
                 mensaje.setMensaje("Error: " + e.getMessage());
-            }finally{
+            } finally {
                 conexionBD.close();
             }
         } else {
@@ -96,17 +100,16 @@ public class SucursalDAO {
             try {
                 conexionBD.update("sucursal.editarSucursal", datos);
                 conexionBD.commit();
-                
-                if(datos.getFilasAfectadas()>0 && datos.getError().isEmpty()){
+
+                if (datos.getFilasAfectadas() > 0 && datos.getError().isEmpty()) {
                     mensaje.setError(false);
                     mensaje.setMensaje("Información actualizada con éxito");
-                }else{
+                } else {
                     mensaje.setMensaje("Error al actualizar la información");
                 }
-
             } catch (Exception e) {
                 e.printStackTrace();
-                    mensaje.setMensaje("Error: " + e.getMessage());
+                mensaje.setMensaje("Error: " + e.getMessage());
             } finally {
                 conexionBD.close();
             }
@@ -116,30 +119,30 @@ public class SucursalDAO {
 
         return mensaje;
     }
-    
+
     public static Mensaje eliminarSucursal(Sucursal sucursal) {
         Mensaje mensaje = new Mensaje();
         mensaje.setError(true);
         SqlSession conexionBD = MyBatisUtil.getSession();
-        if(conexionBD != null){
+        if (conexionBD != null) {
             try {
                 int numeroFilasAfectadas = conexionBD.delete("sucursal.eliminarSucursal", sucursal);
                 conexionBD.commit();
-                if(numeroFilasAfectadas > 0 ){
+                if (numeroFilasAfectadas > 0) {
                     mensaje.setError(false);
                     mensaje.setMensaje("Sucursal eliminada con éxito");
-                }else{
+                } else {
                     mensaje.setMensaje("Error al eliminar la sucursal");
                 }
             } catch (Exception e) {
                 mensaje.setMensaje("Error: " + e.getMessage());
-            }finally{
+            } finally {
                 conexionBD.close();
             }
-        }else{
+        } else {
             mensaje.setMensaje("Error: Por el momento no hay conexión con la base de datos, favor de intentarlo mas tarde");
         }
-        
+
         return mensaje;
     }
 }
