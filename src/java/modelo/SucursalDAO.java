@@ -69,7 +69,7 @@ public class SucursalDAO {
                 conexionBD.insert("sucursal.registrarSucursal", datos);
                 conexionBD.commit();
 
-                if (datos.getFilasAfectadas() > 0) {
+                if (datos.getFilasAfectadas() > 0 && datos.getError().isEmpty()) {
                     mensaje.setError(false);
                     mensaje.setMensaje("Sucursal registrada con éxito.");
                 } else {

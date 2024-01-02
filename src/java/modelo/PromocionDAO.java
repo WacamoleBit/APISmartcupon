@@ -164,4 +164,19 @@ public class PromocionDAO {
 
         return categorias;
     }
+    
+    public static List<Promocion> obtenerPromocionesPorCategoria(int idCategoria){
+        List<Promocion> promocionesCategoria = null;
+
+        SqlSession conexionBD = MyBatisUtil.getSession();
+
+        if (conexionBD != null) {
+            promocionesCategoria = new ArrayList<>();
+
+            promocionesCategoria = conexionBD.selectList("promociones.obtenerPromocionesPorCategoria", idCategoria);
+        }
+
+        return promocionesCategoria;
+    }
+    
 }

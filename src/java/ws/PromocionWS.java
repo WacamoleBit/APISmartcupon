@@ -159,4 +159,14 @@ public class PromocionWS {
     public List<Categoria> obtenerCategirias() {
         return PromocionDAO.obtenerCategorias();
     }
+    
+    @GET
+    @Path("obtenerPromocionesPorCategoria/{idCategoria}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Promocion> obtenerPromocionesCategoria(@PathParam("idCategoria") Integer idCategoria){
+        if(idCategoria == null || idCategoria<0){
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        return PromocionDAO.obtenerPromocionesPorCategoria(idCategoria);
+    }
 }

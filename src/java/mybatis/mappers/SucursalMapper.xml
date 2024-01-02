@@ -28,6 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{persona.apellidoMaterno, mode=IN, jdbcType=VARCHAR},
             
             #{filasAfectadas, mode=INOUT, jdbcType=INTEGER}
+            #{error, mode=INOUT, jdbcType=VARCHAR}
     )}
     </insert>
     
@@ -53,7 +54,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{direccion.ciudad, mode=IN, jdbcType=INTEGER},
             
             #{filasAfectadas, mode=INOUT, jdbcType=INTEGER},
-            #{error, mode=INOUT, jdbcType=INTEGER}
+            #{error, mode=INOUT, jdbcType=VARCHAR}
     )}
     </update>
     
