@@ -5,6 +5,7 @@ USE smartcupon_db;
 DROP PROCEDURE IF EXISTS registrarSucursal;
 DROP PROCEDURE IF EXISTS modificarSucursal;
 DROP PROCEDURE IF EXISTS eliminarSucursal;
+DROP PROCEDURE IF EXISTS buscarSucursalPorFiltro;
 DROP TRIGGER IF EXISTS delete_sucursal_trigger;
 
 DELIMITER //
@@ -194,6 +195,19 @@ BEGIN
 	END;
 
 	COMMIT;
+END//
+
+-- BUSCAR SUCURSAL POR FILTRO
+
+CREATE PROCEDURE buscarSucursalPorFiltro (
+	IN _nombre VARCHAR(255),
+    IN _direccion VARCHAR(255)
+)
+BEGIN
+	SELECT s.* FROM sucursal s
+    INNER JOIN direccion d ON s.direccion = d.idDireccion
+    WHERE s.nombre LIKE CONCAT('%', _nombre, '%')
+    OR d.calle LIKE CONCAT('%', _direccion, '%');
 END//
 
 -- DELETE

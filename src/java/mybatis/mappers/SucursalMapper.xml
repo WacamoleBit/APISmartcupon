@@ -81,4 +81,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{error, mode=INOUT, jdbcType=INTEGER}
         )}
     </delete>
+    
+    <select id="buscarPorFiltro" parameterType="modelo.pojo.FiltroBuscarSucursal" resultType="modelo.pojo.Sucursal" statementType="CALLABLE">
+        {CALL buscarSucursalPorFiltro(
+            #{nombre, mode=IN, jdbcType=VARCHAR},
+            #{direccion, mode=IN, jdbcType=VARCHAR}
+        )}
+    </select>
 </mapper>

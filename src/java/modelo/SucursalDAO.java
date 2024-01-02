@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import modelo.pojo.DatosRegistroSucursal;
 import modelo.pojo.Direccion;
+import modelo.pojo.FiltroBuscarSucursal;
 import modelo.pojo.Mensaje;
 import modelo.pojo.Persona;
 import modelo.pojo.Sucursal;
@@ -123,9 +124,9 @@ public class SucursalDAO {
     public static Mensaje eliminarSucursal(DatosRegistroSucursal datos) {
         Mensaje mensaje = new Mensaje();
         mensaje.setError(true);
-        
+
         SqlSession conexionBD = MyBatisUtil.getSession();
-        
+
         if (conexionBD != null) {
             try {
                 conexionBD.delete("sucursal.eliminarSucursal", datos);
@@ -146,5 +147,21 @@ public class SucursalDAO {
         }
 
         return mensaje;
+    }
+
+    public static List<Sucursal> buscarPorFiltro(FiltroBuscarSucursal filtro) {
+        List<Sucursal> sucursales = new ArrayList<>();
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        if (conexionBD != null) {
+            try {
+                sucursales = conexionBD.selectList("sucursal.buscarPorFiltro", filtro);
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                conexionBD.close();
+            }
+        }
+
+        return sucursales;
     }
 }
