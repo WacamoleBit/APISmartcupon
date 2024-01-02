@@ -6,8 +6,6 @@
 package modelo;
 
 import modelo.pojo.Cliente;
-import modelo.pojo.DatosRegistroCliente;
-import modelo.pojo.Direccion;
 import modelo.pojo.MensajeUsuario;
 import modelo.pojo.MensajeCliente;
 import modelo.pojo.Usuario;

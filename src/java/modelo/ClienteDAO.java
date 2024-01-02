@@ -5,7 +5,6 @@
  */
 package modelo;
 
-import java.util.HashMap;
 import modelo.pojo.Cliente;
 import modelo.pojo.DatosRegistroCliente;
 import modelo.pojo.Direccion;
