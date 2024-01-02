@@ -169,4 +169,15 @@ public class PromocionWS {
         }
         return PromocionDAO.obtenerPromocionesPorCategoria(idCategoria);
     }
+    
+    @GET
+    @Path("obtenerLogoPorId/{idPromocion}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Promocion obtenerLogoPromocion(@PathParam("idPromocion") Integer idPromocion){
+        if (idPromocion == null || idPromocion <= 0) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        return PromocionDAO.obtenerLogoPorId(idPromocion);
+    }
 }

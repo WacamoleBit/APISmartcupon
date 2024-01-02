@@ -179,4 +179,19 @@ public class PromocionDAO {
         return promocionesCategoria;
     }
     
+    
+    public static Promocion obtenerLogoPorId(Integer idPromocion) {
+        Promocion promocion = null;
+
+        SqlSession conexionBD = MyBatisUtil.getSession();
+
+        if (conexionBD != null) {
+            promocion = new Promocion();
+
+            promocion = conexionBD.selectOne("promociones.obtenerLogoPorId", idPromocion);
+        }
+
+        return promocion;
+    }
+    
 }

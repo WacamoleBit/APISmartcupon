@@ -88,6 +88,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             WHERE  c.idCategoria=#{idCategoria};
     </select>
     
+    <select id="obtenerLogoPorId" resultType="modelo.pojo.Promocion" parameterType="int">
+        SELECT to_base64(imagen) as imagenBase64 FROM promocion
+        WHERE idPromocion = #{idPromocion};
+    </select>
+    
     <select id="obtenerTiposPromocion" resultType="modelo.pojo.TipoPromocion">
         SELECT * FROM tipopromocion;
     </select>
