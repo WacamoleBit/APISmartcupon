@@ -101,5 +101,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         SELECT * FROM categoriapromocion
     </select>
     
-    
+    <select id="buscarPorFiltro" parameterType="modelo.pojo.FiltroBuscarPromocion" resultType="modelo.pojo.Promocion" statementType="CALLABLE">
+        {CALL buscarPromocionPorFiltro (
+            #{fecha, mode=IN, jdbcType=DATE},
+            #{porFechaInicio, mode=IN, jdbcType=BOOLEAN},
+            #{nombre, mode=IN, jdbcType=VARCHAR}
+        )}
+    </select>
 </mapper>

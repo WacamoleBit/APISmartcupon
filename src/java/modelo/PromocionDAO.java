@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import modelo.pojo.Categoria;
 import modelo.pojo.DatosRegistroPromocion;
+import modelo.pojo.FiltroBuscarPromocion;
 import modelo.pojo.Mensaje;
 import modelo.pojo.Promocion;
 import modelo.pojo.TipoPromocion;
@@ -108,7 +109,7 @@ public class PromocionDAO {
 
         return mensaje;
     }
-    
+
     public static Promocion obtenerPorId(Integer idPromocion) {
         Promocion promocion = null;
 
@@ -164,8 +165,8 @@ public class PromocionDAO {
 
         return categorias;
     }
-    
-    public static List<Promocion> obtenerPromocionesPorCategoria(int idCategoria){
+
+    public static List<Promocion> obtenerPromocionesPorCategoria(int idCategoria) {
         List<Promocion> promocionesCategoria = null;
 
         SqlSession conexionBD = MyBatisUtil.getSession();
@@ -178,8 +179,7 @@ public class PromocionDAO {
 
         return promocionesCategoria;
     }
-    
-    
+
     public static Promocion obtenerLogoPorId(Integer idPromocion) {
         Promocion promocion = null;
 
@@ -193,5 +193,19 @@ public class PromocionDAO {
 
         return promocion;
     }
-    
+
+    public static List<Promocion> buscarPorFiltro(FiltroBuscarPromocion filtro) {
+        List<Promocion> promociones = null;
+
+        SqlSession conexionBD = MyBatisUtil.getSession();
+
+        if (conexionBD != null) {
+            promociones = new ArrayList();
+
+            promociones = conexionBD.selectList("promociones.buscarPorFiltro", filtro);
+        }
+
+        return promociones;
+    }
+
 }
