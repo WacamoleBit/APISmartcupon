@@ -5,6 +5,7 @@ USE smartcupon_db;
 DROP PROCEDURE IF EXISTS registrarPromocion;
 DROP PROCEDURE IF EXISTS modificarPromocion;
 DROP PROCEDURE IF EXISTS eliminarPromocion;
+DROP PROCEDURE IF EXISTS buscarPromocionPorFiltro;
 DROP TRIGGER IF EXISTS delete_promocion_trigger;
 
 DELIMITER //
@@ -173,6 +174,24 @@ BEGIN
 		SET _error = 'La promocion no existe en la base de datos';
     END IF;
 END//
+
+-- BUSCAR PROMOCION POR FILTRO
+
+CREATE PROCEDURE buscarPromocionPorFiltro (
+    IN _fecha DATE,
+    IN _porFechaInicio BOOL,
+    IN _nombre VARCHAR(255)
+)
+BEGIN
+    SELECT idPromocion, nombre, descripcion, to_base64(imagen) as imagenBase64, 
+			fechaInicio, fechaTermino, restricciones, tipoPromocion, porcentajeDescuento, 
+			categoria, cuponesDisponibles, maximoCupones, codigoPromocion, estatus, 
+			empresa 
+	FROM promocion
+	WHERE (_porFechaInicio = true AND fechaInicio = _fecha)
+	OR (_porFechaInicio = false AND fechaTermino = _fecha)
+	OR (nombre LIKE CONCAT('%', _nombre, '%'));
+END //
 
 -- DELETE
 
