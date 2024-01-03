@@ -12,11 +12,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <select id="iniciarSesionUsuario" resultType="modelo.pojo.Usuario" parameterType="modelo.pojo.Usuario">
-        SELECT idUsuario, u.nombre, apellidoPaterno, apellidoMaterno, curp, u.email, username, password, rol, r.nombre as nombreRol, empresa as nombreEmpresa
+        SELECT u.idUsuario, u.nombre, u.apellidoPaterno, u.apellidoMaterno, u.curp, u.email, u.username, u.password, u.rol, r.nombre as nombreRol, u.empresa, e.nombreComercial  as nombreEmpresa
         FROM usuario u
         INNER JOIN rol r ON u.rol = r.idRol
         LEFT JOIN empresa e ON u.empresa = e.idEmpresa
-        WHERE username=#{username} AND password=#{password}
+        WHERE u.username=#{username} AND u.password=#{password}
     </select>
     
 </mapper>

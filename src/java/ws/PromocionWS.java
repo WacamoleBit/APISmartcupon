@@ -163,6 +163,25 @@ public class PromocionWS {
     }
 
     @GET
+    @Path("obtenerPromocionesDisponibles")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Promocion> obtenerPromocionesDisponibles() {
+        return PromocionDAO.obtenerPromocionesDisponibles();
+    }
+    
+    @GET
+    @Path("obtenerPromocionesDisponiblesPorEmpresa/{idEmpresa}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Promocion> obtenerPromocionesDisponiblesPorEmpresa(@PathParam("idEmpresa") Integer idEmpresa) {
+        
+        if (idEmpresa == null || idEmpresa<0) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        
+        return PromocionDAO.obtenerPromocionesDisponiblesPorEmpresa(idEmpresa);
+    }
+    
+    @GET
     @Path("obtenerPromocionesPorCategoria/{idCategoria}")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Promocion> obtenerPromocionesCategoria(@PathParam("idCategoria") Integer idCategoria) {

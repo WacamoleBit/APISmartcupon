@@ -5,6 +5,7 @@
  */
 package ws;
 
+import com.google.gson.Gson;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Consumes;
@@ -12,7 +13,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import modelo.CuponDAO;
+import modelo.pojo.Mensaje;
+import modelo.pojo.Promocion;
 
 /**
  * REST Web Service
@@ -33,21 +39,32 @@ public class CuponWS {
 
     /**
      * Retrieves representation of an instance of ws.CuponWS
+     *
      * @return an instance of java.lang.String
      */
-    @GET
+    @PUT
+    @Path("canjearCupon")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getJson() {
-        //TODO return proper representation object
-        throw new UnsupportedOperationException();
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Mensaje canjearCupon(String json) {
+
+        if (!json.isEmpty()) {
+            Gson gson = new Gson();
+            Promocion promocion = gson.fromJson(json, Promocion.class);
+
+            if (promocion == null) {
+                throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            }
+
+            if (promocion.getCodigoPromocion() == null || promocion.getCodigoPromocion().isEmpty()) {
+                throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            }
+
+            return CuponDAO.canjearCupon(promocion);
+        } else {
+
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
     }
 
-    /**
-     * PUT method for updating or creating an instance of CuponWS
-     * @param content representation for the resource
-     */
-    @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void putJson(String content) {
-    }
 }

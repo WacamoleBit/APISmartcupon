@@ -137,6 +137,34 @@ public class PromocionDAO {
 
         return promociones;
     }
+    
+    public static List<Promocion> obtenerPromocionesDisponibles() {
+        List<Promocion> promociones = null;
+
+        SqlSession conexionBD = MyBatisUtil.getSession();
+
+        if (conexionBD != null) {
+            promociones = new ArrayList<>();
+
+            promociones = conexionBD.selectList("promociones.obtenerPromocionesDisponibles");
+        }
+
+        return promociones;
+    }
+    
+    public static List<Promocion> obtenerPromocionesDisponiblesPorEmpresa(Integer idEmpresa) {
+        List<Promocion> promociones = null;
+
+        SqlSession conexionBD = MyBatisUtil.getSession();
+
+        if (conexionBD != null) {
+            promociones = new ArrayList<>();
+
+            promociones = conexionBD.selectList("promociones.obtenerPromocionesDisponiblesPorEmpresa", idEmpresa);
+        }
+
+        return promociones;
+    }
 
     public static List<TipoPromocion> obtenerTiposPromocion() {
         List<TipoPromocion> tiposPromocion = null;

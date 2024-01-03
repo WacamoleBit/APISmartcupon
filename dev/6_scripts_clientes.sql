@@ -90,7 +90,7 @@ BEGIN
 					apellidoMaterno=IFNULL(_apellidoMaterno, apellidoMaterno),
 					telefono=IFNULL(_telefono, telefono),
 					fechaNacimiento=IFNULL(_fechaNacimiento, fechaNacimiento),
-					password=IF(_password IS NOT NULL AND LENGTH(_password) > 8, _password, password)
+					password=IF(_password IS NOT NULL AND LENGTH(_password) > 7, _password, password)
 					WHERE idCliente=_idCliente;
 
 					SET @filasCliente = ROW_COUNT();
