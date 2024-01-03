@@ -175,23 +175,3 @@ CREATE TABLE
         FOREIGN KEY (idSucursal) REFERENCES sucursal(idSucursal),
         FOREIGN KEY (idPromocion) REFERENCES promocion(idPromocion)
     );
-
-CREATE TABLE
-    cupon ( -- PENDIENTE
-        idCupon INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-        codigo VARCHAR(8) UNIQUE NOT NULL,
-        estatus INT NOT NULL,
-        promocion INT NOT NULL,
-        FOREIGN KEY (estatus) REFERENCES estatus(idEstatus),
-        FOREIGN KEY (promocion) REFERENCES promocion(idPromocion)
-    );
-
-CREATE TABLE
-    canjeCupon (
-        idCanjeCupon INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-        fechaDeCanjeo DATETIME NOT NULL,
-        cupon INT NOT NULL,
-        usuario INT NOT NULL,
-        FOREIGN KEY (cupon) REFERENCES cupon(idCupon),
-        FOREIGN KEY (usuario) REFERENCES usuario(idUsuario)
-    );
