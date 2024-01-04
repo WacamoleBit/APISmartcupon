@@ -16,63 +16,61 @@ import org.apache.ibatis.session.SqlSession;
  * @author Dell
  */
 public class PromocionesSucursalesDAO {
-    public static Mensaje registrarPromocionesSucursales(List<PromocionesSucursales> promocionesSucursales){
+
+    public static Mensaje registrarPromocionesSucursales(PromocionesSucursales promocionSucursal) {
         Mensaje mensaje = new Mensaje();
         mensaje.setError(true);
         SqlSession conexionBD = MyBatisUtil.getSession();
-        if(conexionBD!= null){
-            try{
-                int filasAfectadas = 0;
-                for(PromocionesSucursales sucursalPromocion : promocionesSucursales){
-                    filasAfectadas = conexionBD.insert("promociones.insertarPromocionSucursales", sucursalPromocion);
-                }
+        if (conexionBD != null) {
+            try {
+               
+                int filasAfectadas = conexionBD.insert("promociones.insertarPromocionSucursales", promocionSucursal);
                 conexionBD.commit();
-                
-                if (filasAfectadas>0) {
+
+                if (filasAfectadas > 0) {
                     mensaje.setError(false);
-                    mensaje.setMensaje("Sucursales registradas con éxito");
-                }else{
-                    mensaje.setMensaje("Error al registrar las sucursales");
+                    mensaje.setMensaje("Sucursal registrada con éxito");
+                } else {
+                    mensaje.setMensaje("Error al registrar la sucursal");
                 }
-                
-            }catch(Exception e){
+
+            } catch (Exception e) {
                 mensaje.setMensaje("Error: " + e.getMessage());
-            }finally{
+            } finally {
                 conexionBD.close();
             }
-        }else{
+        } else {
             mensaje.setMensaje("Error: Por el momento no hay conexión con la base de datos, favor de intentarlo mas tarde");
         }
-        
+
         return mensaje;
     }
-    
-    public static Mensaje eliminarPromocionSucursal(PromocionesSucursales promocionesSucursales){
+
+    public static Mensaje eliminarPromocionSucursal(PromocionesSucursales promocionesSucursales) {
         Mensaje mensaje = new Mensaje();
         mensaje.setError(true);
         SqlSession conexionBD = MyBatisUtil.getSession();
-        if(conexionBD!= null){
+        if (conexionBD != null) {
             try {
-                
+
                 int filasAfectadas = conexionBD.delete("promociones.eliminarPromocionSucursal", promocionesSucursales);
                 conexionBD.commit();
-                if(filasAfectadas > 0){
+                if (filasAfectadas > 0) {
                     mensaje.setError(false);
                     mensaje.setMensaje("Sucursal eliminada de la promoción");
-                }else{
+                } else {
                     mensaje.setMensaje("Error al eliminar la sucursal de la promocion");
                 }
             } catch (Exception e) {
-               mensaje.setMensaje("Error: " + e.getMessage());
-            }finally{
+                mensaje.setMensaje("Error: " + e.getMessage());
+            } finally {
                 conexionBD.close();
             }
-        }else{
+        } else {
             mensaje.setMensaje("Error: Por el momento no hay conexión con la base de datos, favor e intentarlo mas tarde");
         }
-        
-    return mensaje;
+
+        return mensaje;
     }
-    
-    
+
 }

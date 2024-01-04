@@ -249,15 +249,13 @@ public class PromocionWS {
     public Mensaje registrarPromocionSucursales(String json){
         if(!json.isEmpty()){
             Gson gson = new Gson();
-            List<PromocionesSucursales> promocionesSucursales = new ArrayList<>();
-            Type arraylistPromocionesSucursales = new TypeToken<ArrayList<PromocionesSucursales>>() {}.getType();
             
-            promocionesSucursales = gson.fromJson(json,arraylistPromocionesSucursales);
-            if(promocionesSucursales.isEmpty()){
+            PromocionesSucursales promocionSucursal = gson.fromJson(json,PromocionesSucursales.class);
+            if(promocionSucursal == null){
                 throw new WebApplicationException(Response.Status.BAD_REQUEST);
             }
             
-            return PromocionesSucursalesDAO.registrarPromocionesSucursales(promocionesSucursales);
+            return PromocionesSucursalesDAO.registrarPromocionesSucursales(promocionSucursal);
         }else{
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
