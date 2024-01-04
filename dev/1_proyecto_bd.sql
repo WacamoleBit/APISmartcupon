@@ -92,7 +92,7 @@ CREATE TABLE
         direccion INT NOT NULL,
         telefono VARCHAR(10) NOT NULL,
         paginaWeb VARCHAR(100) NULL, -- No es NOT NULL, porque dice (si tiene)
-        rfc VARCHAR(12) NOT NULL,
+        rfc VARCHAR(13) NOT NULL,
         estatus INT NOT NULL,
         FOREIGN KEY (direccion) REFERENCES direccion(idDireccion),
         FOREIGN KEY (estatus) REFERENCES estatus(idEstatus),

@@ -18,7 +18,7 @@ CREATE PROCEDURE registrarEmpresa (
     IN _email VARCHAR(50),
     IN _telefono VARCHAR(10),
     IN _paginaWeb VARCHAR(100),
-    IN _rfc VARCHAR(12),
+    IN _rfc VARCHAR(13),
     IN _nombreRepresentante VARCHAR(50),
     IN _apellidoPaterno VARCHAR(50),
     IN _apellidoMaterno VARCHAR(50),
@@ -175,7 +175,7 @@ BEGIN
 		BEGIN 
 
 			IF EXISTS (SELECT * FROM direccion WHERE idDireccion = _idDireccion) THEN 
-				IF NOT EXISTS (SELECT * FROM direccion WHERE calle=_calle AND numero = _numero AND idDireccion=_idDireccion) THEN 
+				IF NOT EXISTS (SELECT * FROM direccion WHERE calle=_calle AND numero = _numero AND idDireccion != _idDireccion) THEN 
 					UPDATE direccion SET 
 					calle= IFNULL(_calle, calle),
 					numero=IFNULL(_numero, numero),
