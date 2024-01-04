@@ -6,6 +6,8 @@ DROP PROCEDURE IF EXISTS registrarPromocion;
 DROP PROCEDURE IF EXISTS modificarPromocion;
 DROP PROCEDURE IF EXISTS eliminarPromocion;
 DROP PROCEDURE IF EXISTS buscarPromocionPorFiltro;
+DROP TRIGGER IF EXISTS actualizarEstatusPromocion;
+DROP TRIGGER IF EXISTS actualizarEstatusFecha;
 DROP TRIGGER IF EXISTS delete_promocion_trigger;
 
 DELIMITER //
@@ -218,6 +220,24 @@ BEGIN
 		DELETE FROM promocion WHERE idPromocion = _idPromocion;
             
 		SET _filasAfectadas = ROW_COUNT();
+    END IF;
+END //
+
+-- ACTUALIZAR ESTATUS PROMOCION
+CREATE TRIGGER actualizarEstatusPromocion BEFORE UPDATE ON promocion
+FOR EACH ROW 
+BEGIN
+     IF NEW.cuponesDisponibles <= 0 AND NEW.estatus <> 2 THEN
+        SET NEW.estatus = 2;
+    END IF;
+END //
+
+-- ACTUALIZAR ESTATUS FECHA
+CREATE TRIGGER actualizarEstatusFecha BEFORE UPDATE ON promocion
+FOR EACH ROW
+BEGIN
+    IF NEW.fechaTermino < NOW() AND NEW.estatus <> 2 THEN
+        SET NEW.estatus = 2;
     END IF;
 END //
 
