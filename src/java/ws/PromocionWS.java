@@ -32,7 +32,7 @@ import modelo.pojo.DatosRegistroPromocion;
 import modelo.pojo.FiltroBuscarPromocion;
 import modelo.pojo.Mensaje;
 import modelo.pojo.Promocion;
-import modelo.pojo.PromocionesSucursales;
+import modelo.pojo.PromocionSucursal;
 import modelo.pojo.Sucursal;
 import modelo.pojo.TipoPromocion;
 
@@ -175,31 +175,43 @@ public class PromocionWS {
     public List<Promocion> obtenerPromocionesDisponibles() {
         return PromocionDAO.obtenerPromocionesDisponibles();
     }
-    
+
     @GET
     @Path("obtenerPromocionesDisponiblesPorEmpresa/{idEmpresa}")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Promocion> obtenerPromocionesDisponiblesPorEmpresa(@PathParam("idEmpresa") Integer idEmpresa) {
-        
-        if (idEmpresa == null || idEmpresa<0) {
+
+        if (idEmpresa == null || idEmpresa < 0) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-        
+
         return PromocionDAO.obtenerPromocionesDisponiblesPorEmpresa(idEmpresa);
     }
-    
+
     @GET
     @Path("obtenerSucursalesPorPromocion/{idPromocion}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Sucursal> obtenerSucursalesPorPromocion(@PathParam("idPromocion") Integer idPromocion){
-        
-        if (idPromocion<0 || idPromocion == null ) {
+    public List<Sucursal> obtenerSucursalesPorPromocion(@PathParam("idPromocion") Integer idPromocion) {
+
+        if (idPromocion < 0 || idPromocion == null) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-    
+
         return SucursalDAO.obtenerSucursalesPorPromocion(idPromocion);
     }
-    
+
+    @GET
+    @Path("obtenerSucursalesSinPromocion/{idPromocion}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Sucursal> obtenerSucursalesSinPromocion(@PathParam("idPromocion") Integer idPromocion) {
+
+        if (idPromocion < 0 || idPromocion == null) {
+
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+        return SucursalDAO.obtenerSucursalesSinPromocion(idPromocion);
+    }
+
     @GET
     @Path("obtenerPromocionesPorCategoria/{idCategoria}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -241,41 +253,40 @@ public class PromocionWS {
 
         return PromocionDAO.buscarPorFiltro(filtro);
     }
-    
+
     @POST
     @Path("registroPromocionSucursal")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Mensaje registrarPromocionSucursales(String json){
-        if(!json.isEmpty()){
+    public Mensaje registrarPromocionSucursales(String json) {
+        if (!json.isEmpty()) {
             Gson gson = new Gson();
-            
-            PromocionesSucursales promocionSucursal = gson.fromJson(json,PromocionesSucursales.class);
-            if(promocionSucursal == null){
+
+            PromocionSucursal promocionSucursal = gson.fromJson(json, PromocionSucursal.class);
+            if (promocionSucursal == null) {
                 throw new WebApplicationException(Response.Status.BAD_REQUEST);
             }
-            
+
             return PromocionesSucursalesDAO.registrarPromocionesSucursales(promocionSucursal);
-        }else{
+        } else {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
     }
-    
-    
+
     @DELETE
     @Path("eliminarPromocionSucursal")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Mensaje eliminarPromocionSucursal(String json){
-        if(!json.isEmpty()){
+    public Mensaje eliminarPromocionSucursal(String json) {
+        if (!json.isEmpty()) {
             Gson gson = new Gson();
-            PromocionesSucursales promocionesSucursales = gson.fromJson(json,PromocionesSucursales.class);
-            if(promocionesSucursales.getIdPromocion()<0 || promocionesSucursales.getIdSucursal()<0 || promocionesSucursales.getIdPromocion()== null || promocionesSucursales.getIdSucursal() == null ){
+            PromocionSucursal promocionesSucursales = gson.fromJson(json, PromocionSucursal.class);
+            if (promocionesSucursales.getIdPromocion() < 0 || promocionesSucursales.getIdSucursal() < 0 || promocionesSucursales.getIdPromocion() == null || promocionesSucursales.getIdSucursal() == null) {
                 throw new WebApplicationException(Response.Status.BAD_REQUEST);
             }
-            
+
             return PromocionesSucursalesDAO.eliminarPromocionSucursal(promocionesSucursales);
-        }else{
+        } else {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
     }

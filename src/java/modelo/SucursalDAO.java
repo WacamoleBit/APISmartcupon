@@ -12,6 +12,7 @@ import modelo.pojo.Direccion;
 import modelo.pojo.FiltroBuscarSucursal;
 import modelo.pojo.Mensaje;
 import modelo.pojo.Persona;
+import modelo.pojo.PromocionSucursal;
 import modelo.pojo.Sucursal;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
@@ -40,14 +41,14 @@ public class SucursalDAO {
 
         return sucursales;
     }
-    
-    public static List<Sucursal> obtenerSucursalesPorPromocion(Integer idPromocion){
-                List<Sucursal> sucursales = new ArrayList<>();
+
+    public static List<Sucursal> obtenerSucursalesPorPromocion(Integer idPromocion) {
+        List<Sucursal> sucursales = new ArrayList<>();
         SqlSession conexionBD = MyBatisUtil.getSession();
         if (conexionBD != null) {
             try {
 
-                sucursales = conexionBD.selectList("sucursal.obtenerSucursalesPorIdSucursal", idPromocion);
+                sucursales = conexionBD.selectList("sucursal.obtenerSucursalesPorIdPromocion", idPromocion);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -58,8 +59,26 @@ public class SucursalDAO {
 
         return sucursales;
     }
-    
-     public static List<Sucursal> obtenerSucursalesPorIdEmpresa(Integer idEmpresa) {
+
+    public static List<Sucursal> obtenerSucursalesSinPromocion(Integer idPromocion) {
+        List<Sucursal> sucursales = new ArrayList<>();
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        if (conexionBD != null) {
+            try {
+
+                sucursales = conexionBD.selectList("sucursal.obtenerSucursalesSinPromocion", idPromocion);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                conexionBD.close();
+            }
+        }
+
+        return sucursales;
+    }
+
+    public static List<Sucursal> obtenerSucursalesPorIdEmpresa(Integer idEmpresa) {
         List<Sucursal> sucursales = new ArrayList<>();
         SqlSession conexionBD = MyBatisUtil.getSession();
         if (conexionBD != null) {

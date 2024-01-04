@@ -9,14 +9,14 @@ package modelo.pojo;
  *
  * @author Dell
  */
-public class PromocionesSucursales {
+public class PromocionSucursal {
     private Integer idSucursal;
     private Integer idPromocion;
 
-    public PromocionesSucursales() {
+    public PromocionSucursal() {
     }
 
-    public PromocionesSucursales(Integer idSucursal, Integer idPromocion) {
+    public PromocionSucursal(Integer idSucursal, Integer idPromocion) {
         this.idSucursal = idSucursal;
         this.idPromocion = idPromocion;
     }

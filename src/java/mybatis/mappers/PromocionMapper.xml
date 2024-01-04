@@ -151,12 +151,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
     
     
-    <insert id="insertarPromocionSucursales" parameterType="modelo.pojo.PromocionesSucursales">
+    
+    <insert id="insertarPromocionSucursal" parameterType="modelo.pojo.PromocionSucursal">
         INSERT INTO promocionSucursal(idSucursal, idPromocion) 
         VALUES(#{idSucursal}, #{idPromocion}) 
     </insert>
 
-    <delete id="eliminarPromocionSucursal" parameterType="modelo.pojo.PromocionesSucursales">
+    <delete id="eliminarPromocionSucursal" parameterType="modelo.pojo.PromocionSucursal">
         DELETE FROM promocionSucursal WHERE idSucursal=#{idSucursal} AND idPromocion=#{idPromocion}
     </delete>
 </mapper>

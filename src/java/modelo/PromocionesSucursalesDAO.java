@@ -7,7 +7,7 @@ package modelo;
 
 import java.util.List;
 import modelo.pojo.Mensaje;
-import modelo.pojo.PromocionesSucursales;
+import modelo.pojo.PromocionSucursal;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 
@@ -17,14 +17,14 @@ import org.apache.ibatis.session.SqlSession;
  */
 public class PromocionesSucursalesDAO {
 
-    public static Mensaje registrarPromocionesSucursales(PromocionesSucursales promocionSucursal) {
+    public static Mensaje registrarPromocionesSucursales(PromocionSucursal promocionSucursal) {
         Mensaje mensaje = new Mensaje();
         mensaje.setError(true);
         SqlSession conexionBD = MyBatisUtil.getSession();
         if (conexionBD != null) {
             try {
                
-                int filasAfectadas = conexionBD.insert("promociones.insertarPromocionSucursales", promocionSucursal);
+                int filasAfectadas = conexionBD.insert("promociones.insertarPromocionSucursal", promocionSucursal);
                 conexionBD.commit();
 
                 if (filasAfectadas > 0) {
@@ -46,7 +46,7 @@ public class PromocionesSucursalesDAO {
         return mensaje;
     }
 
-    public static Mensaje eliminarPromocionSucursal(PromocionesSucursales promocionesSucursales) {
+    public static Mensaje eliminarPromocionSucursal(PromocionSucursal promocionesSucursales) {
         Mensaje mensaje = new Mensaje();
         mensaje.setError(true);
         SqlSession conexionBD = MyBatisUtil.getSession();
