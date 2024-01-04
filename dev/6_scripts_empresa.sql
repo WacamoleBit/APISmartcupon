@@ -271,8 +271,9 @@ CREATE PROCEDURE buscarEmpresaPorFiltro(
 	IN porRepresentante BOOL
 )
 BEGIN 
-	SELECT e.idEmpresa, e.nombre, e.nombreComercial,e.email,e.telefono, e.paginaWeb, e.rfc
+	SELECT e.idEmpresa, e.nombre, e.nombreComercial,e.email,e.telefono, e.paginaWeb, e.rfc, es.idEstatus, es.nombre AS nombreEstatus 
 	FROM empresa e 
+	INNER JOIN estatus es ON es.idEstatus=e.estatus
 	INNER JOIN persona p ON e.representante=p.idPersona
     WHERE (porNombre AND e.nombre LIKE CONCAT('%', cadenaBusqueda, '%'))
 	OR (porRFC AND e.rfc LIKE CONCAT('%', cadenaBusqueda, '%'))
