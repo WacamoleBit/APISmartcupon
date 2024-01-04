@@ -19,7 +19,7 @@ CREATE PROCEDURE registrarEmpresa (
     IN _telefono VARCHAR(10),
     IN _paginaWeb VARCHAR(100),
     IN _rfc VARCHAR(12),
-	IN _nombreRepresentante VARCHAR(50),
+    IN _nombreRepresentante VARCHAR(50),
     IN _apellidoPaterno VARCHAR(50),
     IN _apellidoMaterno VARCHAR(50),
     IN _calle VARCHAR(100),
@@ -121,6 +121,7 @@ CREATE PROCEDURE modificarEmpresa(
 	IN _idEmpresa INT,
 	IN _nombre VARCHAR(50),
 	IN _nombreComercial VARCHAR(100),
+	IN _logo LONGBLOB,
 	IN _email VARCHAR(50),
 	IN _telefono VARCHAR(10),
 	IN _paginaWeb VARCHAR(50),
@@ -151,7 +152,7 @@ BEGIN
 
 			IF EXISTS (SELECT * FROM persona WHERE idPersona = _idPersona) THEN 
 
-				IF NOT EXISTS (SELECT * FROM persona WHERE nombre= _nombreEncargado AND apellidoPaterno= _apellidoPaterno AND apellidoMaterno= _apellidoMaterno) THEN 
+				IF NOT EXISTS (SELECT * FROM persona WHERE nombre= _nombreEncargado AND apellidoPaterno= _apellidoPaterno AND apellidoMaterno= _apellidoMaterno AND idPersona!=idPersona) THEN 
 					UPDATE persona SET 
 					nombre=IFNULL(_nombreEncargado, nombre),
 					apellidoPaterno=IFNULL(_apellidoPaterno, apellidoPaterno),
@@ -174,7 +175,7 @@ BEGIN
 		BEGIN 
 
 			IF EXISTS (SELECT * FROM direccion WHERE idDireccion = _idDireccion) THEN 
-				IF NOT EXISTS (SELECT * FROM dirección WHERE calle=_calle AND numero = _numero ) THEN 
+				IF NOT EXISTS (SELECT * FROM direccion WHERE calle=_calle AND numero = _numero AND idDireccion=_idDireccion) THEN 
 					UPDATE direccion SET 
 					calle= IFNULL(_calle, calle),
 					numero=IFNULL(_numero, numero),
@@ -198,10 +199,11 @@ BEGIN
 		BEGIN 
 
 			IF EXISTS (SELECT * FROM empresa WHERE idEmpresa = _idEmpresa) THEN 
- 				IF NOT EXISTS (SELECT * FROM empresa WHERE nombre=_nombre AND nombreComercial = _nombreComercial AND email=_email AND telefono=_telefono AND paginaWeb=_paginaWeb ) THEN 
+ 				IF NOT EXISTS (SELECT * FROM empresa WHERE nombre=_nombre AND nombreComercial = _nombreComercial AND email=_email AND telefono=_telefono AND paginaWeb=_paginaWeb AND idEmpresa!=_idEmpresa) THEN 
 					UPDATE empresa SET 
 					nombre=IFNULL(_nombre, nombre),
 					nombreComercial=IFNULL(_nombreComercial, nombreComercial),
+					logo=IFNULL(_logo, logo),
 					email=IFNULL(_email, email),
 					telefono=IFNULL(_telefono, telefono),
 					paginaWeb=IFNULL(_paginaWeb, paginaWeb),
@@ -239,19 +241,23 @@ CREATE PROCEDURE eliminarEmpresa (
     INOUT _error VARCHAR(255)
 )
 BEGIN
-	SET _filasAfectadas = 0;
+    SET _filasAfectadas = 0;
     SET _error = '';
     
-	IF NOT EXISTS (SELECT * FROM empresa WHERE idEmpresa = _idEmpresa) THEN
+    IF NOT EXISTS (SELECT * FROM empresa WHERE idEmpresa = _idEmpresa) THEN
 		SET _error = CONCAT(_error, "No existe la empresa proporcionada");
 	ELSE
-		IF EXISTS (SELECT * FROM sucursal WHERE empresa = @_idEmpresa) THEN
-			SET _error = "La empresa tiene sucursales asociadas.";
+		IF EXISTS(SELECT * FROM promocion WHERE empresa = _idEmpresa) THEN
+			SET _error = CONCAT(_error, "La empresa tiene promociones asociadas");
 		ELSE
-			DELETE FROM empresa WHERE idEmpresa = _idEmpresa;
+			IF EXISTS (SELECT * FROM sucursal WHERE empresa = _idEmpresa) THEN
+				SET _error = "La empresa tiene sucursales asociadas.";
+			ELSE
+				DELETE FROM empresa WHERE idEmpresa = _idEmpresa;
             
-            SET _filasAfectadas = ROW_COUNT();
-        END IF;
+            		SET _filasAfectadas = ROW_COUNT();
+        	END IF;
+	END IF;
     END IF;
 END //
 

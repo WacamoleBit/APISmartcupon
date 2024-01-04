@@ -5,8 +5,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="empresa">
     
-    <select id="obtenerListaEmpresas" resultType="modelo.pojo.Empresa" statementType="CALLABLE">
-        SELECT e.idEmpresa, e.nombre, e.nombreComercial, e.logo,e.email,e.telefono, e.paginaWeb, e.rfc, es.idEstatus, es.nombre AS nombreEstatus 
+    <select id="obtenerListaEmpresas" resultType="modelo.pojo.Empresa">
+        SELECT e.idEmpresa, e.nombre, e.nombreComercial,e.email,e.telefono, e.paginaWeb, e.rfc, es.idEstatus, es.nombre AS nombreEstatus 
         FROM empresa e 
         INNER JOIN estatus es ON es.idEstatus=e.estatus; 
     </select>
@@ -42,6 +42,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{empresa.idEmpresa, mode=IN, jdbcType=INTEGER},
             #{empresa.nombre, mode=IN, jdbcType=VARCHAR},
             #{empresa.nombreComercial, mode=IN, jdbcType=VARCHAR},
+            #{empresa.logo, mode=IN, jdbcType=BLOB},
             #{empresa.email, mode=IN, jdbcType=VARCHAR},
             #{empresa.telefono, mode=IN, jdbcType=VARCHAR},
             #{empresa.paginaWeb, mode=IN, jdbcType=VARCHAR},
@@ -63,8 +64,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     )}
     </update>
     
-    <delete id="eliminarEmpresa" parameterType="modelo.pojo.Empresa">
-        DELETE FROM empresa WHERE idEmpresa = #{idEmpresa}
+    <delete id="eliminarEmpresa" parameterType="modelo.pojo.DatosRegistroEmpresa" statementType="CALLABLE">
+        {CALL eliminarEmpresa(
+            #{empresa.idEmpresa, mode=IN, jdbcType=INTEGER},
+        
+            #{filasAfectadas, mode=INOUT, jdbcType=INTEGER},
+            #{error, mode=INOUT, jdbcType=VARCHAR}
+        )}
     </delete>
     
     <select id="obtenerRepresentantePorId" resultType="modelo.pojo.Persona" parameterType="int">
@@ -81,5 +87,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         INNER JOIN ciudad c ON di.ciudad = c.idCiudad 
         WHERE e.idEmpresa = #{idEmpresa} 
     </select>
-
+    
+    <select id="obtenerEmpresaPorId" resultType="modelo.pojo.Empresa" parameterType="int">
+        SELECT idEmpresa, nombre, nombreComercial, email, telefono, paginaWeb, rfc, estatus as idEstatus, to_base64(logo) as logoBase64
+        FROM empresa 
+        WHERE idEmpresa = #{idEmpresa} 
+    </select>
 </mapper>
