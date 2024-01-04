@@ -53,6 +53,14 @@ public class SucursalWS {
 
         return SucursalDAO.obtenerSucursales();
     }
+    
+    @GET
+    @Path("obtenerSucursalesPorIdEmpresa/{idEmpresa}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Sucursal> mostrarSucursales(@PathParam("idEmpresa") Integer idEmpresa) {
+
+        return SucursalDAO.obtenerSucursalesPorIdEmpresa(idEmpresa);
+    }
 
     @GET
     @Path("obtenerPorId/{idSucursal}")

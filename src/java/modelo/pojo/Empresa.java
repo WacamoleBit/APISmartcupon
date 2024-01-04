@@ -10,10 +10,11 @@ package modelo.pojo;
  * @author jegal
  */
 public class Empresa {
+
     private Integer idEmpresa;
     private String nombre;
     private String nombreComercial;
-    private byte [] logo;
+    private byte[] logo;
     private Integer representante;
     private String email;
     private Integer direccion;
@@ -23,11 +24,11 @@ public class Empresa {
     private Integer idEstatus;
     private String nombreEstatus;
     private String logoBase64;
-    
+
     public Empresa() {
     }
 
-    public Empresa(Integer idEmpresa, String nombre, String nombreComercial, byte[] logo, Integer representante, String email, Integer direccion, String telefono, String paginaWeb, String rfc, Integer idEstatus, String nombreEstatus) {
+    public Empresa(Integer idEmpresa, String nombre, String nombreComercial, byte[] logo, Integer representante, String email, Integer direccion, String telefono, String paginaWeb, String rfc, Integer idEstatus, String nombreEstatus, String logoBase64) {
         this.idEmpresa = idEmpresa;
         this.nombre = nombre;
         this.nombreComercial = nombreComercial;
@@ -39,9 +40,9 @@ public class Empresa {
         this.paginaWeb = paginaWeb;
         this.rfc = rfc;
         this.idEstatus = idEstatus;
-        this.nombreEstatus=nombreEstatus;
+        this.nombreEstatus = nombreEstatus;
+        this.logoBase64 = logoBase64;
     }
-
 
     public Integer getIdEmpresa() {
         return idEmpresa;
@@ -139,8 +140,6 @@ public class Empresa {
         this.nombreEstatus = nombreEstatus;
     }
 
-    
-
     public String getLogoBase64() {
         return logoBase64;
     }
@@ -148,5 +147,5 @@ public class Empresa {
     public void setLogoBase64(String logoBase64) {
         this.logoBase64 = logoBase64;
     }
-    
+
 }
