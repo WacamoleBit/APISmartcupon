@@ -73,7 +73,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             INNER JOIN categoriapromocion c ON p.categoria = c.idCategoria
             INNER JOIN estatus es ON p.estatus = es.idEstatus
             INNER JOIN empresa em ON p.empresa = em.idEmpresa
-            WHERE p.cuponesDisponibles > 0 && p.estatus = 1;
+            WHERE p.cuponesDisponibles > 0 AND p.estatus = 1;
     </select>
     
     
