@@ -6,6 +6,9 @@
 package ws;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -22,11 +25,15 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import modelo.PromocionDAO;
+import modelo.PromocionesSucursalesDAO;
+import modelo.SucursalDAO;
 import modelo.pojo.Categoria;
 import modelo.pojo.DatosRegistroPromocion;
 import modelo.pojo.FiltroBuscarPromocion;
 import modelo.pojo.Mensaje;
 import modelo.pojo.Promocion;
+import modelo.pojo.PromocionesSucursales;
+import modelo.pojo.Sucursal;
 import modelo.pojo.TipoPromocion;
 
 /**
@@ -182,6 +189,18 @@ public class PromocionWS {
     }
     
     @GET
+    @Path("obtenerSucursalesPorPromocion/{idPromocion}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Sucursal> obtenerSucursalesPorPromocion(@PathParam("idPromocion") Integer idPromocion){
+        
+        if (idPromocion<0 || idPromocion == null ) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+    
+        return SucursalDAO.obtenerSucursalesPorPromocion(idPromocion);
+    }
+    
+    @GET
     @Path("obtenerPromocionesPorCategoria/{idCategoria}")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Promocion> obtenerPromocionesCategoria(@PathParam("idCategoria") Integer idCategoria) {
@@ -221,5 +240,45 @@ public class PromocionWS {
         filtro.setNombre(nombre);
 
         return PromocionDAO.buscarPorFiltro(filtro);
+    }
+    
+    @POST
+    @Path("registroPromocionSucursal")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Mensaje registrarPromocionSucursales(String json){
+        if(!json.isEmpty()){
+            Gson gson = new Gson();
+            List<PromocionesSucursales> promocionesSucursales = new ArrayList<>();
+            Type arraylistPromocionesSucursales = new TypeToken<ArrayList<PromocionesSucursales>>() {}.getType();
+            
+            promocionesSucursales = gson.fromJson(json,arraylistPromocionesSucursales);
+            if(promocionesSucursales.isEmpty()){
+                throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            }
+            
+            return PromocionesSucursalesDAO.registrarPromocionesSucursales(promocionesSucursales);
+        }else{
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+    }
+    
+    
+    @DELETE
+    @Path("eliminarPromocionSucursal")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Mensaje eliminarPromocionSucursal(String json){
+        if(!json.isEmpty()){
+            Gson gson = new Gson();
+            PromocionesSucursales promocionesSucursales = gson.fromJson(json,PromocionesSucursales.class);
+            if(promocionesSucursales.getIdPromocion()<0 || promocionesSucursales.getIdSucursal()<0 || promocionesSucursales.getIdPromocion()== null || promocionesSucursales.getIdSucursal() == null ){
+                throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            }
+            
+            return PromocionesSucursalesDAO.eliminarPromocionSucursal(promocionesSucursales);
+        }else{
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
     }
 }

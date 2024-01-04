@@ -41,6 +41,24 @@ public class SucursalDAO {
         return sucursales;
     }
     
+    public static List<Sucursal> obtenerSucursalesPorPromocion(Integer idPromocion){
+                List<Sucursal> sucursales = new ArrayList<>();
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        if (conexionBD != null) {
+            try {
+
+                sucursales = conexionBD.selectList("sucursal.obtenerSucursalesPorIdSucursal", idPromocion);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                conexionBD.close();
+            }
+        }
+
+        return sucursales;
+    }
+    
      public static List<Sucursal> obtenerSucursalesPorIdEmpresa(Integer idEmpresa) {
         List<Sucursal> sucursales = new ArrayList<>();
         SqlSession conexionBD = MyBatisUtil.getSession();

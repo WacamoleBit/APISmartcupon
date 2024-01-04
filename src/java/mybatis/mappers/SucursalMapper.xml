@@ -15,6 +15,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          WHERE empresa = #{idEmpresa};
     </select>
     
+    <select id="obtenerSucursalesPorIdSucursal" resultType="modelo.pojo.Sucursal" parameterType="int">
+        SELECT s.idSucursal, nombre, direccion, telefono, latitud, longitud, encargado, empresa 
+         FROM sucursal s 
+         INNER JOIN 
+         promocionSucursal ps ON ps.idSucursal = s.idSucursal 
+         WHERE ps.idPromocion = #{idPromocion}
+    </select>
+    
     
     <insert id="registrarSucursal" parameterType="modelo.pojo.DatosRegistroSucursal" statementType="CALLABLE">
         {CALL registrarSucursal(

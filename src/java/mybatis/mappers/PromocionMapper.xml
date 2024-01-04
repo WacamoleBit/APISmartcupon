@@ -149,4 +149,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         cuponesDisponibles = cuponesDisponibles -1 
         WHERE codigoPromocion = #{codigoPromocion} AND empresa = #{empresa} AND estatus = 1;
     </update>
+    
+    
+    <insert id="insertarPromocionSucursales" parameterType="modelo.pojo.PromocionesSucursales">
+        INSERT INTO promocionSucursal(idSucursal, idPromocion) 
+        VALUES(#{idSucursal}, #{idPromocion}) 
+    </insert>
+
+    <delete id="eliminarPromocionSucursal" parameterType="modelo.pojo.PromocionesSucursales">
+        DELETE FROM promocionSucursal WHERE idSucursal=#{idSucursal} AND idPromocion=#{idPromocion}
+    </delete>
 </mapper>
