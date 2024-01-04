@@ -5,6 +5,7 @@ USE smartcupon_db;
 DROP PROCEDURE IF EXISTS registrarEmpresa;
 DROP PROCEDURE IF EXISTS modificarEmpresa;
 DROP PROCEDURE IF EXISTS eliminarEmpresa;
+DROP PROCEDURE IF EXISTS buscarEmpresaPorFiltro;
 DROP TRIGGER IF EXISTS delete_empresa_trigger;
 
 DELIMITER //
@@ -259,6 +260,23 @@ BEGIN
         	END IF;
 	END IF;
     END IF;
+END //
+
+-- BUSCAR EMPRESA POR FILTRO
+
+CREATE PROCEDURE buscarEmpresaPorFiltro(
+	IN cadenaBusqueda VARCHAR(255), 
+	IN porNombre BOOL, 
+	IN porRFC BOOL, 
+	IN porRepresentante BOOL
+)
+BEGIN 
+	SELECT e.idEmpresa, e.nombre, e.nombreComercial,e.email,e.telefono, e.paginaWeb, e.rfc
+	FROM empresa e 
+	INNER JOIN persona p ON e.representante=p.idPersona
+    WHERE (porNombre AND e.nombre LIKE CONCAT('%', cadenaBusqueda, '%'))
+	OR (porRFC AND e.rfc LIKE CONCAT('%', cadenaBusqueda, '%'))
+	OR (porRepresentante AND p.nombre LIKE CONCAT('%', cadenaBusqueda, '%'));
 END //
 
 DELIMITER ;

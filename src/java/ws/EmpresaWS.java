@@ -19,6 +19,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -27,6 +28,7 @@ import modelo.pojo.DatosRegistroEmpresa;
 import modelo.pojo.Direccion;
 import modelo.pojo.Mensaje;
 import modelo.pojo.Empresa;
+import modelo.pojo.FiltroBuscarEmpresa;
 import modelo.pojo.Persona;
 
 /**
@@ -151,7 +153,7 @@ public class EmpresaWS {
             if (datos.getPersona().getIdPersona() < 0 || datos.getPersona().getIdPersona() == null) {
                 throw new WebApplicationException(Response.Status.BAD_REQUEST);
             }
-            if(datos.getDireccion().getCiudad() <0 || datos.getDireccion().getCiudad() == null){
+            if (datos.getDireccion().getCiudad() < 0 || datos.getDireccion().getCiudad() == null) {
                 throw new WebApplicationException(Response.Status.BAD_REQUEST);
             }
 
@@ -179,6 +181,40 @@ public class EmpresaWS {
         } else {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
+    }
 
+    @GET
+    @Path("buscarPorFiltro")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Empresa> buscarUsuarioPorFiltro(
+            @QueryParam("cadenaBusqueda") String cadenaBusqueda,
+            @QueryParam("porNombre") Boolean porNombre,
+            @QueryParam("porRFC") Boolean porRFC,
+            @QueryParam("porRepresentante") Boolean porRepresentante) {
+
+        if (cadenaBusqueda == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (porNombre == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (porRFC == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        if (porRepresentante == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        FiltroBuscarEmpresa filtro = new FiltroBuscarEmpresa();
+        
+        filtro.setCadena(cadenaBusqueda);
+        filtro.setPorNombre(porNombre);
+        filtro.setPorRFC(porRFC);
+        filtro.setPorRepresentante(porRepresentante);
+
+        return EmpresaDAO.buscarPorFiltro(filtro);
     }
 }

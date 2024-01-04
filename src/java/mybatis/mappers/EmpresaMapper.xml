@@ -93,4 +93,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         FROM empresa 
         WHERE idEmpresa = #{idEmpresa} 
     </select>
+    
+    <select id="buscarEmpresaPorFiltro" parameterType="modelo.pojo.FiltroBuscarEmpresa" resultType="modelo.pojo.Empresa" statementType="CALLABLE">
+        {CALL buscarEmpresaPorFiltro(
+            #{cadena, mode=IN, jdbcType=VARCHAR},
+            #{porNombre, mode=IN},
+            #{porRFC, mode=IN},
+            #{porRepresentante, mode=IN}
+        )}
+    </select>
 </mapper>

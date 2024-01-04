@@ -13,6 +13,7 @@ import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 import java.util.List;
 import modelo.pojo.Direccion;
+import modelo.pojo.FiltroBuscarEmpresa;
 import modelo.pojo.Persona;
 
 /**
@@ -139,5 +140,19 @@ public class EmpresaDAO {
             mensaje.setMensaje("Error: Por el momento no hay conexión con la base de datos, intenta mas tarde.");
         }
         return mensaje;
+    }
+    
+    public static List<Empresa> buscarPorFiltro (FiltroBuscarEmpresa filtro) {
+        List<Empresa> empresas = null;
+        
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        
+        if(conexionBD != null) {
+            empresas = new ArrayList<>();
+            
+            empresas = conexionBD.selectList("empresa.buscarEmpresaPorFiltro", filtro);
+        }
+        
+        return empresas;
     }
 }
