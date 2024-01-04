@@ -70,12 +70,55 @@ public class EmpresaWS {
     @Consumes(MediaType.APPLICATION_JSON)
     public Mensaje registrarEmpresa(String json) {
 
-        Gson gson = new Gson();
-        DatosRegistroEmpresa datos = gson.fromJson(json, DatosRegistroEmpresa.class);
-        Empresa empresa = datos.getEmpresa();
-        Persona persona = datos.getPersona();
-        Direccion direccion = datos.getDireccion();
-        if (datos != null) {
+        if (!json.isEmpty()) {
+            Gson gson = new Gson();
+            DatosRegistroEmpresa datos = gson.fromJson(json, DatosRegistroEmpresa.class);
+            Empresa empresa = datos.getEmpresa();
+            Persona persona = datos.getPersona();
+            Direccion direccion = datos.getDireccion();
+
+            if (datos == null) {
+                throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            }
+            if (empresa.getNombre().isEmpty() || empresa.getNombre() == null) {
+                throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            }
+            if (empresa.getNombreComercial().isEmpty() || empresa.getNombreComercial() == null) {
+                throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            }
+            if (empresa.getLogo() == null) {
+                throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            }
+            if (empresa.getEmail().isEmpty() || empresa.getEmail() == null) {
+                throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            }
+            if (empresa.getTelefono().isEmpty() || empresa.getTelefono() == null) {
+                throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            }
+            if (empresa.getTelefono().isEmpty() || empresa.getTelefono() == null) {
+                throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            }
+            if (direccion.getCalle().isEmpty() || direccion.getCalle() == null) {
+                throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            }
+            if (direccion.getNumero() < 0 || direccion.getNumero() == null) {
+                throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            }
+            if (direccion.getCodigoPostal().isEmpty() || direccion.getCodigoPostal() == null) {
+                throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            }
+            if (direccion.getCiudad() < 0 || direccion.getCiudad() == null) {
+                throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            }
+            if (persona.getNombre().isEmpty() || persona.getNombre() == null) {
+                throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            }
+            if (persona.getApellidoPaterno().isEmpty() || persona.getApellidoPaterno() == null) {
+                throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            }
+            if (persona.getApellidoMaterno().isEmpty() || persona.getApellidoMaterno() == null) {
+                throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            }
             return EmpresaDAO.registrarEmpresa(datos);
         } else {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
@@ -88,10 +131,35 @@ public class EmpresaWS {
     @Consumes(MediaType.APPLICATION_JSON)
     public Mensaje modificarEmpresa(String json) {
 
-        Gson gson = new Gson();
-        DatosRegistroEmpresa datos = gson.fromJson(json, DatosRegistroEmpresa.class);
+        if (!json.isEmpty()) {
+            Gson gson = new Gson();
+            DatosRegistroEmpresa datos = gson.fromJson(json, DatosRegistroEmpresa.class);
+            Empresa empresa = datos.getEmpresa();
+            Persona persona = datos.getPersona();
+            Direccion direccion = datos.getDireccion();
 
-        return EmpresaDAO.editarEmpresa(datos);
+            if (datos == null) {
+                throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            }
+            if (datos.getEmpresa().getIdEmpresa() < 0 || datos.getEmpresa().getIdEmpresa() == null) {
+                throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            }
+
+            if (datos.getDireccion().getIdDireccion() < 0 || datos.getEmpresa().getIdEmpresa() == null) {
+                throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            }
+            if (datos.getPersona().getIdPersona() < 0 || datos.getPersona().getIdPersona() == null) {
+                throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            }
+            if(datos.getDireccion().getCiudad() <0 || datos.getDireccion().getCiudad() == null){
+                throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            }
+
+            return EmpresaDAO.editarEmpresa(datos);
+        } else {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
     }
 
     @DELETE
