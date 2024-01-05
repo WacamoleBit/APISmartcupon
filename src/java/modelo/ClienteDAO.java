@@ -54,18 +54,18 @@ public class ClienteDAO {
 
                 if (datos.getFilasAfectadas() > 0 && datos.getError().isEmpty()) {
                     mensaje.setError(false);
-                    mensaje.setMensaje("Cliente registrado con exito");
+                    mensaje.setMensaje("Registro éxitoso");
                 } else {
                     mensaje.setMensaje(datos.getError());
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                mensaje.setMensaje("Error: " + e.getMessage());
+                mensaje.setMensaje("Error: Verifique la información");
             } finally {
                 conexionBD.close();
             }
         } else {
-            mensaje.setMensaje("Por el momento no hay conexion con la base de datos");
+            mensaje.setMensaje("Error: Por el momento no hay conexion con la base de datos");
         }
 
         return mensaje;
@@ -83,7 +83,7 @@ public class ClienteDAO {
                 conexionBD.commit();
                 if (datos.getFilasAfectadas() > 0 && datos.getError().isEmpty()) {
                     mensaje.setError(false);
-                    mensaje.setMensaje("Cliente modificado con exito");
+                    mensaje.setMensaje("Informacion modificada con exito");
                 } else {
                     mensaje.setMensaje(datos.getError());
                 }
