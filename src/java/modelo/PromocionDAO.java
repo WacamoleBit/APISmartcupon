@@ -124,18 +124,14 @@ public class PromocionDAO {
         return promocion;
     }
 
-    public static List<Promocion> obtenerPromociones(Integer idEmpresa) {
+    public static List<Promocion> obtenerPromociones() {
         List<Promocion> promociones = null;
 
         SqlSession conexionBD = MyBatisUtil.getSession();
 
         if (conexionBD != null) {
             promociones = new ArrayList<>();
-            if(idEmpresa == null || idEmpresa < 0){
-                promociones = conexionBD.selectList("promociones.obtenerPromociones");
-            }else{
-                promociones = conexionBD.selectList("promociones.obtenerPromociones", idEmpresa);
-            }
+            
             promociones = conexionBD.selectList("promociones.obtenerPromociones");
         }
 
