@@ -19,7 +19,7 @@ public class CuponDAO {
         SqlSession conexionBD = MyBatisUtil.getSession();
         if (conexionBD != null) {
             try {
-
+                
                 if (promocion.getEmpresa() == null || promocion.getEmpresa() < 0) {
                     int filasAfectadas = conexionBD.update("promociones.canjearCupon", promocion);
                     conexionBD.commit();
@@ -27,7 +27,7 @@ public class CuponDAO {
                         respuesta.setError(false);
                         respuesta.setMensaje("Cupon canjeado con éxito");
                     } else {
-                        respuesta.setMensaje("Error al canjear el cupon, favor de verificar que el código del cupon sea correcto");
+                        respuesta.setMensaje("Favor de ingresar un cupon valido");
                     }
                 } else {
                     int filasAfectadas = conexionBD.update("promociones.canjearCuponComercial", promocion);
@@ -36,7 +36,7 @@ public class CuponDAO {
                         respuesta.setError(false);
                         respuesta.setMensaje("Cupon canjeado con éxito");
                     } else {
-                        respuesta.setMensaje("Error al canjear el cupon, favor de verificar que el código del cupon sea correcto");
+                        respuesta.setMensaje("Favor de ingresar un cupon válido");
                     }
 
                 }
