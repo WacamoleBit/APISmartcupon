@@ -217,9 +217,18 @@ BEGIN
 	IF NOT EXISTS (SELECT * FROM promocion WHERE idPromocion = _idPromocion) THEN
 		SET _error = CONCAT(_error, "No existe la promoción proporcionada");
 	ELSE
-		DELETE FROM promocion WHERE idPromocion = _idPromocion;
+		DELETE FROM promocionSucursal WHERE idPromocion=_idPromocion;
+
+		SET @filasPromocionesSucursales = ROW_COUNT();
+
+		IF @filasPromocionesAfectadas < 0 THEN 
+
+			SET _error = CONCAT(_error, "Error al eliminar las sucursales afiliadas a la promoción");
+		ELSE
+			DELETE FROM promocion WHERE idPromocion = _idPromocion;
             
-		SET _filasAfectadas = ROW_COUNT();
+			SET _filasAfectadas = ROW_COUNT();
+		END IF;	
     END IF;
 END //
 
