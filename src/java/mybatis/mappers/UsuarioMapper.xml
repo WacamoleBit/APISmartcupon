@@ -6,17 +6,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 <mapper namespace="usuario">
-    <insert id="registrarUsuario" parameterType="modelo.pojo.Usuario">
-        INSERT INTO usuario (nombre, apellidoPaterno, apellidoMaterno, curp, email, username, password, rol, empresa)
-        VALUES (#{nombre}, #{apellidoPaterno}, #{apellidoMaterno}, #{curp}, #{email}, #{username}, #{password}, #{rol}, #{empresa})
+    <insert id="registrarUsuario" parameterType="modelo.pojo.DatosRegistroUsuario"  statementType="CALLABLE">
+        {CALL registrarUsuario (
+            #{usuario.nombre, mode=IN}, 
+            #{usuario.apellidoPaterno, mode=IN}, 
+            #{usuario.apellidoMaterno, mode=IN}, 
+            #{usuario.curp, mode=IN}, 
+            #{usuario.email,mode=IN}, 
+            #{usuario.username, mode=IN}, 
+            #{usuario.password, mode=IN}, 
+            #{usuario.rol, mode=IN}, 
+            #{usuario.empresa, mode=IN},
+            #{filasAfectadas, mode=INOUT, jdbcType=INTEGER},
+            #{error, mode=INOUT, jdbcType=VARCHAR}
+        )}
     </insert>
     
-    <update id="editarUsuario" parameterType="modelo.pojo.Usuario">
-        UPDATE usuario 
-        SET nombre = #{nombre}, apellidoPaterno = #{apellidoPaterno}, 
-        apellidoMaterno = #{apellidoMaterno}, curp = #{curp}, email = #{email}, 
-        username = #{username}, password = #{password}, rol = #{rol}, empresa = #{empresa}
-        WHERE idUsuario = #{idUsuario}
+    <update id="editarUsuario" parameterType="modelo.pojo.DatosRegistroUsuario"  statementType="CALLABLE">
+        {CALL editarUsuario (
+            #{usuario.idUsuario, mode=IN}, 
+            #{usuario.nombre, mode=IN}, 
+            #{usuario.apellidoPaterno, mode=IN}, 
+            #{usuario.apellidoMaterno, mode=IN}, 
+            #{usuario.curp, mode=IN}, 
+            #{usuario.email,mode=IN}, 
+            #{usuario.username, mode=IN}, 
+            #{usuario.password, mode=IN}, 
+            #{usuario.rol, mode=IN}, 
+            #{usuario.empresa, mode=IN},
+            #{filasAfectadas, mode=INOUT, jdbcType=INTEGER},
+            #{error, mode=INOUT, jdbcType=VARCHAR}
+        )}
     </update>
     
     <delete id="eliminarUsuario" parameterType="int">

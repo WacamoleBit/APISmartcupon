@@ -20,6 +20,7 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import modelo.UsuarioDAO;
+import modelo.pojo.DatosRegistroUsuario;
 import modelo.pojo.FiltroBuscarUsuario;
 import modelo.pojo.Mensaje;
 import modelo.pojo.Usuario;
@@ -74,8 +75,12 @@ public class UsuarioWS {
         if (usuario.getRol() == 1 && usuario.getEmpresa() == null) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
+        
+        DatosRegistroUsuario datos = new DatosRegistroUsuario();
+        datos.setUsuario(usuario);
+        
 
-        return UsuarioDAO.registrarUsuario(usuario);
+        return UsuarioDAO.registrarUsuario(datos);
     }
 
     @PUT
@@ -128,8 +133,11 @@ public class UsuarioWS {
         }
 
         usuario.setIdUsuario(idUsuario);
+        
+        DatosRegistroUsuario datos = new DatosRegistroUsuario();
+        datos.setUsuario(usuario);
 
-        return UsuarioDAO.editarUsuario(usuario);
+        return UsuarioDAO.editarUsuario(datos);
     }
 
     @DELETE
