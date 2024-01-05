@@ -4,7 +4,6 @@ USE smartcupon_db;
 
 DROP PROCEDURE IF EXISTS registrarCliente;
 DROP PROCEDURE IF EXISTS modificarCliente;
-DROP PROCEDURE IF EXISTS buscarPorFiltro;
 
 DELIMITER //
 
@@ -120,23 +119,5 @@ BEGIN
 	COMMIT;
 END;
 -- ELIMINAR
-
--- BUSCAR POR FILTRO
-
-CREATE PROCEDURE buscarPorFiltro(
-	IN cadenaBusqueda VARCHAR(255), 
-	IN porNombre BOOL, 
-	IN porUsername BOOL, 
-	IN porRol BOOL
-) 
-BEGIN 
-	SELECT idUsuario, u.nombre as nombre, apellidoPaterno, apellidoMaterno, curp, u.email, username, password, u.rol as rol, r.nombre as nombreRol, empresa, e.nombre as nombreEmpresa
-	FROM usuario u
-	INNER JOIN rol r ON u.rol = r.idRol 
-    LEFT JOIN empresa e ON u.empresa = e.idEmpresa
-	WHERE (porNombre AND u.nombre LIKE CONCAT('%', cadenaBusqueda, '%'))
-	OR (porUsername AND username LIKE CONCAT('%', cadenaBusqueda, '%'))
-	OR (porRol AND r.nombre LIKE CONCAT('%', cadenaBusqueda, '%'));
-END //
 
 DELIMITER ;
