@@ -149,10 +149,11 @@ public class PromocionWS {
     }
 
     @GET
-    @Path("obtenerPromociones")
+    @Path("obtenerPromociones/id{idEmpresa}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Promocion> obtenerPromociones() {
-        return PromocionDAO.obtenerPromociones();
+    public List<Promocion> obtenerPromociones(@PathParam("idEmpresa") Integer idEmpresa) {
+        
+        return PromocionDAO.obtenerPromociones(idEmpresa);
     }
 
     @GET
