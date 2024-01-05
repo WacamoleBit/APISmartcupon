@@ -6,12 +6,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="sucursal">
     
     <select id="obtenerSucursales" resultType="modelo.pojo.Sucursal">
-        SELECT idSucursal, nombre, direccion, telefono, latitud, longitud, encargado, empresa FROM sucursal;
+        SELECT idSucursal, su.nombre, su.direccion, su.telefono, latitud, longitud, encargado, empresa, CONCAT(pe.nombre, " " ,pe.apellidoPaterno) as encargadoNombre, em.nombre as empresaNombre
+         FROM sucursal su
+         INNER JOIN persona pe ON su.encargado = pe.idPersona
+         INNER JOIN empresa em ON su.empresa = em.idEmpresa;
     </select>
     
      <select id="obtenerSucursalesPorIdEmpresa" resultType="modelo.pojo.Sucursal" parameterType="int">
-        SELECT idSucursal, nombre, direccion, telefono, latitud, longitud, encargado, empresa 
-         FROM sucursal
+        SELECT idSucursal, su.nombre, su.direccion, su.telefono, latitud, longitud, encargado, empresa, CONCAT(pe.nombre, " " ,pe.apellidoPaterno) as encargadoNombre, em.nombre as empresaNombre
+         FROM sucursal su
+         INNER JOIN persona pe ON su.encargado = pe.idPersona
+         INNER JOIN empresa em ON su.empresa = em.idEmpresa
          WHERE empresa = #{idEmpresa};
     </select>
     
