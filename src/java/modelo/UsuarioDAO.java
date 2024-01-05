@@ -8,6 +8,7 @@ package modelo;
 
 import java.util.ArrayList;
 import java.util.List;
+import modelo.pojo.DatosRegistroUsuario;
 import modelo.pojo.FiltroBuscarUsuario;
 import modelo.pojo.Mensaje;
 import modelo.pojo.Usuario;
@@ -19,7 +20,7 @@ import org.apache.ibatis.session.SqlSession;
  * @author Manuel Hernandez
  */
 public class UsuarioDAO {
-    public static Mensaje registrarUsuario(Usuario usuario) {
+    public static Mensaje registrarUsuario(DatosRegistroUsuario datos) {
         Mensaje mensaje = new Mensaje();
         mensaje.setError(true);
         
@@ -27,14 +28,14 @@ public class UsuarioDAO {
         
         if(conexionBD != null) {
             try {
-                int filasAfectadas = conexionBD.insert("usuario.registrarUsuario", usuario);
+                conexionBD.insert("usuario.registrarUsuario", datos);
                 conexionBD.commit();
                 
-                if(filasAfectadas > 0){    
+                if(datos.getFilasAfectadas() > 0){    
                     mensaje.setError(false);
                     mensaje.setMensaje("El usuario se registró correctamente");
                 }else{
-                    mensaje.setMensaje("No se pudo registrar la información del usuario");
+                    mensaje.setMensaje("Error: " + datos.getError());
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -49,7 +50,7 @@ public class UsuarioDAO {
         return mensaje;
     }
     
-    public static Mensaje editarUsuario(Usuario usuario) {
+    public static Mensaje editarUsuario(DatosRegistroUsuario datos) {
         Mensaje mensaje = new Mensaje();
         mensaje.setError(true);
         
@@ -57,14 +58,14 @@ public class UsuarioDAO {
         
         if(conexionBD != null) {
             try {
-                int filasAfectadas = conexionBD.update("usuario.editarUsuario", usuario);
+                conexionBD.update("usuario.editarUsuario", datos);
                 conexionBD.commit();
                 
-                if(filasAfectadas > 0){    
+                if(datos.getFilasAfectadas() > 0){    
                     mensaje.setError(false);
                     mensaje.setMensaje("La información del usuario se actualizó correctamente");
                 }else{
-                    mensaje.setMensaje("No se pudo actualizar la información del usuario");
+                    mensaje.setMensaje("Error: " + datos.getError());
                 }
             } catch (Exception e) {
                 e.printStackTrace();
