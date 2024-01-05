@@ -59,7 +59,7 @@ public class SucursalDAO {
 
         return sucursales;
     }
-
+ 
     public static List<Sucursal> obtenerSucursalesSinPromocion(Integer idPromocion) {
         List<Sucursal> sucursales = new ArrayList<>();
         SqlSession conexionBD = MyBatisUtil.getSession();
@@ -102,7 +102,6 @@ public class SucursalDAO {
         if (conexionBD != null) {
             try {
                 Sucursal sucursal = conexionBD.selectOne("sucursal.obtenerSucursalPorId", idSucursal);
-                System.out.println(sucursal.getEncargado());
                 Persona encargado = conexionBD.selectOne("sucursal.obtenerEncargadoPorId", sucursal.getEncargado());
                 Direccion direccion = conexionBD.selectOne("sucursal.obtenerDireccionPorId", sucursal.getDireccion());
 
@@ -186,11 +185,11 @@ public class SucursalDAO {
             try {
                 conexionBD.delete("sucursal.eliminarSucursal", datos);
                 conexionBD.commit();
-                if (datos.getFilasAfectadas() > 0) {
+                if (datos.getFilasAfectadas() > 0 && datos.getError().isEmpty()) {
                     mensaje.setError(false);
                     mensaje.setMensaje("Sucursal eliminada con éxito");
                 } else {
-                    mensaje.setMensaje("Error al eliminar la sucursal");
+                    mensaje.setMensaje(datos.getError());
                 }
             } catch (Exception e) {
                 mensaje.setMensaje("Error: " + e.getMessage());
